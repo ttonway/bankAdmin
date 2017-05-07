@@ -1,0 +1,61 @@
+.login-head{
+	width: 100%;
+	height: 50px;
+	background: #00613c;
+	text-align: center;
+    line-height: 62px;
+}
+.login-bg{
+	width:100%;
+	height: 190px;
+	background: url(images/login-bg.png) repeat-x;
+}
+.login-cont{
+	width:320px;
+	height:auto;
+	background: #fff;
+	margin: -140px auto 0;
+	padding-bottom: 20px;
+}
+.login-cont .cont-tit{
+	width: 320px;
+	height: 140px;
+	line-height: 140px;
+	text-align: center;
+	color:#fff;
+	background: url(images/cont-tit.png) no-repeat;
+}
+.cont-form{
+	padding: 20px;
+}
+.opr-item{
+	font-size: 14px;
+	color: #999;
+}
+.opr-item a{
+	text-decoration: none;
+	color: #999;
+}
+.ipt-item{
+	margin-bottom: 20px;
+}
+.ipt-item input{
+	width:100%;
+	height:50px;
+	line-height: 50px;
+	font-size: 14px;
+	text-indent: 12px;
+}
+.ipt-item input.error{
+	border:1px solid #ff0000;
+}
+button.sub{
+	width:100%;
+	height:46px;
+	line-height: 46px;
+	background: #00613c;
+	border:1px solid #015434;
+	font-size: 16px;
+	color:#fff;
+	margin-top: 20px;
+}

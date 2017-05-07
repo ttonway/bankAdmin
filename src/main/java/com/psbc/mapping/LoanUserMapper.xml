@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.psbc.dao.LoanUserMapper">
+    <resultMap id="BaseResultMap" type="com.psbc.pojo.LoanUser">
+        <id column="loanId" property="loanid" jdbcType="BIGINT"/>
+        <result column="userNm" property="usernm" jdbcType="VARCHAR"/>
+        <result column="phoneNum" property="phonenum" jdbcType="VARCHAR"/>
+        <result column="area" property="area" jdbcType="VARCHAR"/>
+        <result column="bank" property="bank" jdbcType="VARCHAR"/>
+        <result column="referrals" property="referrals" jdbcType="VARCHAR"/>
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="loanNum" property="loanNum" jdbcType="BIGINT"/>
+        <result column="createtime" property="createtime" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="updatetime" property="updatetime" jdbcType="VARCHAR"/>
+        <result column="workunit" property="workunit" jdbcType="VARCHAR"/>
+        <result column="utmsrc" property="utmsrc" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <select id="selectByList" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        t.loanid, t.usernm, t.phonenum, t.area, t.bank, t.loanNum, t.id, t.referrals, t.createtime, t.status, t.utmsrc,
+        t1.loanType, t1.workunit, t1.workunit2, t1.loanNum as loanNum1
+        from loan_user_info t
+        left join loan_user t1 on t.id = t1.id
+        where t1.loanType = #{type,jdbcType=VARCHAR}
+        <if test="bank != null">
+            and bank = #{bank,jdbcType=VARCHAR}
+        </if>
+        <if test="status != null">
+            and status = #{status,jdbcType=VARCHAR}
+        </if>
+        order by t.loanid desc
+        limit #{startrow,jdbcType=BIGINT},#{endrow,jdbcType=BIGINT}
+    </select>
+
+
+    <select id="selectByDetial" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+      select t.loanid,t.usernm,t.phonenum,t.area,t.bank,t.loanNum,t.id,t.referrals,t.status,
+      t1.workunit, t1.house, t1.loanNum as loanNum2, t1.job, t1.income, t1.loanHouse, t1.loanCar, t1.loanConsumer,
+      t1.loanType, t1.workunit2, t1.localPerson, t1.guaranteeType
+      from loan_user_info t
+      left join loan_user t1 on t.id = t1.id
+      where t.loanid = #{loanid,jdbcType=BIGINT}
+  </select>
+
+
+    <select id="selectByCnt" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+        select count(t.loanid) cnt
+        from loan_user_info t
+        left join loan_user t1 on t.id = t1.id
+        where t1.loanType = #{type,jdbcType=VARCHAR}
+        <if test="bank != null">
+            and bank = #{bank,jdbcType=VARCHAR}
+        </if>
+        <if test="status != null">
+            and status = #{status,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <select id="selectByStatusCnt" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+        select status,count(t.loanid) cnt
+        from loan_user_info t
+        left join loan_user t1 on t.id = t1.id
+        where t1.loanType = #{type,jdbcType=VARCHAR}
+        <if test="bank != null">
+            and bank = #{bank,jdbcType=VARCHAR}
+        </if>
+        group by status
+        order by status
+    </select>
+
+
+    <insert id="insertSelective" parameterType="com.psbc.pojo.LoanUser">
+        insert into loan_user_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="loanid != null">
+                loanId,
+            </if>
+            <if test="usernm != null">
+                userNm,
+            </if>
+            <if test="phonenum != null">
+                phoneNum,
+            </if>
+            <if test="area != null">
+                area,
+            </if>
+            <if test="bank != null">
+                bank,
+            </if>
+            <if test="referrals != null">
+                referrals,
+            </if>
+            <if test="id != null">
+                id,
+            </if>
+            <if test="loanNum != null">
+                loanNum,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="loanid != null">
+                #{loanid,jdbcType=INTEGER},
+            </if>
+            <if test="usernm != null">
+                #{usernm,jdbcType=VARCHAR},
+            </if>
+            <if test="phonenum != null">
+                #{phonenum,jdbcType=VARCHAR},
+            </if>
+            <if test="area != null">
+                #{area,jdbcType=VARCHAR},
+            </if>
+            <if test="bank != null">
+                #{bank,jdbcType=VARCHAR},
+            </if>
+            <if test="referrals != null">
+                #{referrals,jdbcType=VARCHAR},
+            </if>
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="loanNum != null">
+                #{loanNum,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.psbc.pojo.LoanUser">
+        update loan_user_info
+        <set>
+            <if test="usernm != null">
+                userNm = #{usernm,jdbcType=VARCHAR},
+            </if>
+            <if test="phonenum != null">
+                phoneNum = #{phonenum,jdbcType=VARCHAR},
+            </if>
+            <if test="area != null">
+                area = #{area,jdbcType=VARCHAR},
+            </if>
+            <if test="bank != null">
+                bank = #{bank,jdbcType=VARCHAR},
+            </if>
+            <if test="referrals != null">
+                referrals = #{referrals,jdbcType=VARCHAR},
+            </if>
+            <if test="id != null">
+                id = #{id,jdbcType=INTEGER},
+            </if>
+            <if test="loanNum != null">
+                loanNum = #{loanNum,jdbcType=BIGINT},
+            </if>
+            <if test="createtime != null">
+                createtime = #{createtime,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="updatetime != null">
+                updatetime = #{updatetime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where loanId = #{loanid,jdbcType=BIGINT}
+    </update>
+
+    <delete id="deleteByPrimaryKey">
+        update loan_user_info
+        set status = '5'
+        where loanid in
+        <foreach collection="array" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="export" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        t.loanid,t.usernm,t.phonenum,t.area,t.bank,t.loanNum,t.id,t.referrals,t1.workunit,t.createtime,t.status,t.utmsrc
+        from loan_user_info t
+        left join loan_user t1 on t.id = t1.id
+        where 1 = 1
+        <if test="bank != null">
+            and bank = #{bank,jdbcType=VARCHAR}
+        </if>
+        <if test="status != null">
+            and status = #{status,jdbcType=VARCHAR}
+        </if>
+        order by t.loanid desc
+    </select>
+</mapper>

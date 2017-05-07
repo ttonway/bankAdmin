@@ -1,0 +1,10 @@
+.DS_Store
+.project
+.classpath
+.myumldata
+.settings
+.idea
+*.iml
+.externalToolBuilders
+logs
+target
