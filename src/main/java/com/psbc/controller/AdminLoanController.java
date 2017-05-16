@@ -113,7 +113,7 @@ public class AdminLoanController {
     }
 
     @RequestMapping("/export")
-    public void export(HttpServletResponse response, String userrole, String bank, String status) {
+    public void export(HttpServletResponse response, String userrole, String bank, String status, String loanType) {
         Map<String, Object> map = new HashMap<String, Object>();
         Map<String, Object> pmap = new HashMap<String, Object>();
         if ("支行营销岗".equals(userrole)) {
@@ -122,6 +122,7 @@ public class AdminLoanController {
             pmap.put("bank", null);
         }
         pmap.put("status", status);
+        pmap.put("type", loanType);
 
 
         // 获取百分比
@@ -130,19 +131,29 @@ public class AdminLoanController {
         nf.setMinimumFractionDigits(2);
 
         // 定义response类型
-        response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-disposition;charset=UTF-8", "attachment;filename=下载.xls");
+        response.setContentType("application/vnd.ms-excel;charset=UTF-8");
+        response.setHeader("Content-Disposition", "attachment;filename=\"export.xls\"");
         // 定义输出流
         OutputStream excelStream;
         try {
-            excelStream = new BufferedOutputStream(response.getOutputStream());
-            Collection<LoanUser> dataset = loanUserService.export(pmap);
+            logger.info("export excel " + loanType);
             ExportExcelUtils<LoanUser> outExcel = new ExportExcelUtils<LoanUser>();
             // 定义sheet页标题
             String title = "下载";
             // 定义表头
-            String[] headers = {"申请人ID", "申请人姓名", "联系手机", "区域", "支行", "推荐人", "ID", "申请金额", "工作单位", "申请时间", "状态", "备注", "跟新时间", "来源"};
-            outExcel.exportExcel(title, headers, dataset, excelStream);
+            if ("邮信贷".equals(loanType)) {
+                excelStream = new BufferedOutputStream(response.getOutputStream());
+                Collection<LoanUser> dataset = loanUserService.export(pmap);
+                String[] headers = {"申请人ID", "申请人姓名", "联系手机", "区域", "支行", "推荐人", "ID", "申请金额", "工作单位", "申请时间", "状态", "备注", "跟新时间", "来源"};
+                String[] fields = {"loanid", "usernm", "phonenum", "area", "bank", "referrals", "id", "loanNum", "workunit", "createtime", "status", "remark", "updatetime", "utmsrc"};
+                outExcel.exportExcel(title, headers, fields, dataset, excelStream);
+            } else if ("生意贷".equals(loanType)) {
+                excelStream = new BufferedOutputStream(response.getOutputStream());
+                Collection<LoanUser> dataset = loanUserService.export(pmap);
+                String[] headers = {"申请人ID", "申请人姓名", "联系手机", "区域", "支行", "推荐人", "ID", "申请金额", "行业信息（一级）", "行业信息（二级）", "是否为本地人", "本地是否有房产", "担保方式", "申请时间", "状态", "备注", "跟新时间", "来源"};
+                String[] fields = {"loanid", "usernm", "phonenum", "area", "bank", "referrals", "id", "loanNum", "workunit", "workunit2", "localPerson", "house", "guaranteeType", "createtime", "status", "remark", "updatetime", "utmsrc"};
+                outExcel.exportExcel(title, headers, fields, dataset, excelStream);
+            }
         } catch (Exception e) {
             logger.error("export fail.", e);
         }

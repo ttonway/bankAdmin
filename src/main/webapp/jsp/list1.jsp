@@ -62,7 +62,7 @@
             <table class="rw-table" style="table-layout: fixed;">
                 <thead>
                 <tr>
-                    <th style="width:30px"><input type="checkbox"/></th>
+                    <th style="width:30px"><input type="checkbox" name="chk_all"/></th>
                     <th style="width:200px">来源</th>
                     <th>申请人</th>
                     <th>联系手机</th>
@@ -359,7 +359,7 @@
 
 <script id="userTableTmpl" type="text/x-jsrender">  
 <tr>
-    <td style="width:30px"><input type="checkbox" loanid="{{:loanid}}" usernm="{{:usernm}}" loanNum="{{:loanNum}}" status="{{:status}}"/></td>
+    <td style="width:30px"><input type="checkbox" name="chk_item" loanid="{{:loanid}}" usernm="{{:usernm}}" loanNum="{{:loanNum}}" status="{{:status}}"/></td>
     <td style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden; ">{{:utmsrc}}</td>
     <td>{{:usernm}}</td>
     <td>{{:phonenum}}</td>

@@ -23,14 +23,10 @@ public class LoanUser {
     private Integer id;
 
 	/**
-	 * 邮信贷: 申请金额
+	 * 申请金额
 	 */
 	private Integer loanNum;
-	/**
-	 * 邮信贷: 申请人数
-	 * 生意贷: 申请金额
-	 */
-    private String loanNum1;
+
 	/**
 	 * 生意贷: 行业信息（一级）
 	 */
@@ -214,11 +210,4 @@ public class LoanUser {
 		this.guaranteeType = guaranteeType;
 	}
 
-	public String getLoanNum1() {
-		return loanNum1;
-	}
-
-	public void setLoanNum1(String loanNum1) {
-		this.loanNum1 = loanNum1;
-	}
 }

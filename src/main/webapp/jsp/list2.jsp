@@ -62,7 +62,7 @@
             <table class="rw-table" style="table-layout: fixed;">
                 <thead>
                 <tr>
-                    <th style="width:30px"><input type="checkbox"/></th>
+                    <th style="width:30px"><input type="checkbox" name="chk_all"/></th>
                     <th style="width:200px">来源</th>
                     <th>申请人</th>
                     <th>联系手机</th>
@@ -322,7 +322,7 @@
                 <span class="list-item-span2" id="house3"></span>
             </div>
             <div class="list-item">
-                <span class="list-item-span1">年销售额（万元）：</span>
+                <span class="list-item-span1">年销售额：</span>
                 <span class="list-item-span2" id="income3"></span>
             </div>
             <div class="list-item">
@@ -351,13 +351,13 @@
 
 <script id="userTableTmpl" type="text/x-jsrender">  
 <tr>
-    <td style="width:30px"><input type="checkbox" loanid="{{:loanid}}" usernm="{{:usernm}}" loanNum="{{:loanNum}}" status="{{:status}}"/></td>
+    <td style="width:30px"><input type="checkbox" name="chk_item" loanid="{{:loanid}}" usernm="{{:usernm}}" loanNum="{{:loanNum}}" status="{{:status}}"/></td>
     <td style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden; ">{{:utmsrc}}</td>
     <td>{{:usernm}}</td>
     <td>{{:phonenum}}</td>
     <td>{{:workunit}}{{if workunit2}}-{{:workunit2}}{{/if}}</td>
     <td>{{:area}}{{if bank}}-{{:bank}}{{/if}}</td>
-    <td>{{:loanNum1}}</td>
+    <td>{{:loanNum}}</td>
     <td>{{:createtime}}</td>
     <td><a href="javascript:showDetail({{:loanid}})">详情</a></td>
 </tr>
