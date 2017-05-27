@@ -309,7 +309,7 @@ function showDetail(loanid) {
                     $('#usernm3').text(map.usernm);
                     $('#loanNum3').text(map.loanNum);
                     $('#phonenum3').text(map.phonenum);
-                    $('#bank3').text(map.area + (map.bank ? '-' + map.bank : ''));
+                    $('#bank3').text(map.bank);
                     $('#referrals3').text(map.referrals);
                     $('#workunit3').text(map.workunit + (map.workunit2 ? '-' + map.workunit2 : ''));
                     $('#localPerson3').text(map.localPerson);

@@ -356,7 +356,7 @@
     <td>{{:usernm}}</td>
     <td>{{:phonenum}}</td>
     <td>{{:workunit}}{{if workunit2}}-{{:workunit2}}{{/if}}</td>
-    <td>{{:area}}{{if bank}}-{{:bank}}{{/if}}</td>
+    <td>{{:bank}}</td>
     <td>{{:loanNum}}</td>
     <td>{{:createtime}}</td>
     <td><a href="javascript:showDetail({{:loanid}})">详情</a></td>
