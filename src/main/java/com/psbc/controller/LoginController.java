@@ -86,7 +86,7 @@ public class LoginController {
         return "/list1";
     }
 
-    // 生意贷
+    // 商易贷
     @RequestMapping("/list2")
     public String list2(HttpServletRequest req) {
         String usercode = (String) req.getSession().getAttribute("usercode");

@@ -305,7 +305,7 @@ function showDetail(loanid) {
                     $('#status99').text(map.status);
                     $('[data-pop="detail"]').show();
                     $(".mark").show();
-                } else if (map.loanType == '生意贷') {
+                } else if (map.loanType == '商易贷') {
                     $('#usernm3').text(map.usernm);
                     $('#loanNum3').text(map.loanNum);
                     $('#phonenum3').text(map.phonenum);

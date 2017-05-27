@@ -114,6 +114,9 @@
                         <option>阜宁支行</option>
                         <option>滨海支行</option>
                         <option>响水支行</option>
+                        <option>小贷团队</option>
+                        <option>招商场商圈专营团队</option>
+                        <option>家装市场团队</option>
                     </select>
                 </div>
                 <div class="app-item">

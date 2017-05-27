@@ -5,7 +5,7 @@ public class LoanUser {
 
 	/**
 	 * 业务类型
-	 * 1. 生意贷
+	 * 1. 商易贷
 	 * 2. 邮信贷
 	 */
 	private String loanType;
@@ -28,23 +28,23 @@ public class LoanUser {
 	private Integer loanNum;
 
 	/**
-	 * 生意贷: 行业信息（一级）
+	 * 商易贷: 行业信息（一级）
 	 */
     private String workunit;
 	/**
-	 * 生意贷: 行业信息（二级）
+	 * 商易贷: 行业信息（二级）
 	 */
 	private String workunit2;
 	/**
-	 * 生意贷: 是否为本地人
+	 * 商易贷: 是否为本地人
 	 */
 	private String localPerson;
 	/**
-	 * 生意贷:本地是否有房产
+	 * 商易贷:本地是否有房产
 	 */
 	private String house;
 	/**
-	 * 生意贷: 担保方式
+	 * 商易贷: 担保方式
 	 */
 	private String guaranteeType;
 

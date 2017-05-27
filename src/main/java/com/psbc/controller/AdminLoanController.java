@@ -147,7 +147,7 @@ public class AdminLoanController {
                 String[] headers = {"申请人ID", "申请人姓名", "联系手机", "区域", "支行", "推荐人", "ID", "申请金额", "工作单位", "申请时间", "状态", "备注", "跟新时间", "来源"};
                 String[] fields = {"loanid", "usernm", "phonenum", "area", "bank", "referrals", "id", "loanNum", "workunit", "createtime", "status", "remark", "updatetime", "utmsrc"};
                 outExcel.exportExcel(title, headers, fields, dataset, excelStream);
-            } else if ("生意贷".equals(loanType)) {
+            } else if ("商易贷".equals(loanType)) {
                 excelStream = new BufferedOutputStream(response.getOutputStream());
                 Collection<LoanUser> dataset = loanUserService.export(pmap);
                 String[] headers = {"申请人ID", "申请人姓名", "联系手机", "区域", "支行", "推荐人", "ID", "申请金额", "行业信息（一级）", "行业信息（二级）", "是否为本地人", "本地是否有房产", "担保方式", "申请时间", "状态", "备注", "跟新时间", "来源"};

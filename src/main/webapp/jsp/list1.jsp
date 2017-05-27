@@ -25,7 +25,7 @@
             <a href="list1.htm">邮信贷</a>
         </div>
         <div class="cont-list">
-            <a href="list2.htm">生意贷</a>
+            <a href="list2.htm">商易贷</a>
         </div>
         <div class="left-bg"></div>
     </div>

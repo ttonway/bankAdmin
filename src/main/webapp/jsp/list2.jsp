@@ -25,7 +25,7 @@
             <a href="list1.htm">邮信贷</a>
         </div>
         <div class="cont-list active">
-            <a href="list2.htm">生意贷</a>
+            <a href="list2.htm">商易贷</a>
         </div>
         <div class="left-bg"></div>
     </div>
@@ -343,7 +343,7 @@
 <input type="hidden" id="usercode" value='<%=session.getAttribute("usercode")%>'>
 <input type="hidden" id="bank" value='<%=session.getAttribute("bank")%>'>
 <input type="hidden" id="userrole" value='<%=session.getAttribute("userrole")%>'>
-<input type="hidden" id="loanType" value='生意贷'>
+<input type="hidden" id="loanType" value='商易贷'>
 <script type="text/javascript" src="<%=request.getContextPath()%>/src/js/jquery.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/src/js/jquery.pagination.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/src/js/jsRender.js"></script>
