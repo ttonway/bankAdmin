@@ -35,7 +35,7 @@ var bank = bank || (function (Win, Doc, $, undefined) {
 function showVerify() {
     $('#sucess').hide();
     $('#fail').hide();
-    var len = $("input[type='checkbox']:checked").length;
+    var len = $("input[type='checkbox'][name='chk_item']:checked").length;
     if (len == 0) {
         alert("请选择用户");
         return;
@@ -44,8 +44,8 @@ function showVerify() {
         alert("请选择单个用户");
         return;
     } else {
-        var usernm = $("input[type='checkbox']:checked").attr('usernm');
-        var loanNum = $("input[type='checkbox']:checked").attr('loanNum');
+        var usernm = $("input[type='checkbox'][name='chk_item']:checked").attr('usernm');
+        var loanNum = $("input[type='checkbox'][name='chk_item']:checked").attr('loanNum');
         $('#usernm1').text(usernm);
         $('#loanNum1').text(loanNum);
         $('[data-pop="verify"]').show();
@@ -54,7 +54,7 @@ function showVerify() {
 }
 
 function submitVerify() {
-    var loanid = $("input[type='checkbox']:checked").attr('loanid');
+    var loanid = $("input[type='checkbox'][name='chk_item']:checked").attr('loanid');
     var remark = $("#remark1").val();
     $.ajax({
         type: "post",
@@ -85,7 +85,7 @@ function submitVerify() {
 function showstatus2() {
     $('#sucess3').hide();
     $('#fail3').hide();
-    var len = $("input[type='checkbox']:checked").length;
+    var len = $("input[type='checkbox'][name='chk_item']:checked").length;
     if (len == 0) {
         alert("请选择用户");
         return;
@@ -100,7 +100,7 @@ function showstatus2() {
 }
 
 function submitStatus2() {
-    var loanid = $("input[type='checkbox']:checked").attr('loanid');
+    var loanid = $("input[type='checkbox'][name='chk_item']:checked").attr('loanid');
     $.ajax({
         type: "post",
         cache: false,
@@ -129,7 +129,7 @@ function submitStatus2() {
 function showstatus3() {
     $('#sucess4').hide();
     $('#fail4').hide();
-    var len = $("input[type='checkbox']:checked").length;
+    var len = $("input[type='checkbox'][name='chk_item']:checked").length;
     if (len == 0) {
         alert("请选择用户");
         return;
@@ -144,7 +144,7 @@ function showstatus3() {
 }
 
 function submitStatus3() {
-    var loanid = $("input[type='checkbox']:checked").attr('loanid');
+    var loanid = $("input[type='checkbox'][name='chk_item']:checked").attr('loanid');
     var remark = $("#remarksubmitStatus3").val();
     $.ajax({
         type: "post",
@@ -174,7 +174,7 @@ function submitStatus3() {
 function showVerify2() {
     $('#sucess5').hide();
     $('#fail5').hide();
-    var len = $("input[type='checkbox']:checked").length;
+    var len = $("input[type='checkbox'][name='chk_item']:checked").length;
     if (len == 0) {
         alert("请选择用户");
         return;
@@ -183,8 +183,8 @@ function showVerify2() {
         alert("请选择单个用户");
         return;
     } else {
-        var usernm = $("input[type='checkbox']:checked").attr('usernm');
-        var loanNum = $("input[type='checkbox']:checked").attr('loanNum');
+        var usernm = $("input[type='checkbox'][name='chk_item']:checked").attr('usernm');
+        var loanNum = $("input[type='checkbox'][name='chk_item']:checked").attr('loanNum');
         $('#usernm2').text(usernm);
         $('#loanNum2').val(loanNum);
         $('[data-pop="verify2"]').show();
@@ -193,7 +193,7 @@ function showVerify2() {
 }
 
 function submitVerify2() {
-    var loanid = $("input[type='checkbox']:checked").attr('loanid');
+    var loanid = $("input[type='checkbox'][name='chk_item']:checked").attr('loanid');
     var remark = $("#remark2").val();
     var loanNum = $('#loanNum2').val();
     $.ajax({
@@ -226,7 +226,7 @@ function submitVerify2() {
 function showDelete() {
     $('#sucess6').hide();
     $('#fail6').hide();
-    var len = $("input[type='checkbox']:checked").length;
+    var len = $("input[type='checkbox'][name='chk_item']:checked").length;
     if (len == 0) {
         alert("请选择用户");
         return;
@@ -239,7 +239,7 @@ function showDelete() {
 function submitDelete() {
     var loanid = new Array();
     var flag = 1;
-    $("input[type='checkbox']:checked").each(function () {
+    $("input[type='checkbox'][name='chk_item']:checked").each(function () {
         if ($(this).attr('status') != 0) {
             $('#fail6').show();
             $('#sucess6').hide();
