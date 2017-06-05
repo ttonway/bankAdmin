@@ -33,7 +33,7 @@
             and status = #{status,jdbcType=VARCHAR}
         </if>
         order by t.loanid desc
-        limit #{startrow,jdbcType=BIGINT},#{endrow,jdbcType=BIGINT}
+        limit #{start,jdbcType=BIGINT},#{length,jdbcType=BIGINT}
     </select>
 
 

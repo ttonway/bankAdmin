@@ -19,7 +19,7 @@ public interface AdminUserService {
     
     AdminUser selectByCode(String usercode);
     
-    public List<AdminUser> selectByList(int startrow,int endrow);
+    public List<AdminUser> selectByList(int start,int length);
     
     public int selectByCnt();
 }

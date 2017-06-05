@@ -14,6 +14,8 @@ import com.psbc.pojo.AdminUser;
 import com.psbc.service.AdminUserService;
 import com.psbc.util.MD5Util;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 @RequestMapping("/adminUser")
 public class AdminUserController {
@@ -24,14 +26,17 @@ public class AdminUserController {
 
 	@RequestMapping("/getUserList")
 	@ResponseBody
-	public Map<String, Object> getUserList(Integer startrow,Integer endrow) {
+	public Map<String, Object> getUserList(Integer draw, Integer start, Integer length) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			int cnt = adminUserService.selectByCnt();
-			List<AdminUser> list = adminUserService.selectByList(startrow,endrow);
+			List<AdminUser> list = adminUserService.selectByList(start, length);
+
+			map.put("draw", draw);
+			map.put("recordsTotal", cnt);
+			map.put("recordsFiltered", cnt);
+			map.put("data", list);
 			map.put("code", 0);
-			map.put("cnt", cnt);
-			map.put("result", list);
 			return map;
 		} catch (Exception e) {
 			map.put("code", 1);
@@ -73,13 +78,15 @@ public class AdminUserController {
 	
 	@RequestMapping("/submitReset")
 	@ResponseBody
-	public Map<String, Object> submitReset(Long userid,String usercode,String userPw) {
+	public Map<String, Object> submitReset(HttpServletRequest req, String userPw) {
+		AdminUser user = (AdminUser) req.getSession().getAttribute("user");
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			AdminUser adminUser  = new AdminUser();
-			adminUser.setUserid(userid);	
+			adminUser.setUserid(user.getUserid());
 			if(StringUtils.isEmpty(userPw)){
-				adminUser.setUserpw(MD5Util.getMD5(usercode));
+				adminUser.setUserpw(MD5Util.getMD5(user.getUsercode()));
 			}else{
 				adminUser.setUserpw(MD5Util.getMD5(userPw));
 			}

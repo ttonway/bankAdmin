@@ -57,10 +57,10 @@ public class AdminUserServiceImpl implements AdminUserService {
 	};
 	
 	@Override
-	public List<AdminUser> selectByList(int startrow,int endrow){
+	public List<AdminUser> selectByList(int start, int length){
 		Map<String, Integer> map = new HashMap<String, Integer>();
-		map.put("startrow", startrow);
-		map.put("endrow", endrow);
+		map.put("start", start);
+		map.put("length", length);
 		return adminUserMapper.selectByList(map);
 	}
 	@Override

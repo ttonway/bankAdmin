@@ -8,8 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.psbc.pojo.AdminUser;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,25 +33,30 @@ public class AdminLoanController {
 
     @RequestMapping("/getLoanList")
     @ResponseBody
-    public Map<String, Object> getLoanList(String loanType, String userrole, String bank, String status, Integer startrow, Integer endrow) {
+    public Map<String, Object> getLoanList(HttpServletRequest req, String loanType, String status, Integer draw, Integer start, Integer length) {
+        AdminUser user = (AdminUser) req.getSession().getAttribute("user");
+
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             Map<String, Object> pmap = new HashMap<String, Object>();
-            if ("支行营销岗".equals(userrole)) {
-                pmap.put("bank", bank);
+            if ("支行营销岗".equals(user.getUserrole())) {
+                pmap.put("bank", user.getBank());
             } else {
                 pmap.put("bank", null);
             }
             pmap.put("type", loanType);
             pmap.put("status", status);
-            pmap.put("startrow", startrow);
-            pmap.put("endrow", endrow - startrow);
+            pmap.put("start", start);
+            pmap.put("length", length);
             List<Map<String, Object>> cntlist = loanUserService.selectByStatusCnt(pmap);
             map.put("cntlist", cntlist);
             int cnt = loanUserService.selectByCnt(pmap);
-            map.put("cnt", cnt);
             List<LoanUser> list = loanUserService.selectByList(pmap);
-            map.put("result", list);
+
+            map.put("draw", draw);
+            map.put("recordsTotal", cnt);
+            map.put("recordsFiltered", cnt);
+            map.put("data", list);
             map.put("code", 0);
             return map;
         } catch (Exception e) {
@@ -113,11 +120,11 @@ public class AdminLoanController {
     }
 
     @RequestMapping("/export")
-    public void export(HttpServletResponse response, String userrole, String bank, String status, String loanType) {
-        Map<String, Object> map = new HashMap<String, Object>();
+    public void export(HttpServletRequest req, HttpServletResponse response, String status, String loanType) {
+        AdminUser user = (AdminUser) req.getSession().getAttribute("user");
         Map<String, Object> pmap = new HashMap<String, Object>();
-        if ("支行营销岗".equals(userrole)) {
-            pmap.put("bank", bank);
+        if ("支行营销岗".equals(user.getUserrole())) {
+            pmap.put("bank", user.getBank());
         } else {
             pmap.put("bank", null);
         }

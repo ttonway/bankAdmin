@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.psbc.dao.PosterMapper">
+    <resultMap id="BaseResultMap" type="com.psbc.pojo.PosterImage">
+        <id column="posterId" property="posterId" jdbcType="BIGINT"/>
+        <result column="posterName" property="posterName" jdbcType="VARCHAR"/>
+        <result column="fileName" property="fileName" jdbcType="VARCHAR"/>
+        <result column="contentType" property="contentType" jdbcType="VARCHAR"/>
+        <result column="createtime" property="createtime" jdbcType="VARCHAR"/>
+        <result column="updatetime" property="updatetime" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        posterId, posterName, fileName, contentType
+    </sql>
+
+    <select id="selectByList" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select t.posterId, t.posterName, t.fileName, t.contentType
+        from poster_image t
+        order by createtime desc
+        limit #{startrow,jdbcType=BIGINT},#{endrow,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByCnt" resultType="java.lang.Integer">
+        select count(t.posterId) cnt
+        from poster_image t
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from poster_image
+        where posterId = #{posterId,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from poster_image
+        where posterId = #{posterId,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.psbc.pojo.PosterImage">
+        insert into poster_image (posterName, fileName, contentType, createtime, updatetime)
+        values (#{posterName,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR},
+        #{contentType,jdbcType=VARCHAR}, #{createtime,jdbcType=VARCHAR}, #{updatetime,jdbcType=VARCHAR})
+    </insert>
+</mapper>

@@ -1,0 +1,27 @@
+a.category {
+	color: #999;
+	font-size: 16px;
+	font-weight: bold;
+	text-decoration: underline;
+	margin-left: 8px;
+}
+a.category.active {
+	color: #01945c;
+}
+
+.box-footer .btn {
+	margin-left: 8px;
+}
+
+.table-bordered>thead>tr>th {
+	background: #01945c;
+	color: #fff;
+	border-left: 0px;
+	border-right: 0px;
+}
+table {
+	word-break: break-all;
+}
+.view-details {
+	text-align: center;
+}

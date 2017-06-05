@@ -1,483 +1,400 @@
-var pagenum = 1;
+$(function () {
 
-var bank = bank || (function (Win, Doc, $, undefined) {
-        return {
-            init: function () {
-                $(document).on("click", ".js-pop", function () {
-                    var dataName = $(this).attr('data-name');
-                    $('[data-pop="' + dataName + '"]').show();
-                    $(".mark").show();
+    var tableEl = $('#loan-table');
+    var table;
+
+    function reloadTable() {
+
+        $("input[type='checkbox'][name='chk_all']").prop("checked", false);
+
+        table = tableEl.DataTable({
+            language: myApp.datatablesLang,
+            "destroy": true,
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "info": true,
+            "autoWidth": false,
+            "serverSide": true,
+            "ajax": function (data, callback, settings) {
+                data.loanType = $("#loanType").val();
+                data.status = $('.category.active').attr('status');
+                data.r = Math.random();
+                $.ajax({
+                    type: "post",
+                    cache: false,
+                    data: data,
+                    url: "../loan/getLoanList.htm",
+                    success: function (res) {
+                        var result = $.parseJSON(res);
+                        if (result.code == 0) {
+                            var cntList = result.cntlist;
+                            for (var i = 0; i < cntList.length; i++) {
+                                var map = cntList[i];
+                                $('.category[status="' + map.status + '"] span').text("(" + map.cnt + ")");
+                            }
+
+                            if (data.loanType == '商易贷') {
+                                for (var i = 0; i < result.data.length; i++) {
+                                    var map = result.data[i];
+                                    if (map.workunit2) {
+                                        map.workunit += '-' + map.workunit2;
+                                    }
+                                }
+                            }
+                            callback(result);
+                        }
+                    }
                 });
-                $(".close").on('click', function () {
-                    $(this).parents('.popup').hide();
-                    $(".mark").hide();
-                    getUser();
-                });
-
-
-                $(document).on("change", "input[type='checkbox'][name='chk_all']", function () {
-                    $("input[type='checkbox'][name='chk_item']").attr("checked", $(this).is(':checked'));
-                });
-                $(document).on("change", "input[type='checkbox'][name='chk_item']", function () {
-                    var allChecked = $("input[type='checkbox'][name='chk_item']:not(:checked)").length === 0;
-                    $("input[type='checkbox'][name='chk_all']").attr("checked", allChecked);
-                });
-            }
-        }
-    })(window, document, $);
-
-(function () {
-    bank.init();
-    getUser();
-})();
-
-// 通过审核
-function showVerify() {
-    $('#sucess').hide();
-    $('#fail').hide();
-    var len = $("input[type='checkbox'][name='chk_item']:checked").length;
-    if (len == 0) {
-        alert("请选择用户");
-        return;
-    }
-    if (len > 1) {
-        alert("请选择单个用户");
-        return;
-    } else {
-        var usernm = $("input[type='checkbox'][name='chk_item']:checked").attr('usernm');
-        var loanNum = $("input[type='checkbox'][name='chk_item']:checked").attr('loanNum');
-        $('#usernm1').text(usernm);
-        $('#loanNum1').text(loanNum);
-        $('[data-pop="verify"]').show();
-        $(".mark").show();
-    }
-}
-
-function submitVerify() {
-    var loanid = $("input[type='checkbox'][name='chk_item']:checked").attr('loanid');
-    var remark = $("#remark1").val();
-    $.ajax({
-        type: "post",
-        cache: false,
-        data: {
-            loanid: loanid,
-            status: 2,
-            remark: remark,
-            r: Math.random()
-        },
-        url: "/bankAdmin/loan/updateLoan.htm",
-        success: function (res) {
-            var result = $.parseJSON(res);
-            if (result.code == 0) {
-                $('#fail').hide();
-                $('#sucess').show();
-                $('#sucess').html("通过审核成功");
-            } else {
-                $('#fail').show();
-                $('#sucess').hide();
-                $('#fail').html("通过审核失败 ");
-            }
-        }
-    });
-}
-
-// 提交审核
-function showstatus2() {
-    $('#sucess3').hide();
-    $('#fail3').hide();
-    var len = $("input[type='checkbox'][name='chk_item']:checked").length;
-    if (len == 0) {
-        alert("请选择用户");
-        return;
-    }
-    if (len > 1) {
-        alert("请选择单个用户");
-        return;
-    } else {
-        $('[data-pop="status2"]').show();
-        $(".mark").show();
-    }
-}
-
-function submitStatus2() {
-    var loanid = $("input[type='checkbox'][name='chk_item']:checked").attr('loanid');
-    $.ajax({
-        type: "post",
-        cache: false,
-        data: {
-            loanid: loanid,
-            status: 1,
-            r: Math.random()
-        },
-        url: "/bankAdmin/loan/updateLoan.htm",
-        success: function (res) {
-            var result = $.parseJSON(res);
-            if (result.code == 0) {
-                $('#fail3').hide();
-                $('#sucess3').show();
-                $('#sucess3').html("提交审核成功");
-            } else {
-                $('#fail3').show();
-                $('#sucess3').hide();
-                $('#fail3').html("提交审核失败 ");
-            }
-        }
-    });
-}
-
-// 提交驳回
-function showstatus3() {
-    $('#sucess4').hide();
-    $('#fail4').hide();
-    var len = $("input[type='checkbox'][name='chk_item']:checked").length;
-    if (len == 0) {
-        alert("请选择用户");
-        return;
-    }
-    if (len > 1) {
-        alert("请选择单个用户");
-        return;
-    } else {
-        $('[data-pop="status3"]').show();
-        $(".mark").show();
-    }
-}
-
-function submitStatus3() {
-    var loanid = $("input[type='checkbox'][name='chk_item']:checked").attr('loanid');
-    var remark = $("#remarksubmitStatus3").val();
-    $.ajax({
-        type: "post",
-        cache: false,
-        data: {
-            loanid: loanid,
-            status: 3,
-            r: Math.random()
-        },
-        url: "/bankAdmin/loan/updateLoan.htm",
-        success: function (res) {
-            var result = $.parseJSON(res);
-            if (result.code == 0) {
-                $('#fail4').hide();
-                $('#sucess4').show();
-                $('#sucess4').html("提交驳回成功");
-            } else {
-                $('#fail4').show();
-                $('#sucess4').hide();
-                $('#fail4').html("提交驳回失败 ");
-            }
-        }
-    });
-}
-
-// 调整
-function showVerify2() {
-    $('#sucess5').hide();
-    $('#fail5').hide();
-    var len = $("input[type='checkbox'][name='chk_item']:checked").length;
-    if (len == 0) {
-        alert("请选择用户");
-        return;
-    }
-    if (len > 1) {
-        alert("请选择单个用户");
-        return;
-    } else {
-        var usernm = $("input[type='checkbox'][name='chk_item']:checked").attr('usernm');
-        var loanNum = $("input[type='checkbox'][name='chk_item']:checked").attr('loanNum');
-        $('#usernm2').text(usernm);
-        $('#loanNum2').val(loanNum);
-        $('[data-pop="verify2"]').show();
-        $(".mark").show();
-    }
-}
-
-function submitVerify2() {
-    var loanid = $("input[type='checkbox'][name='chk_item']:checked").attr('loanid');
-    var remark = $("#remark2").val();
-    var loanNum = $('#loanNum2').val();
-    $.ajax({
-        type: "post",
-        cache: false,
-        data: {
-            loanid: loanid,
-            status: 4,
-            remark: remark,
-            loanNum: loanNum,
-            r: Math.random()
-        },
-        url: "/bankAdmin/loan/updateLoan.htm",
-        success: function (res) {
-            var result = $.parseJSON(res);
-            if (result.code == 0) {
-                $('#fail5').hide();
-                $('#sucess5').show();
-                $('#sucess5').html("调整额度成功");
-            } else {
-                $('#fail5').show();
-                $('#sucess5').hide();
-                $('#fail5').html("调整额度失败 ");
-            }
-        }
-    });
-}
-
-// 删除
-function showDelete() {
-    $('#sucess6').hide();
-    $('#fail6').hide();
-    var len = $("input[type='checkbox'][name='chk_item']:checked").length;
-    if (len == 0) {
-        alert("请选择用户");
-        return;
-    } else {
-        $('[data-pop="delete"]').show();
-        $(".mark").show();
-    }
-}
-
-function submitDelete() {
-    var loanid = new Array();
-    var flag = 1;
-    $("input[type='checkbox'][name='chk_item']:checked").each(function () {
-        if ($(this).attr('status') != 0) {
-            $('#fail6').show();
-            $('#sucess6').hide();
-            $('#fail6').html("只能删除待联系客户");
-            flag = 0;
-        }
-        loanid.push($(this).attr('loanid'))
-    });
-    if (flag == 1) {
-        $.ajax({
-            type: "post",
-            cache: false,
-            traditional: true,
-            data: {
-                loanid: loanid,
-                r: Math.random()
             },
-            url: "/bankAdmin/loan/deleteLoan.htm",
-            success: function (res) {
-                var result = $.parseJSON(res);
-                if (result.code == 0) {
-                    $('#fail6').hide();
-                    $('#sucess6').show();
-                    $('#sucess6').html("删除成功");
-                } else {
-                    $('#fail6').show();
-                    $('#sucess6').hide();
-                    $('#fail6').html("删除失败 ");
+            "columns": [
+                {
+                    "class": 'td-checkbox',
+                    "orderable": false,
+                    "data": null,
+                    "defaultContent": '<input type="checkbox" name="chk_item""/>'
+                },
+                {"data": "utmsrc", "width": "15%"},
+                {"data": "usernm"},
+                {"data": "phonenum"},
+                {"data": "workunit"},
+                {"data": "bank"},
+                {"data": "loanNum"},
+                {"data": "createtime"},
+                {
+                    "class": 'view-details',
+                    "orderable": false,
+                    "data": null,
+                    "defaultContent": '<a href="####">详情</a>'
                 }
-            }
+            ]
         });
     }
 
-}
+    reloadTable();
+    $('.category').on('click', function () {
+        $('.category').removeClass('active');
+        $(this).addClass('active');
+        reloadTable();
+    });
 
-// 明细
-function showDetail(loanid) {
-    $.ajax({
-        type: "post",
-        cache: false,
-        data: {
-            loanid: loanid,
-            r: Math.random()
-        },
-        url: "/bankAdmin/loan/selecDetial.htm",
-        success: function (res) {
-            var result = $.parseJSON(res);
-            var map = result.result;
-            if (result.code == 0) {
-                if (map.loanType == '邮信贷') {
-                    $('#usernm3').text(map.usernm);
-                    $('#loanNum3').text(map.loanNum);
-                    $('#phonenum3').text(map.phonenum);
-                    $('#bank3').text(map.bank);
-                    $('#referrals3').text(map.referrals);
-                    $('#workunit3').text(map.workunit);
-                    $('#loanmen3').text(map.loanmen);
-                    $('#job3').text(map.job);
-                    $('#income3').text(map.income);
-                    $('#loanHouse3').text(map.loanHouse);
-                    $('#loanCar3').text(map.loanCar);
-                    $('#loanConsumer3').text(map.loanConsumer);
-                    $('#status99').text(map.status);
-                    $('[data-pop="detail"]').show();
-                    $(".mark").show();
-                } else if (map.loanType == '商易贷') {
-                    $('#usernm3').text(map.usernm);
-                    $('#loanNum3').text(map.loanNum);
-                    $('#phonenum3').text(map.phonenum);
-                    $('#bank3').text(map.bank);
-                    $('#referrals3').text(map.referrals);
-                    $('#workunit3').text(map.workunit + (map.workunit2 ? '-' + map.workunit2 : ''));
-                    $('#localPerson3').text(map.localPerson);
-                    $('#house3').text(map.house);
-                    $('#income3').text(map.income);
-                    $('#guaranteeType3').text(map.guaranteeType);
-                    $('#status99').text(map.status);
-                    $('[data-pop="detail"]').show();
-                    $(".mark").show();
+    tableEl.on("change", "input[type='checkbox'][name='chk_all']", function () {
+        $("input[type='checkbox'][name='chk_item']").prop("checked", $(this).is(':checked'));
+    });
+    tableEl.on("change", "input[type='checkbox'][name='chk_item']", function () {
+        var allChecked = $("input[type='checkbox'][name='chk_item']:not(:checked)").length === 0;
+        $("input[type='checkbox'][name='chk_all']").prop("checked", allChecked);
+    });
+
+
+    tableEl.on("click", ".view-details a", function () {
+        var data = table.row($(this).parents('tr')).data();
+
+        $.ajax({
+            type: "post",
+            cache: false,
+            data: {
+                loanid: data.loanid,
+                r: Math.random()
+            },
+            url: "../loan/selecDetial.htm",
+            success: function (res) {
+                var result = $.parseJSON(res);
+                var map = result.result;
+                if (result.code == 0) {
+                    var dl = $('#details-modal dl');
+                    dl.html('');
+                    dl.append('<dt>申请人：</dt><dd>' + map.usernm + '</dd>');
+                    dl.append('<dt>申请额度：</dt><dd>' + map.loanNum + '</dd>');
+                    dl.append('<dt>联系手机：</dt><dd>' + map.phonenum + '</dd>');
+                    dl.append('<dt>经办银行：</dt><dd>' + map.bank + '</dd>');
+                    dl.append('<dt>推荐人：</dt><dd>' + map.referrals + '</dd>');
+                    dl.append('<dt>工作单位：</dt><dd>' + map.workunit + '</dd>');
+                    if (map.loanType == '邮信贷') {
+
+                        // dl.append('<dt>申请人数：</dt><dd>' + map.loanmen + '</dd>');
+                        dl.append('<dt>个人职务：</dt><dd>' + map.job + '</dd>');
+                        dl.append('<dt>月收入：</dt><dd>' + map.income + '</dd>');
+                        dl.append('<dt>房贷月供：</dt><dd>' + map.loanHouse + '</dd>');
+                        dl.append('<dt>车贷月供：</dt><dd>' + map.loanCar + '</dd>');
+                        dl.append('<dt>其他贷款：</dt><dd>' + map.loanConsumer + '</dd>');
+                        dl.append('<dt>审核情况：</dt><dd>' + map.status + '</dd>');
+
+                        $('#details-modal').modal();
+                    } else if (map.loanType == '商易贷') {
+
+                        dl.append('<dt>是否为本地人：</dt><dd>' + map.localPerson + '</dd>');
+                        dl.append('<dt>本地是否有房产：</dt><dd>' + map.house + '</dd>');
+                        dl.append('<dt>年销售额：</dt><dd>' + map.income + '</dd>');
+                        dl.append('<dt>担保方式：</dt><dd>' + map.guaranteeType + '</dd>');
+                        dl.append('<dt>审核情况：</dt><dd>' + map.status + '</dd>');
+
+                        $('#details-modal').modal();
+                    }
                 }
             }
-        }
+        });
     });
-}
 
-function ckeckStatus(i) {
-    var status = $("[name1='statuslist'].on").removeClass("on");
-    $($("[name1='statuslist']")[i]).addClass("on");
-    getUser();
-}
-
-function getUser() {
-    var startRow = (pagenum - 1) * 10;
-    var endRow = 10 + (pagenum - 1) * 10;
-    var status = $("[name1='statuslist'].on").attr('status');
-    var loanType = $("#loanType").val();
-    $.ajax({
-        type: "post",
-        cache: false,
-        data: {
-            loanType: loanType,
-            startrow: startRow,
-            endrow: endRow,
-            bank: $('#bank').val(),
-            userrole: $('#userrole').val(),
+    $('#export').on('click', function () {
+        var loanType = $("#loanType").val();
+        var status = $('.category.active').attr('status');
+        // 获取三端的URL
+        var params = {
             status: status,
+            loanType: loanType,
             r: Math.random()
-        },
-        url: "/bankAdmin/loan/getLoanList.htm",
-        success: function (res) {
-            var result = $.parseJSON(res);
-            initPagination(result.cnt);
-            if (result.code == 0) {
-                var cntList = result.cntlist;
-                for (i = 0; i < cntList.length; i++) {
-                    var map = cntList[i];
-                    if (map.status == 0) {
-                        $('#statuslist0').text("(" + map.cnt + ")");
-                    }
-                    if (map.status == 1) {
-                        $('#statuslist1').text("(" + map.cnt + ")");
-                    }
-                    if (map.status == 2) {
-                        $('#statuslist2').text("(" + map.cnt + ")");
-                    }
-                    if (map.status == 3) {
-                        $('#statuslist3').text("(" + map.cnt + ")");
-                    }
-                    if (map.status == 4) {
-                        $('#statuslist4').text("(" + map.cnt + ")");
-                    }
-                    if (map.status == 5) {
-                        $('#statuslist5').text("(" + map.cnt + ")");
-                    }
-                }
-                var userList = result.result;
-                var html = $.templates("#userTableTmpl").render(userList);
-                $("#userTable").html(html);
-                $('#showVerify').hide();
-                $('#showstatus2').hide();
-                $('#showstatus3').hide();
-                $('#showVerify2').hide();
-                $('#showDelete').hide();
-                if ($('#userrole').val() == '支行营销岗') {
-                    $('#showstatus2').show();
-                    $('#showDelete').show();
-                }
-                if ($('#userrole').val() == '授信管理岗') {
-                    $('#showVerify').show();
-                    $('#showstatus3').show();
-                    $('#showVerify2').show();
-                }
-
-            }
+        };
+        var url = "../loan/export.htm?" + $.param(params);
+        location.href = url;
+    });
+    // 删除
+    $('#showDelete').on('click', function () {
+        var len = $("input[type='checkbox'][name='chk_item']:checked").length;
+        if (len == 0) {
+            alert("请选择用户");
+            return;
+        } else {
+            $('#delete-modal .alert-success').hide();
+            $('#delete-modal .alert-danger').hide();
+            $('#delete-modal').modal();
         }
     });
-}
-
-// 分页初始化
-initPagination = function (cnt) {
-    $("#News-Pagination").pagination(cnt, {
-        items_per_page: 10, // 每页显示多少条记录
-        current_page: pagenum - 1, // 当前显示第几页数据
-        num_display_entries: 3, // 分页显示的条目数
-        next_text: "下一页",
-        prev_text: "上一页",
-        num_edge_entries: 2, // 两侧显示的首尾分页的条目数
-        callback: handlePaginationClick,
-        ellipse_text: '...' // 省略的页数用什么文字表示
-    });
-
-    var $pg = $(".jumpSpan input");
-    $pg.focus(function (e) {
-        $pg.attr("class", "jumpInputHidden");
-        $(this).attr("class", "jumpInput");
-    });
-};
-
-handlePaginationClick = function (new_page_index) {
-    pagenum = new_page_index + 1;
-    getUser();
-    return false;
-};
-
-function logout() {
-    location.href = "/bankAdmin/login.htm";
-}
-
-
-function resetUser2() {
-    $('#sucess7').hide();
-    $('#fail7').hide();
-    $('[data-pop="reset2"]').show();
-    $(".mark").show();
-}
-
-function submitReset2() {
-    var userid = $("#userid").val();
-    var usercode = $("#usercode").val();
-    var userpw = $("#userpw4").val();
-    $.ajax({
-        type: "post",
-        cache: false,
-        data: {
-            userid: userid,
-            usercode: usercode,
-            userPw: userpw,
-            r: Math.random()
-        },
-        url: "/bankAdmin/adminUser/submitReset.htm",
-        success: function (res) {
-            var result = $.parseJSON(res);
-            if (result.code == 0) {
-                $('#fail7').hide();
-                $('#sucess7').show();
-                $('#sucess7').html("修改成功");
-            } else {
-                $('#fail7').show();
-                $('#sucess7').hide();
-                $('#fail7').html("修改失败 ");
+    $('#delete-modal button.btn-danger').on('click', function () {
+        var loanid = [];
+        var flag = 1;
+        $("input[type='checkbox'][name='chk_item']:checked").each(function () {
+            var data = table.row($(this).parents('tr')).data();
+            if (data.status != 0) {
+                $('#delete-modal .alert-danger').text("只能删除待联系客户");
+                $('#delete-modal .alert-danger').show();
+                flag = 0;
             }
+            loanid.push(data.loanid);
+        });
+        if (flag == 1 && loanid.length > 0) {
+            $.ajax({
+                type: "post",
+                cache: false,
+                traditional: true,
+                data: {
+                    loanid: loanid,
+                    r: Math.random()
+                },
+                url: "../loan/deleteLoan.htm",
+                success: function (res) {
+                    var result = $.parseJSON(res);
+                    if (result.code == 0) {
+                        $('#delete-modal .alert-success').text("删除成功");
+                        $('#delete-modal .alert-success').show();
+
+                        reloadTable();
+                    } else {
+                        $('#delete-modal .alert-danger').text("删除失败");
+                        $('#delete-modal .alert-danger').show();
+                    }
+                }
+            });
         }
     });
-}
 
+    // 通过审核
+    $('#showVerify').on('click', function () {
+        var checkboxs = $("input[type='checkbox'][name='chk_item']:checked");
+        var len = checkboxs.length;
+        if (len == 0) {
+            alert("请选择用户");
+            return;
+        } else if (len > 1) {
+            alert("请选择单个用户");
+            return;
+        } else {
+            var data = table.row(checkboxs.parents('tr')).data();
+            var dl = $('#verify-modal dl');
+            dl.html('');
+            dl.append('<dt>申请人：</dt><dd>' + data.usernm + '</dd>');
+            dl.append('<dt>申请额度：</dt><dd>' + data.loanNum + '</dd>');
+            dl.append('<dt>经办银行：</dt><dd>' + data.bank + '</dd>');
+            $('#verify-remark').val('');
 
-//导出商品数据
-function exportList() {
-    var status = $("[name1='statuslist'].on").attr('status');
-    var loanType = $("#loanType").val();
-    // 获取三端的URL
-    var params = {
-        bank: $('#bank').val(),
-        userrole: $('#userrole').val(),
-        status: status,
-        loanType: loanType,
-        r: Math.random()
-    };
-    var url = "/bankAdmin/loan/export.htm?" + $.param(params);
-    location.href = url;
-};
+            $('#verify-modal .alert-success').hide();
+            $('#verify-modal .alert-danger').hide();
+            $('#verify-modal').modal();
+        }
+    });
+    $('#verify-modal button.btn-primary').on('click', function () {
+        var checkboxs = $("input[type='checkbox'][name='chk_item']:checked");
+        if (checkboxs.length == 1) {
+            var data = table.row(checkboxs.parents('tr')).data();
+            $.ajax({
+                type: "post",
+                cache: false,
+                data: {
+                    loanid: data.loanid,
+                    status: 2,
+                    remark: $('#verify-remark').val(),
+                    r: Math.random()
+                },
+                url: "../loan/updateLoan.htm",
+                success: function (res) {
+                    var result = $.parseJSON(res);
+                    if (result.code == 0) {
+                        $('#verify-modal .alert-success').text("通过审核成功");
+                        $('#verify-modal .alert-success').show();
+
+                        reloadTable();
+                    } else {
+                        $('#verify-modal .alert-danger').text("通过审核失败");
+                        $('#verify-modal .alert-danger').show();
+                    }
+                }
+            });
+        }
+    });
+
+    // 提交审核
+    $('#showstatus2').on('click', function () {
+        var checkboxs = $("input[type='checkbox'][name='chk_item']:checked");
+        var len = checkboxs.length;
+        if (len == 0) {
+            alert("请选择用户");
+            return;
+        } else if (len > 1) {
+            alert("请选择单个用户");
+            return;
+        } else {
+            $('#status2-modal .alert-success').hide();
+            $('#status2-modal .alert-danger').hide();
+            $('#status2-modal').modal();
+        }
+    });
+    $('#status2-modal button.btn-primary').on('click', function () {
+        var checkboxs = $("input[type='checkbox'][name='chk_item']:checked");
+        if (checkboxs.length == 1) {
+            var data = table.row(checkboxs.parents('tr')).data();
+            $.ajax({
+                type: "post",
+                cache: false,
+                data: {
+                    loanid: data.loanid,
+                    status: 1,
+                    r: Math.random()
+                },
+                url: "../loan/updateLoan.htm",
+                success: function (res) {
+                    var result = $.parseJSON(res);
+                    if (result.code == 0) {
+                        $('#status2-modal .alert-success').text("提交审核成功");
+                        $('#status2-modal .alert-success').show();
+
+                        reloadTable();
+                    } else {
+                        $('#status2-modal .alert-danger').text("提交审核失败");
+                        $('#status2-modal .alert-danger').show();
+                    }
+                }
+            });
+        }
+    });
+
+    // 提交驳回
+    $('#showstatus3').on('click', function () {
+        var checkboxs = $("input[type='checkbox'][name='chk_item']:checked");
+        var len = checkboxs.length;
+        if (len == 0) {
+            alert("请选择用户");
+            return;
+        } else if (len > 1) {
+            alert("请选择单个用户");
+            return;
+        } else {
+            $('#status3-modal .alert-success').hide();
+            $('#status3-modal .alert-danger').hide();
+            $('#status3-modal').modal();
+        }
+    });
+    $('#status3-modal button.btn-primary').on('click', function () {
+        var checkboxs = $("input[type='checkbox'][name='chk_item']:checked");
+        if (checkboxs.length == 1) {
+            var data = table.row(checkboxs.parents('tr')).data();
+            $.ajax({
+                type: "post",
+                cache: false,
+                data: {
+                    loanid: data.loanid,
+                    status: 3,
+                    r: Math.random()
+                },
+                url: "../loan/updateLoan.htm",
+                success: function (res) {
+                    var result = $.parseJSON(res);
+                    if (result.code == 0) {
+                        $('#status3-modal .alert-success').text("提交驳回成功");
+                        $('#status3-modal .alert-success').show();
+
+                        reloadTable();
+                    } else {
+                        $('#status3-modal .alert-danger').text("提交驳回失败 ");
+                        $('#status3-modal .alert-danger').show();
+                    }
+                }
+            });
+        }
+    });
+
+    // 调整
+    $('#showVerify2').on('click', function () {
+        var checkboxs = $("input[type='checkbox'][name='chk_item']:checked");
+        var len = checkboxs.length;
+        if (len == 0) {
+            alert("请选择用户");
+            return;
+        } else if (len > 1) {
+            alert("请选择单个用户");
+            return;
+        } else {
+            var data = table.row(checkboxs.parents('tr')).data();
+            var dl = $('#verify2-modal dl');
+            dl.html('');
+            dl.append('<dt>申请人：</dt><dd>' + data.usernm + '</dd>');
+            dl.append('<dt>经办银行：</dt><dd>' + data.bank + '</dd>');
+            $('#verify2-remark').val('');
+            $('#loanNum2').val('')
+
+            $('#verify2-modal .alert-success').hide();
+            $('#verify2-modal .alert-danger').hide();
+            $('#verify2-modal').modal();
+        }
+    });
+    $('#verify2-modal button.btn-primary').on('click', function () {
+        var checkboxs = $("input[type='checkbox'][name='chk_item']:checked");
+        if (checkboxs.length == 1) {
+            var data = table.row(checkboxs.parents('tr')).data();
+            $.ajax({
+                type: "post",
+                cache: false,
+                data: {
+                    loanid: data.loanid,
+                    status: 4,
+                    remark: $('#verify2-remark').val(),
+                    loanNum: $('#loanNum2').val(),
+                    r: Math.random()
+                },
+                url: "../loan/updateLoan.htm",
+                success: function (res) {
+                    var result = $.parseJSON(res);
+                    if (result.code == 0) {
+                        $('#verify2-modal .alert-success').text("调整额度成功");
+                        $('#verify2-modal .alert-success').show();
+
+                        reloadTable();
+                    } else {
+                        $('#verify2-modal .alert-danger').text("调整额度失败");
+                        $('#verify2-modal .alert-danger').show();
+                    }
+                }
+            });
+        }
+    });
+});

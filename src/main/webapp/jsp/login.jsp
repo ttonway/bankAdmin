@@ -41,7 +41,7 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="<%=request.getContextPath()%>/src/js/jquery.js"></script>
-    <script type="text/javascript" src="<%=request.getContextPath()%>/src/js/login.js"></script>
+    <script src="<%=request.getContextPath()%>/lib/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="<%=request.getContextPath()%>/src/js/login.js"></script>
 </body>
 </html>

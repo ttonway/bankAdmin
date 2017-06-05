@@ -29,7 +29,7 @@
       on t.userCode = t1.userCode
    group by t.userId, t.userNm, t.userCode, t.userPw, t.bank, t.userRole
    order by userId desc
-   limit #{startrow,jdbcType=BIGINT},#{endrow,jdbcType=BIGINT}
+   limit #{start,jdbcType=BIGINT},#{length,jdbcType=BIGINT}
   </select>
   
   
