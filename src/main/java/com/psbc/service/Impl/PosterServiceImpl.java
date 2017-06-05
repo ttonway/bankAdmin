@@ -32,11 +32,8 @@ public class PosterServiceImpl implements PosterService {
     }
 
     @Override
-    public List<PosterImage> selectByList(int startrow, int endrow) {
-        Map<String, Integer> map = new HashMap<String, Integer>();
-        map.put("startrow", startrow);
-        map.put("endrow", endrow);
-        return posterMapper.selectByList(map);
+    public List<PosterImage> selectAll() {
+        return posterMapper.selectAll();
     }
 
     @Override

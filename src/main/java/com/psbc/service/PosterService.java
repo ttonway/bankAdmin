@@ -11,7 +11,7 @@ public interface PosterService {
 
     PosterImage selectByPrimaryKey(Long posterId);
 
-    List<PosterImage> selectByList(int startrow, int endrow);
+    List<PosterImage> selectAll();
 
     int selectByCnt();
 }

@@ -14,11 +14,10 @@
         posterId, posterName, fileName, contentType
     </sql>
 
-    <select id="selectByList" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    <select id="selectAll" resultMap="BaseResultMap">
         select t.posterId, t.posterName, t.fileName, t.contentType
         from poster_image t
         order by createtime desc
-        limit #{startrow,jdbcType=BIGINT},#{endrow,jdbcType=BIGINT}
     </select>
 
     <select id="selectByCnt" resultType="java.lang.Integer">

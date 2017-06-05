@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/lib/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/lib/font-awesome-4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/lib/ionicons-2.0.1/css/ionicons.min.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/lib/datatables/dataTables.bootstrap.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/lib/adminLTE/css/AdminLTE.min.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/lib/adminLTE/css/skins/skin-green.min.css">
 
@@ -97,8 +96,8 @@
             <ul class="sidebar-menu">
                 <li class="header"><img src="<%=request.getContextPath()%>/src/images/logo1.png"/></li>
                 <!-- Optionally, you can add icons to the links -->
-                <li class="active"><a href="userlist.htm"><i class="fa fa-link"></i> <span>帐号密码信息</span></a></li>
-                <li><a href="poster.htm"><i class="fa fa-link"></i> <span>海报管理</span></a></li>
+                <li><a href="userlist.htm"><i class="fa fa-link"></i> <span>帐号密码信息</span></a></li>
+                <li class="active"><a href="poster.htm"><i class="fa fa-link"></i> <span>海报管理</span></a></li>
             </ul>
             <!-- /.sidebar-menu -->
         </section>
@@ -109,46 +108,25 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>
-                帐号密码管理
-            </h1>
+                <h1 style="display: inline-block;">
+                    海报模版
+                </h1>
+                <a class="btn btn-primary pull-right" href="#" role="button" style="margin-top: -8px;"><span class="glyphicon glyphicon-plus"></span></a>
         </section>
 
         <!-- Main content -->
         <section class="content">
 
             <div class="row">
-                <div class="col-xs-12">
-                    <div class="box">
-
-                        <div class="box-body">
-                            <table id="user-table" class="table table-bordered table-hover">
-                                <thead>
-                                <tr>
-                                    <th class="td-checkbox"><input type="checkbox" name="chk_all"/></th>
-                                    <th>支行</th>
-                                    <th>员工姓名</th>
-                                    <th>员工工号</th>
-                                    <th>登录密码</th>
-                                    <th>登录时间</th>
-                                    <th>岗位</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- /.box-body -->
-
-                        <div class="box-footer clearfix">
-                            <a href="#" class="btn btn-default pull-left" id="addUser">新增员工</a>
-                            <a href="#" class="btn btn-default pull-left" id="resetUser">重置密码</a>
-                            <a href="#" class="btn btn-default pull-left" id="deleteUser">删除</a>
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail">
+                        <img src="<%=request.getContextPath()%>/src/images/logo1.png" alt="...">
+                        <div class="caption">
+                            <h3>Thumbnail label</h3>
+                            <p><a href="#" class="btn btn-danger" role="button">删除</a></p>
                         </div>
                     </div>
-                    <!-- /.box -->
                 </div>
-                <!-- /.col -->
             </div>
             <!-- /.row -->
 
@@ -225,83 +203,9 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div class="modal fade" id="reset-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">重置密码</h4>
-            </div>
-            <div class="modal-body">
-                <div class="alert alert-success" role="alert"></div>
-                <div class="alert alert-danger" role="alert"></div>
-                <p>确认重置此员工的密码吗？</p>
-                <p class="text-info">初始密码与工号相同</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">确认重置</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">删除员工</h4>
-            </div>
-            <div class="modal-body">
-                <div class="alert alert-success" role="alert"></div>
-                <div class="alert alert-danger" role="alert"></div>
-                <p>确认删除此员工吗？</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger">确认删除</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
-<div class="modal fade" id="reset-pwd-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">修改密码</h4>
-            </div>
-            <div class="modal-body">
-                <div class="alert alert-success" role="alert"></div>
-                <div class="alert alert-danger" role="alert"></div>
-                <p>确认修改密码吗？</p>
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <label for="new-password" class="col-sm-2 control-label">密码：</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="new-password">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">确认修改</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
 <script src="<%=request.getContextPath()%>/lib/jQuery/jquery-2.2.3.min.js"></script>
 <script src="<%=request.getContextPath()%>/lib/bootstrap/js/bootstrap.min.js"></script>
-<!-- DataTables -->
-<script src="<%=request.getContextPath()%>/lib/datatables/jquery.dataTables.min.js"></script>
-<script src="<%=request.getContextPath()%>/lib/datatables/dataTables.bootstrap.min.js"></script>
 <script src="<%=request.getContextPath()%>/lib/adminLTE/js/app.min.js"></script>
 <script src="<%=request.getContextPath()%>/src/js/app.js"></script>
-<script src="<%=request.getContextPath()%>/src/js/userlist.js"></script>
 </body>
 </html>

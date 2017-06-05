@@ -12,7 +12,7 @@ public interface PosterMapper {
 
     PosterImage selectByPrimaryKey(Long posterId);
 
-    List<PosterImage> selectByList(Map<String, Integer> map);
+    List<PosterImage> selectAll();
 
     int selectByCnt();
 }

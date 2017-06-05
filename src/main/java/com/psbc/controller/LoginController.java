@@ -108,4 +108,15 @@ public class LoginController {
         return "/list2";
     }
 
+    // º£±¨
+    @RequestMapping("/poster")
+    public String poster(HttpServletRequest req) {
+        AdminUser user = (AdminUser) req.getSession().getAttribute("user");
+        if (user == null) {
+            return "redirect:/login.htm";
+        }
+
+        return "/poster";
+    }
+
 }
