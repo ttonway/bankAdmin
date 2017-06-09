@@ -24,7 +24,7 @@ $(function () {
                     type: "post",
                     cache: false,
                     data: data,
-                    url: "admin/getUserList.htm",
+                    url: "admin/list",
                     success: function (res) {
                         var result = $.parseJSON(res);
                         if (result.code == 0) {
@@ -41,11 +41,11 @@ $(function () {
                     "defaultContent": '<input type="checkbox" name="chk_item""/>'
                 },
                 {"data": "bank"},
-                {"data": "usernm"},
-                {"data": "usercode"},
-                {"data": "userpw"},
+                {"data": "userName"},
+                {"data": "userCode"},
+                {"data": "password"},
                 {"data": "loginTime"},
-                {"data": "userrole"}
+                {"data": "role"}
             ]
         });
     }
@@ -96,13 +96,13 @@ $(function () {
             type: "post",
             cache: false,
             data: {
-                usernm: usernm,
-                usercode: usercode,
+                userName: usernm,
+                userCode: usercode,
                 bank: bank,
-                userrole: userrole,
+                role: userrole,
                 r: Math.random()
             },
-            url: "../adminUser/submitUser.htm",
+            url: "admin/create",
             success: function (res) {
                 var result = $.parseJSON(res);
                 if (result.code == 0) {
@@ -144,11 +144,10 @@ $(function () {
                 type: "post",
                 cache: false,
                 data: {
-                    userid: data.userid,
-                    usercode: data.usercode,
+                    userId: data.userId,
                     r: Math.random()
                 },
-                url: "../adminUser/submitReset.htm",
+                url: "admin/resetPwd",
                 success: function (res) {
                     var result = $.parseJSON(res);
                     if (result.code == 0) {
@@ -178,21 +177,21 @@ $(function () {
         }
     });
     $('#delete-modal button.btn-danger').on('click', function () {
-        var userid = [];
+        var array = [];
         $("input[type='checkbox'][name='chk_item']:checked").each(function () {
             var data = table.row($(this).parents('tr')).data();
-            userid.push(data.userid);
+            array.push(data.userId);
         });
-        if (userid.length > 0) {
+        if (array.length > 0) {
             $.ajax({
                 type: "post",
                 cache: false,
                 traditional: true,
                 data: {
-                    userid: userid,
+                    userIds: array,
                     r: Math.random()
                 },
-                url: "../adminUser/deleteUser.htm",
+                url: "admin/delete",
                 success: function (res) {
                     var result = $.parseJSON(res);
                     if (result.code == 0) {

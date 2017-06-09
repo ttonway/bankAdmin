@@ -28,16 +28,16 @@ public class UserServiceImpl implements UserDetailsService {
             return null;
         } else {
             List<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
-            if (adminUser.getUserrole().equals("系统管理员")) {
+            if (adminUser.getRole().equals("系统管理员")) {
                 auths.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
             } else {
                 auths.add(new SimpleGrantedAuthority("ROLE_USER"));
             }
 
-            AdminUserDetails user = new AdminUserDetails(adminUser.getUsercode(), adminUser.getUserpw(), true, true, true, true, auths);
-            user.setUserId(adminUser.getUserid());
-            user.setShowname(adminUser.getUsernm());
-            user.setUserRole(adminUser.getUserrole());
+            AdminUserDetails user = new AdminUserDetails(adminUser.getUserCode(), adminUser.getPassword(), true, true, true, true, auths);
+            user.setUserId(adminUser.getUserId());
+            user.setShowname(adminUser.getUserName());
+            user.setUserRole(adminUser.getRole());
             user.setUserBank(adminUser.getBank());
             return user;
         }

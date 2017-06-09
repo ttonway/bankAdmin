@@ -1,58 +1,50 @@
 package com.psbc.pojo;
 
 public class AdminUser {
-    private Long userid;
+    private Long userId;
 
-    private String usernm;
+    private String userName;
 
-    private String usercode;
+    private String userCode;
 
-    private String userpw;
+    private String password;
 
     private String bank;
 
-    private String userrole;
+    private String role;
     
     private String loginTime;
 
-    public String getLoginTime() {
-		return loginTime;
-	}
-
-	public void setLoginTime(String loginTime) {
-		this.loginTime = loginTime;
-	}
-
-	public Long getUserid() {
-        return userid;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUserid(Long userid) {
-        this.userid = userid;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public String getUsernm() {
-        return usernm;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsernm(String usernm) {
-        this.usernm = usernm == null ? null : usernm.trim();
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getUsercode() {
-        return usercode;
+    public String getUserCode() {
+        return userCode;
     }
 
-    public void setUsercode(String usercode) {
-        this.usercode = usercode == null ? null : usercode.trim();
+    public void setUserCode(String userCode) {
+        this.userCode = userCode;
     }
 
-    public String getUserpw() {
-        return userpw;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUserpw(String userpw) {
-        this.userpw = userpw == null ? null : userpw.trim();
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getBank() {
@@ -60,14 +52,22 @@ public class AdminUser {
     }
 
     public void setBank(String bank) {
-        this.bank = bank == null ? null : bank.trim();
+        this.bank = bank;
     }
 
-    public String getUserrole() {
-        return userrole;
+    public String getRole() {
+        return role;
     }
 
-    public void setUserrole(String userrole) {
-        this.userrole = userrole == null ? null : userrole.trim();
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getLoginTime() {
+        return loginTime;
+    }
+
+    public void setLoginTime(String loginTime) {
+        this.loginTime = loginTime;
     }
 }

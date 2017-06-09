@@ -1,7 +1,7 @@
 $(function () {
 
     function reloadPosters() {
-        $.getJSON("poster/list.htm", function (data) {
+        $.getJSON("poster/list", function (data) {
             if (data.code == 0) {
                 var grid = $('#poater-grid');
                 var html = $.templates("#posterTmpl").render(data.data);
@@ -23,7 +23,7 @@ $(function () {
         //showCaption: false,
         showRemove: false,
         showUpload: false,
-        uploadUrl: "poster/upload.htm",
+        uploadUrl: "poster/upload",
         uploadExtraData: function () {
             return {
                 posterName: $('#posterName').val()
@@ -64,7 +64,7 @@ $(function () {
         var item = $(this).parents('.poster');
         var posterId = item.attr('poster-id');
 
-        $.getJSON("poster/delete.htm", {posterId: posterId}, function (data) {
+        $.getJSON("poster/delete", {posterId: posterId}, function (data) {
             if (data.code == 0) {
                 item.remove();
             }

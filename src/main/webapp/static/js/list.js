@@ -25,7 +25,7 @@ $(function () {
                     type: "post",
                     cache: false,
                     data: data,
-                    url: "loan/getLoanList.htm",
+                    url: "loan/list",
                     success: function (res) {
                         var result = $.parseJSON(res);
                         if (result.code == 0) {
@@ -98,7 +98,7 @@ $(function () {
                 loanid: data.loanid,
                 r: Math.random()
             },
-            url: "loan/selecDetial.htm",
+            url: "loan/get",
             success: function (res) {
                 var result = $.parseJSON(res);
                 var map = result.result;
@@ -146,7 +146,7 @@ $(function () {
             loanType: loanType,
             r: Math.random()
         };
-        var url = "loan/export.htm?" + $.param(params);
+        var url = "loan/export?" + $.param(params);
         location.href = url;
     });
     // 删除
@@ -182,7 +182,7 @@ $(function () {
                     loanid: loanid,
                     r: Math.random()
                 },
-                url: "loan/deleteLoan.htm",
+                url: "loan/delete",
                 success: function (res) {
                     var result = $.parseJSON(res);
                     if (result.code == 0) {
@@ -236,7 +236,7 @@ $(function () {
                     remark: $('#verify-remark').val(),
                     r: Math.random()
                 },
-                url: "loan/updateLoan.htm",
+                url: "loan/update",
                 success: function (res) {
                     var result = $.parseJSON(res);
                     if (result.code == 0) {

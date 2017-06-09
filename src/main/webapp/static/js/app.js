@@ -41,7 +41,7 @@ $(function () {
                 userPw: userpw,
                 r: Math.random()
             },
-            url: "../adminUser/submitReset.htm",
+            url: "admin/resetPwd",
             success: function (res) {
                 var result = $.parseJSON(res);
                 if (result.code == 0) {

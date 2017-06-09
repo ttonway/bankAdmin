@@ -10,8 +10,6 @@ public interface AdminUserMapper {
 
     int insert(AdminUser record);
 
-    int insertSelective(AdminUser record);
-
     AdminUser selectByPrimaryKey(Long userid);
 
     int updateByPrimaryKeySelective(AdminUser record);

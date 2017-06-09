@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.psbc.dao.AdminUserMapper" >
-  <resultMap id="BaseResultMap" type="com.psbc.pojo.AdminUser" >
-    <id column="userId" property="userid" jdbcType="BIGINT" />
-    <result column="userNm" property="usernm" jdbcType="VARCHAR" />
-    <result column="userCode" property="usercode" jdbcType="VARCHAR" />
-    <result column="userPw" property="userpw" jdbcType="VARCHAR" />
-    <result column="bank" property="bank" jdbcType="VARCHAR" />
-    <result column="userRole" property="userrole" jdbcType="VARCHAR" />
-    <result column="loginTime" property="loginTime" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.psbc.dao.AdminUserMapper">
+    <resultMap id="BaseResultMap" type="com.psbc.pojo.AdminUser">
+        <id column="userId" property="userId" jdbcType="BIGINT"/>
+        <result column="userNm" property="userName" jdbcType="VARCHAR"/>
+        <result column="userCode" property="userCode" jdbcType="VARCHAR"/>
+        <result column="userPw" property="password" jdbcType="VARCHAR"/>
+        <result column="bank" property="bank" jdbcType="VARCHAR"/>
+        <result column="userRole" property="role" jdbcType="VARCHAR"/>
+        <result column="loginTime" property="loginTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     userId, userNm, userCode, userPw, bank, userRole
-  </sql>
-  
-  <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from admin_user
-    where userCode = #{usercode,jdbcType=VARCHAR}
-  </select>
-  
-  <select id="selectByList" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    </sql>
+
+    <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from admin_user
+        where userCode = #{userCode,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByList" resultMap="BaseResultMap" parameterType="java.util.HashMap">
   select t.userId, t.userNm, t.userCode, t.userPw, t.bank, t.userRole,
 		 MAX(t1.loginTime) loginTime
     from admin_user t 
@@ -31,107 +31,65 @@
    order by userId desc
    limit #{start,jdbcType=BIGINT},#{length,jdbcType=BIGINT}
   </select>
-  
-  
-  <select id="selectByCnt" resultType="java.lang.Integer" >
-  select count(t.userId) cnt
+
+
+    <select id="selectByCnt" resultType="java.lang.Integer">
+    select count(t.userId) cnt
     from admin_user t
-  </select>  
-  
-    
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from admin_user
-    where userId = #{userid,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" >
-    delete from admin_user
-    where userId in 
-    <foreach collection="array" item="item" open="(" close=")" separator=",">
-			#{item}
-	</foreach>
-  </delete>
-  <insert id="insert" parameterType="com.psbc.pojo.AdminUser" >
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from admin_user
+        where userId = #{userId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey">
+        delete from admin_user
+        where userId in
+        <foreach collection="array" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+    <insert id="insert" parameterType="com.psbc.pojo.AdminUser">
     insert into admin_user (userId, userNm, userCode, 
       userPw, bank, userRole
       )
-    values (#{userid,jdbcType=BIGINT}, #{usernm,jdbcType=VARCHAR}, #{usercode,jdbcType=VARCHAR}, 
-      #{userpw,jdbcType=VARCHAR}, #{bank,jdbcType=VARCHAR}, #{userrole,jdbcType=VARCHAR}
+    values (#{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{userCode,jdbcType=VARCHAR},
+      #{password,jdbcType=VARCHAR}, #{bank,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.psbc.pojo.AdminUser" >
-    insert into admin_user
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="userid != null" >
-        userId,
-      </if>
-      <if test="usernm != null" >
-        userNm,
-      </if>
-      <if test="usercode != null" >
-        userCode,
-      </if>
-      <if test="userpw != null" >
-        userPw,
-      </if>
-      <if test="bank != null" >
-        bank,
-      </if>
-      <if test="userrole != null" >
-        userRole,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="userid != null" >
-        #{userid,jdbcType=BIGINT},
-      </if>
-      <if test="usernm != null" >
-        #{usernm,jdbcType=VARCHAR},
-      </if>
-      <if test="usercode != null" >
-        #{usercode,jdbcType=VARCHAR},
-      </if>
-      <if test="userpw != null" >
-        #{userpw,jdbcType=VARCHAR},
-      </if>
-      <if test="bank != null" >
-        #{bank,jdbcType=VARCHAR},
-      </if>
-      <if test="userrole != null" >
-        #{userrole,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.psbc.pojo.AdminUser" >
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.psbc.pojo.AdminUser">
+        update admin_user
+        <set>
+            <if test="userName != null">
+                userNm = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userCode != null">
+                userCode = #{userCode,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                userPw = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="bank != null">
+                bank = #{bank,jdbcType=VARCHAR},
+            </if>
+            <if test="role != null">
+                userRole = #{role,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where userId = #{userId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.psbc.pojo.AdminUser">
     update admin_user
-    <set >
-      <if test="usernm != null" >
-        userNm = #{usernm,jdbcType=VARCHAR},
-      </if>
-      <if test="usercode != null" >
-        userCode = #{usercode,jdbcType=VARCHAR},
-      </if>
-      <if test="userpw != null" >
-        userPw = #{userpw,jdbcType=VARCHAR},
-      </if>
-      <if test="bank != null" >
-        bank = #{bank,jdbcType=VARCHAR},
-      </if>
-      <if test="userrole != null" >
-        userRole = #{userrole,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where userId = #{userid,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.psbc.pojo.AdminUser" >
-    update admin_user
-    set userNm = #{usernm,jdbcType=VARCHAR},
-      userCode = #{usercode,jdbcType=VARCHAR},
-      userPw = #{userpw,jdbcType=VARCHAR},
+    set userNm = #{userName,jdbcType=VARCHAR},
+      userCode = #{userCode,jdbcType=VARCHAR},
+      userPw = #{password,jdbcType=VARCHAR},
       bank = #{bank,jdbcType=VARCHAR},
-      userRole = #{userrole,jdbcType=VARCHAR}
-    where userId = #{userid,jdbcType=BIGINT}
+      userRole = #{role,jdbcType=VARCHAR}
+    where userId = #{userId,jdbcType=BIGINT}
   </update>
-  
+
 </mapper>

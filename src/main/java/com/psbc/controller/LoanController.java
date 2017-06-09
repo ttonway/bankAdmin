@@ -32,9 +32,9 @@ public class LoanController {
     private LoanUserService loanUserService;
 
 
-    @RequestMapping("/getLoanList")
+    @RequestMapping("/list")
     @ResponseBody
-    public Map<String, Object> getLoanList(HttpServletRequest req, String loanType, String status, Integer draw, Integer start, Integer length) {
+    public Map<String, Object> list(String loanType, String status, Integer draw, Integer start, Integer length) {
         AdminUserDetails userDetails = (AdminUserDetails) SecurityContextHolder.getContext()
                 .getAuthentication()
                 .getPrincipal();
@@ -69,9 +69,9 @@ public class LoanController {
         }
     }
 
-    @RequestMapping("/deleteLoan")
+    @RequestMapping("/delete")
     @ResponseBody
-    public Map<String, Object> deleteLoan(Long[] loanid) {
+    public Map<String, Object> delete(Long[] loanid) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             loanUserService.deleteByPrimaryKey(loanid);
@@ -84,9 +84,9 @@ public class LoanController {
         }
     }
 
-    @RequestMapping("/updateLoan")
+    @RequestMapping("/update")
     @ResponseBody
-    public Map<String, Object> updateLoan(String status, String remark, Long loanid, Integer loanNum) {
+    public Map<String, Object> update(String status, String remark, Long loanid, Integer loanNum) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             LoanUser loanUser = new LoanUser();
@@ -104,9 +104,9 @@ public class LoanController {
         }
     }
 
-    @RequestMapping("/selecDetial")
+    @RequestMapping("/get")
     @ResponseBody
-    public Map<String, Object> selecDetial(Long loanid) {
+    public Map<String, Object> get(Long loanid) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             Map<String, Long> pmap = new HashMap<String, Long>();

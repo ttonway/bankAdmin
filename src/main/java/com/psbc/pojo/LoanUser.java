@@ -57,6 +57,8 @@ public class LoanUser {
     private String updatetime;
     
     private String utmsrc;
+
+	private String fromUserCode;
     
 	public Long getLoanid() {
 		return loanid;
@@ -210,4 +212,11 @@ public class LoanUser {
 		this.guaranteeType = guaranteeType;
 	}
 
+	public String getFromUserCode() {
+		return fromUserCode;
+	}
+
+	public void setFromUserCode(String fromUserCode) {
+		this.fromUserCode = fromUserCode;
+	}
 }
