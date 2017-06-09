@@ -22,7 +22,7 @@
 
     <select id="selectByList" resultMap="BaseResultMap" parameterType="java.util.HashMap">
         select
-        t.loanid, t.usernm, t.phonenum, t.area, t.bank, t.loanNum, t.id, t.referrals, t.createtime, t.status, t.utmsrc,
+        t.loanid, t.usernm, t.phonenum, t.area, t.bank, t.loanNum, t.id, t.referrals, t.createtime, t.status, t.utmsrc, t.fromUserCode,
         t1.loanType, t1.workunit, t1.workunit2
         from loan_user_info t
         left join loan_user t1 on t.id = t1.id
@@ -39,7 +39,7 @@
 
 
     <select id="selectByDetial" resultType="java.util.HashMap" parameterType="java.util.HashMap">
-      select t.loanid,t.usernm,t.phonenum,t.area,t.bank,t.loanNum,t.id,t.referrals,t.status,
+      select t.loanid, t.usernm, t.phonenum, t.area, t.bank, t.loanNum, t.id, t.referrals, t.status, t.fromUserCode,
       t1.workunit, t1.house, t1.job, t1.income, t1.loanHouse, t1.loanCar, t1.loanConsumer,
       t1.loanType, t1.workunit2, t1.localPerson, t1.guaranteeType
       from loan_user_info t
@@ -181,7 +181,7 @@
 
     <select id="export" resultMap="BaseResultMap" parameterType="java.util.HashMap">
         select
-        t.loanid,t.usernm,t.phonenum,t.area,t.bank,t.loanNum,t.id,t.referrals,t.createtime,t.status,t.utmsrc,t.remark,
+        t.loanid,t.usernm,t.phonenum,t.area,t.bank,t.loanNum,t.id,t.referrals,t.createtime,t.status,t.utmsrc,t.remark,t.fromUserCode,
         t1.loanType, t1.workunit, t1.workunit2, t1.house, t1.localPerson, t1.guaranteeType
         from loan_user_info t
         left join loan_user t1 on t.id = t1.id

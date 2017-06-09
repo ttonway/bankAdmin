@@ -55,7 +55,12 @@ $(function () {
                     "data": null,
                     "defaultContent": '<input type="checkbox" name="chk_item""/>'
                 },
-                {"data": "utmsrc", "width": "15%"},
+                {
+                    "data": "fromUserCode",
+                    "render": function (data, type, full, meta) {
+                        return '<a href="#" class="link-from-user">' + data + '</a>';
+                    }
+                },
                 {"data": "usernm"},
                 {"data": "phonenum"},
                 {"data": "workunit"},
