@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.psbc.pojo.AdminUserDetails" %>
 <%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
 <% AdminUserDetails userDetails = (AdminUserDetails) SecurityContextHolder.getContext()
@@ -43,7 +44,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                邮信贷
+                ${loanType}
             </h1>
         </section>
 
@@ -70,7 +71,12 @@
                                     <th>来源</th>
                                     <th>申请人</th>
                                     <th>联系手机</th>
-                                    <th>工作单位</th>
+                                    <c:if test="${requestScope.loanType eq '邮信贷'}">
+                                        <th>工作单位</th>
+                                    </c:if>
+                                    <c:if test="${requestScope.loanType eq '商易贷'}">
+                                        <th>行业</th>
+                                    </c:if>
                                     <th>申请支行</th>
                                     <th>申请金额</th>
                                     <th>申请时间</th>
@@ -275,38 +281,11 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div class="modal fade" id="reset-pwd-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">修改密码</h4>
-            </div>
-            <div class="modal-body">
-                <div class="alert alert-success" role="alert"></div>
-                <div class="alert alert-danger" role="alert"></div>
-                <p>确认修改密码吗？</p>
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <label for="new-password" class="col-sm-2 control-label">密码：</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="new-password">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">确认修改</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
-<input type="hidden" id="loanType" value='邮信贷'>
+<input type="hidden" id="loanType" value='${loanType}'>
 
-<script src="<%=request.getContextPath()%>/static//lib/jQuery/jquery-2.2.3.min.js"></script>
-<script src="<%=request.getContextPath()%>/static//lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="<%=request.getContextPath()%>/static/lib/jQuery/jquery-2.2.3.min.js"></script>
+<script src="<%=request.getContextPath()%>/static/lib/bootstrap/js/bootstrap.min.js"></script>
 <!-- DataTables -->
 <script src="<%=request.getContextPath()%>/static/lib/datatables/jquery.dataTables.min.js"></script>
 <script src="<%=request.getContextPath()%>/static/lib/datatables/dataTables.bootstrap.min.js"></script>

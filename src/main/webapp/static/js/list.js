@@ -58,7 +58,7 @@ $(function () {
                 {
                     "data": "fromUserCode",
                     "render": function (data, type, full, meta) {
-                        return '<a href="#" class="link-from-user">' + data + '</a>';
+                        return data ? '<a href="#" class="link-from-user">' + data + '</a>' : '';
                     }
                 },
                 {"data": "usernm"},

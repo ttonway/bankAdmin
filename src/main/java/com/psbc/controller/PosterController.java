@@ -113,13 +113,19 @@ public class PosterController {
         }
     }
 
-    @RequestMapping(value = "/file/{fileName}")
-    public void file(HttpServletResponse response, @PathVariable String fileName) throws IOException {
-        File file = new File(fileRootPath, fileName);
+    @RequestMapping(value = "/image/{posterId}")
+    public void file(HttpServletResponse response, @PathVariable Long posterId) throws IOException {
+        PosterImage poster = posterService.selectByPrimaryKey(posterId);
+        if (poster == null) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
+
+        File file = new File(fileRootPath, poster.getFileName());
         logger.debug("read file " + file);
 
         FileInputStream fis = null;
-        response.setContentType(MediaType.IMAGE_PNG.toString());
+        response.setContentType(poster.getContentType());
         try {
             OutputStream out = response.getOutputStream();
             fis = new FileInputStream(file);
@@ -160,6 +166,7 @@ public class PosterController {
             return;
         }
 
+        response.setContentType(MediaType.IMAGE_PNG.toString());
         try {
             OutputStream stream = response.getOutputStream();
             QRCodeWriter writer = new QRCodeWriter();
@@ -184,8 +191,8 @@ public class PosterController {
             return;
         }
 
-//        File file = new File(fileRootPath, fileName);
-        File file = new File("/Users/ttonway/Desktop/frame1.png");
+        response.setContentType(MediaType.IMAGE_PNG.toString());
+        File file = new File(fileRootPath, fileName);
         logger.debug("read file " + file);
         try {
             BufferedImage bufferedImage = ImageIO.read(file);
@@ -227,7 +234,7 @@ public class PosterController {
         }
 
         int w = Math.min(QRCODE_WIDTH, width - minx);
-        int h = Math.max(QRCODE_HEIGHT, height - miny);
+        int h = Math.min(QRCODE_HEIGHT, height - miny);
         int left = (minx + width) / 2 - w / 2;
         int top = (miny + height) / 2 - h / 2;
         return new Rectangle(left, top, w, h);

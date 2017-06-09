@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%@ page import="com.psbc.pojo.AdminUserDetails" %>
+<%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
+<% AdminUserDetails userDetails = (AdminUserDetails) SecurityContextHolder.getContext()
+        .getAuthentication()
+        .getPrincipal(); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -194,34 +199,6 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-
-<div class="modal fade" id="reset-pwd-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">修改密码</h4>
-            </div>
-            <div class="modal-body">
-                <div class="alert alert-success" role="alert"></div>
-                <div class="alert alert-danger" role="alert"></div>
-                <p>确认修改密码吗？</p>
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <label for="new-password" class="col-sm-2 control-label">密码：</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="new-password">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">确认修改</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
 <script src="<%=request.getContextPath()%>/static/lib/jQuery/jquery-2.2.3.min.js"></script>
 <script src="<%=request.getContextPath()%>/static/lib/bootstrap/js/bootstrap.min.js"></script>

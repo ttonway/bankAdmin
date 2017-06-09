@@ -33,12 +33,12 @@ $(function () {
         $('#reset-pwd-modal').modal();
     });
     $('#reset-pwd-modal button.btn-primary').on('click', function () {
-        var userpw = $("#new-password").val();
         $.ajax({
             type: "post",
             cache: false,
             data: {
-                userPw: userpw,
+                userId: $("#user-id").val(),
+                password: $("#new-password").val(),
                 r: Math.random()
             },
             url: "admin/resetPwd",

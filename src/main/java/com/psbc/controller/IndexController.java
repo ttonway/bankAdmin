@@ -43,14 +43,14 @@ public class IndexController {
 
     // 邮信贷
     @RequestMapping("/list1")
-    public String list1() {
-        return "/list1";
+    public ModelAndView list1() {
+        return new ModelAndView("loanlist", "loanType", "邮信贷");
     }
 
     // 商易贷
     @RequestMapping("/list2")
-    public String list2() {
-        return "/list2";
+    public ModelAndView list2() {
+        return new ModelAndView("loanlist", "loanType", "商易贷");
     }
 
     // 海报

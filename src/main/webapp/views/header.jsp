@@ -3,9 +3,12 @@
 <%@ page import="com.psbc.pojo.AdminUserDetails" %>
 <%@ page import="com.psbc.util.AuthorityUtils" %>
 <%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
-<% AdminUserDetails userDetails = (AdminUserDetails) SecurityContextHolder.getContext()
+<%
+    AdminUserDetails userDetails = (AdminUserDetails) SecurityContextHolder.getContext()
         .getAuthentication()
-        .getPrincipal(); %>
+        .getPrincipal();
+    String loanType = (String) request.getAttribute("loanType");
+%>
 <%
     String uri = request.getRequestURI();
     int start = uri.lastIndexOf("/");
@@ -81,8 +84,8 @@
             <% if (AuthorityUtils.hasAuthority(userDetails, "ROLE_ADMIN")) { %>
             <li<% if (uri.equals("userlist")) { %> class="active"<% } %>><a href="userlist"><i class="fa fa-link"></i> <span>帐号密码信息</span></a></li>
             <% } else { %>
-            <li<% if (uri.equals("list1")) { %> class="active"<% } %>><a href="list1"><i class="fa fa-link"></i> <span>邮信贷</span></a></li>
-            <li<% if (uri.equals("list2")) { %> class="active"<% } %>><a href="list2"><i class="fa fa-link"></i> <span>生意贷</span></a></li>
+            <li<% if (uri.equals("loanlist") && "邮信贷".equals(loanType)) { %> class="active"<% } %>><a href="list1"><i class="fa fa-link"></i> <span>邮信贷</span></a></li>
+            <li<% if (uri.equals("loanlist") && "商易贷".equals(loanType)) { %> class="active"<% } %>><a href="list2"><i class="fa fa-link"></i> <span>生意贷</span></a></li>
             <% } %>
             <li<% if (uri.equals("poster")) { %> class="active"<% } %>><a href="poster"><i class="fa fa-link"></i> <span>专属海报</span></a></li>
         </ul>
@@ -90,3 +93,33 @@
     </section>
     <!-- /.sidebar -->
 </aside>
+
+
+<div class="modal fade" id="reset-pwd-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">修改密码</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-success" role="alert"></div>
+                <div class="alert alert-danger" role="alert"></div>
+                <p>确认修改密码吗？</p>
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="new-password" class="col-sm-2 control-label">密码：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="new-password">
+                        </div>
+                    </div>
+                    <input type="hidden" id="user-id" value="<%= userDetails.getUserId() %>">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">确认修改</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
