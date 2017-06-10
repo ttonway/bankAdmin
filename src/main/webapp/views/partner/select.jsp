@@ -43,7 +43,7 @@
         <h3>我是白领<div class="divider"></div></h3>
 
     </a>
-    <a class="button-image" href="form/whitecollar" style="margin-top: 30px">
+    <a class="button-image" href="form/shop" style="margin-top: 30px">
         <img src="<%=request.getContextPath()%>/static/images/btn-shop.png">
         <h3>我是商家<div class="divider"></div></h3>
     </a>

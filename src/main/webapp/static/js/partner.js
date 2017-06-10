@@ -1,20 +1,23 @@
 (function () {
-    function initSelect() {
-        var options1 = $('.input-single-select').find('li');
-        options1.on('click', function (e) {
-            var $target = $(e.target);
-            $target.siblings('li').removeClass('on');
-            $target.addClass('on');
-        });
 
-        var options2 = $('.input-multi-select').find('li');
-        options2.on('click', function (e) {
-            var $target = $(e.target);
-            $target.toggleClass('on');
-        });
-    }
+    $('.input-single-select').find('li').on('click', function (e) {
+        var $target = $(e.target);
+        $target.siblings('li').removeClass('on');
+        $target.addClass('on');
 
-    initSelect();
+        var name = $(this).attr('name');
+        $('input[name="' + name + '"]').val($(this).text());
+    });
+
+    $('#workUnitType').on('change', function () {
+        var value = $(this).val();
+        var input = $('#workUnitName');
+        if ('金融、电信、烟草、电力' == value) {
+            input.show();
+        } else {
+            input.hide();
+        }
+    });
 
 
     var listItems = $('.list-group').find('.list-group-item');
@@ -36,86 +39,60 @@
 
 
 function submitForm() {
-    // var workunit1 = $('#workunit1').val();
-    // var workunit2 = $('#workunit2').val();
-    // var other = $('#workunit-other').val();
-    //
-    // if (!workunit1) {
-    //     alert("情选择行业.");
-    //     return;
-    // }
-    // if (!workunit2) {
-    //     if (!$('#workunit2').is(":hidden")) {
-    //         alert("情选择行业.");
-    //         return;
-    //     }
-    //     workunit2 = '';
-    // }
-    // if (workunit1 == '其他') {
-    //     if (!other) {
-    //         alert("情选择行业.");
-    //         return;
-    //     }
-    //     workunit1 = other;
-    //     workunit2 = '';
-    // }
-    // if (workunit2 == '其他') {
-    //     if (!other) {
-    //         alert("情选择行业.");
-    //         return;
-    //     }
-    //     workunit2 = other;
-    // }
-    //
-    // var localPerson = $('.input-single-select li.on[name="localPerson"]').text();
-    // if (!localPerson) {
-    //     alert("请选是否为本地人");
-    //     return;
-    // }
-    //
-    // var house = $('.input-single-select li.on[name="house"]').text();
-    // if (!localPerson) {
-    //     alert("请选本地是否有房产");
-    //     return;
-    // }
-    //
-    // var income = $('#income').val();
-    // income = income.replace(' ', '').replace('万元', '');
-    // income = parseInt(income) * 10000;
-    // if (isNaN(income)) {
-    //     income = 0;
-    // }
-    // if (income === 0) {
-    //     alert("请输入年销售额");
-    //     return;
-    // }
-    //
-    // var types = [];
-    // $('.input-multi-select li.on[name="guaranteeType"]').each(function () {
-    //     types.push($(this).text());
-    // });
-    // if (types.length === 0) {
-    //     alert("请选择担保方式");
-    //     return;
-    // }
-    // var guaranteeType = types.join("|");
-    //
-    // var loannum = $('#loannum').val();
-    // loannum = loannum.replace(' ', '').replace('万元', '');
-    // loannum = parseInt(loannum) * 10000;
-    // if (isNaN(loannum)) {
-    //     loannum = 0;
-    // }
-    // if (loannum === 0) {
-    //     alert("请输入申请金额");
-    //     return;
-    // }
+    if (!$('input[name="oldCustomer"]').val()) {
+        alert("请选择是否为我行老客户.");
+        return;
+    }
 
-    location.href = "../area";
+    if ($('#workUnitType').length > 0) {
+        if (!$('#workUnitType').val()) {
+            alert("请选择单位性质.");
+            return;
+        }
+        if (!$('#workUnitName').is(":hidden") && !$('#workUnitName').val()) {
+            alert("请输入单位名称.");
+            return;
+        }
+    }
+
+    if (!$('#userName').val()) {
+        alert("请输入姓名.");
+        return;
+    }
+
+    if ($('#shopName').length > 0) {
+        if (!$('#shopName').val()) {
+            alert("请选择店面名称.");
+            return;
+        }
+        if (!$('#shopAddress').val()) {
+            alert("请输入店面位置.");
+            return;
+        }
+    }
+
+    var phoneNumber = $('#phoneNumber').val();
+    if (!phoneNumber) {
+        alert("请输入联系方式");
+        return;
+    }
+    var reg = /^0?1[3|4|5|7|8][0-9]\d{8}$/;
+    if (!reg.test(phoneNumber)) {
+        alert("请输入正确手机号码");
+        return;
+    }
+
+    $('form').submit();
 }
 
 function submitArea() {
-    location.href = "poster";
+    var area = $('.list-group-item.on').text();
+    if (!area) {
+        alert("请选择合作区域.");
+        return;
+    }
+
+    location.href = "poster?area=" + area;
 }
 
 function generatePoster() {

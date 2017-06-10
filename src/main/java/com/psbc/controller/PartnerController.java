@@ -4,6 +4,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.psbc.pojo.PartnerUser;
 import com.psbc.pojo.PosterImage;
 import com.psbc.service.PosterService;
 import org.apache.commons.io.IOUtils;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -56,18 +59,52 @@ public class PartnerController {
         return "/partner/select";
     }
 
-    @RequestMapping("/form/{type}")
-    public ModelAndView form(@PathVariable String type) {
-        return new ModelAndView("partner/form", "type", type);
+    @RequestMapping("/form/whitecollar")
+    public ModelAndView formWhiteCollar(HttpSession session) {
+        PartnerUser partner = new PartnerUser();
+        partner.setType("whitecollar");
+        session.setAttribute("partner", partner);
+        return new ModelAndView("partner/form", "type", "whitecollar");
+    }
+
+    @RequestMapping("/form/shop")
+    public ModelAndView formShop(HttpSession session) {
+        PartnerUser partner = new PartnerUser();
+        partner.setType("shop");
+        session.setAttribute("partner", partner);
+        return new ModelAndView("partner/form", "type", "shop");
     }
 
     @RequestMapping("/area")
-    public String area() {
+    public String area(HttpSession session, String oldCustomer, String workUnitType, String workUnitName, String userName, String phoneNumber, String shopName, String shopAddress) {
+        PartnerUser partner = (PartnerUser)session.getAttribute("partner");
+        if (partner == null) {
+            return "redirect:index";
+        }
+
+        partner.setOldCustomer(oldCustomer);
+        if (partner.getType().equals("whitecollar")) {
+            partner.setWorkUnitType(workUnitType);
+            partner.setWorkUnitName(workUnitName);
+        }
+        partner.setUserName(userName);
+        partner.setPhoneNumber(phoneNumber);
+        if (partner.getType().equals("shop")) {
+            partner.setShopName(shopName);
+            partner.setShopAddress(shopAddress);
+        }
         return "/partner/area";
     }
 
     @RequestMapping("/poster")
-    public ModelAndView poster() {
+    public ModelAndView poster(HttpSession session, String area) {
+        PartnerUser partner = (PartnerUser)session.getAttribute("partner");
+        if (partner == null) {
+            return new ModelAndView("redirect:index");
+        }
+
+        partner.setArea(area);
+
         List<PosterImage> list = posterService.selectAll();
         return new ModelAndView("partner/poster", "posters", list);
     }

@@ -46,7 +46,7 @@
 </nav>
 
 <div class="container">
-    <form>
+    <form action="../area">
         <div class="form-group">
             <label for="oldCustomer">是否为我行老客户</label>
             <ul id="oldCustomer" class="form-control input-single-select">
@@ -54,6 +54,7 @@
                 <li name="oldCustomer">否</li>
             </ul>
         </div>
+        <input type="hidden" name="oldCustomer"/>
 
         <div class="form-divider"></div>
 
@@ -95,7 +96,8 @@
             <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="请输入手机号码">
         </div>
 
-        <button type="button" class="btn btn-primary btn-block" style="margin-top: 30px;" onclick="submitForm()">继续</button>
+        <button type="button" class="btn btn-primary btn-block" style="margin-top: 30px;" onclick="submitForm()">继续
+        </button>
     </form>
 </div>
 

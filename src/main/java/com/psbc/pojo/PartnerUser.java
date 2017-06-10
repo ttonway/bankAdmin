@@ -1,26 +1,64 @@
 package com.psbc.pojo;
 
 public class PartnerUser {
-    private Long userId;
+    private Long partnerId;
+
+    private String type;
+
+    private String oldCustomer;
+
+    private String workUnitType;
+    private String workUnitName;
 
     private String userName;
 
-    private String userCode;
+    private String phoneNumber;
 
-    private String password;
+    private String shopName;
+    private String shopAddress;
 
-    private String bank;
-
-    private String role;
+    private String area;
     
-    private String loginTime;
+    private String posterType;
 
-    public Long getUserId() {
-        return userId;
+    public Long getPartnerId() {
+        return partnerId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setPartnerId(Long partnerId) {
+        this.partnerId = partnerId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getOldCustomer() {
+        return oldCustomer;
+    }
+
+    public void setOldCustomer(String oldCustomer) {
+        this.oldCustomer = oldCustomer;
+    }
+
+    public String getWorkUnitType() {
+        return workUnitType;
+    }
+
+    public void setWorkUnitType(String workUnitType) {
+        this.workUnitType = workUnitType;
+    }
+
+    public String getWorkUnitName() {
+        return workUnitName;
+    }
+
+    public void setWorkUnitName(String workUnitName) {
+        this.workUnitName = workUnitName;
     }
 
     public String getUserName() {
@@ -31,43 +69,43 @@ public class PartnerUser {
         this.userName = userName;
     }
 
-    public String getUserCode() {
-        return userCode;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setUserCode(String userCode) {
-        this.userCode = userCode;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public String getPassword() {
-        return password;
+    public String getShopName() {
+        return shopName;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
     }
 
-    public String getBank() {
-        return bank;
+    public String getShopAddress() {
+        return shopAddress;
     }
 
-    public void setBank(String bank) {
-        this.bank = bank;
+    public void setShopAddress(String shopAddress) {
+        this.shopAddress = shopAddress;
     }
 
-    public String getRole() {
-        return role;
+    public String getArea() {
+        return area;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setArea(String area) {
+        this.area = area;
     }
 
-    public String getLoginTime() {
-        return loginTime;
+    public String getPosterType() {
+        return posterType;
     }
 
-    public void setLoginTime(String loginTime) {
-        this.loginTime = loginTime;
+    public void setPosterType(String posterType) {
+        this.posterType = posterType;
     }
 }

@@ -11,7 +11,7 @@
     <http security="none" pattern="/static/**"/>
 
     <http use-expressions="true" auto-config="true">
-        <intercept-url pattern="/parnter/**" access="permitAll"/>
+        <intercept-url pattern="/partner/**" access="permitAll"/>
 
         <intercept-url pattern="/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/>
 
