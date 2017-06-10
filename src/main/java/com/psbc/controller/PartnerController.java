@@ -27,9 +27,9 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/parter")
-public class ParterController {
-    private static Logger logger = Logger.getLogger(ParterController.class);
+@RequestMapping("/partner")
+public class PartnerController {
+    private static Logger logger = Logger.getLogger(PartnerController.class);
 
     private static final int RED = 0xffff0000;
     private static final int QRCODE_WIDTH = 200;
@@ -48,28 +48,28 @@ public class ParterController {
 
     @RequestMapping("/index")
     public String userlist() {
-        return "/parter/index";
+        return "/partner/index";
     }
 
     @RequestMapping("/select")
     public String select() {
-        return "/parter/select";
+        return "/partner/select";
     }
 
     @RequestMapping("/form/{type}")
     public ModelAndView form(@PathVariable String type) {
-        return new ModelAndView("parter/form", "type", type);
+        return new ModelAndView("partner/form", "type", type);
     }
 
     @RequestMapping("/area")
     public String area() {
-        return "/parter/area";
+        return "/partner/area";
     }
 
     @RequestMapping("/poster")
     public ModelAndView poster() {
         List<PosterImage> list = posterService.selectAll();
-        return new ModelAndView("parter/poster", "posters", list);
+        return new ModelAndView("partner/poster", "posters", list);
     }
 
     @RequestMapping("/list")

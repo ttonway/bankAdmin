@@ -117,15 +117,15 @@
 <script id="posterTmpl" type="text/x-jsrender">
     <div class="col-sm-6 col-md-3 poster" poster-id="{{:posterId}}">
         <div class="thumbnail">
-            <img src="parter/image/{{:posterId}}">
+            <img src="partner/image/{{:posterId}}">
             <div class="caption">
                 <h3>{{:posterName}}</h3>
                 <% if (AuthorityUtils.hasAuthority(userDetails, "ROLE_ADMIN")) { %>
                 <p><a href="#" class="btn btn-danger" role="button">删除</a></p>
                 <% } else { %>
                 <p>
-                <a href="parter/generate/<%=userDetails.getUsername()%>/0/{{:fileName}}" class="btn btn-success" role="button">邮信贷</a>
-                <a href="parter/generate/<%=userDetails.getUsername()%>/1/{{:fileName}}" class="btn btn-warning" role="button">生意贷</a>
+                <a href="partner/generate/<%=userDetails.getUsername()%>/0/{{:fileName}}" class="btn btn-success" role="button">邮信贷</a>
+                <a href="partner/generate/<%=userDetails.getUsername()%>/1/{{:fileName}}" class="btn btn-warning" role="button">生意贷</a>
                 </p>
                 <% } %>
             </div>

@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -26,45 +27,48 @@
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <link href="<%=request.getContextPath()%>/static/css/parter.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/static/css/partner.css" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar navbar-fixed-top">
     <div class="container">
-        <div class="navbar-header">`
+        <div class="navbar-header">
             <a class="navbar-brand" href="#">
-                合作区域
+                获取海报
             </a>
         </div>
     </div>
 </nav>
 
+<ul class="nav nav-tabs nav-justified">
+    <li role="presentation" class="active"><a href="#">消费贷海报</a></li>
+    <li role="presentation"><a href="#">生意贷海报</a></li>
+</ul>
+
 <div class="container">
-    <form>
+    <div class="row poster-row">
+        <c:forEach var="poster" items="${posters}">
+            <div class="col-xs-4 col-md-3 poster" poster-id="${poster.posterId}">
+                <div class="thumbnail">
+                    <img src="image/${poster.posterId}">
+                </div>
+                <div class="selected-mask"><span class="glyphicon glyphicon-ok"></span></div>
+            </div>
+        </c:forEach>
+    </div>
 
-        <div class="form-group">
-            <label for="corporateArea">请选择合作区域</label>
-            <ul class="list-group" id="corporateArea">
-                <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>市区</li>
-                <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>东台</li>
-                <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>大丰</li>
-                <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>建湖</li>
-                <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>射阳</li>
-                <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>滨海</li>
-                <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>阜宁</li>
-                <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>响水</li>
-            </ul>
-        </div>
-
-        <button type="button" class="btn btn-primary btn-block" style="margin-top: 30px;" onclick="submitArea()">继续</button>
-    </form>
+    <div class="fixed-bottom">
+    <button type="button" class="btn btn-primary btn-block" onclick="generatePoster()">
+        生成海报
+    </button>
+    </div>
 </div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="<%=request.getContextPath()%>/static/lib/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="<%=request.getContextPath()%>/static/lib/bootstrap/js/bootstrap.min.js"></script>
-<script src="<%=request.getContextPath()%>/static/js/parter.js"></script>
+<script src="<%=request.getContextPath()%>/static/js/partner.js"></script>
 </body>
 </html>
 

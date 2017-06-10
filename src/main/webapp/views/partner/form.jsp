@@ -27,7 +27,7 @@
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <link href="<%=request.getContextPath()%>/static/css/parter.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/static/css/partner.css" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar navbar-fixed-top">
@@ -103,7 +103,7 @@
 <script src="<%=request.getContextPath()%>/static/lib/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="<%=request.getContextPath()%>/static/lib/bootstrap/js/bootstrap.min.js"></script>
-<script src="<%=request.getContextPath()%>/static/js/parter.js"></script>
+<script src="<%=request.getContextPath()%>/static/js/partner.js"></script>
 </body>
 </html>
 

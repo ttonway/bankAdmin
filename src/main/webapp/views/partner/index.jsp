@@ -35,7 +35,7 @@
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox">
             <div class="item active">
-                <img class="background" src="<%=request.getContextPath()%>/static/images/parter-bg1.png">
+                <img class="background" src="<%=request.getContextPath()%>/static/images/partner-bg1.png">
 
                 <div class="carousel-caption">
                     <h4>成为合伙人条件</h4>
@@ -47,7 +47,7 @@
                 </div>
             </div>
             <div class="item">
-                <img class="background" src="<%=request.getContextPath()%>/static/images/parter-bg2.png">
+                <img class="background" src="<%=request.getContextPath()%>/static/images/partner-bg2.png">
                 <div class="carousel-caption">
                     <h4>合伙人的优势</h4>
                     <div class="divider"></div>
@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class="item">
-                <img class="background" src="<%=request.getContextPath()%>/static/images/parter-bg3.png">
+                <img class="background" src="<%=request.getContextPath()%>/static/images/partner-bg3.png">
                 <div class="carousel-caption">
                     <h4>合伙人工作内容</h4>
                     <div class="divider"></div>
@@ -65,7 +65,7 @@
                 </div>
             </div>
         </div>
-        <img class="top-logo" src="<%=request.getContextPath()%>/static/images/parter-logo.png">
+        <img class="top-logo" src="<%=request.getContextPath()%>/static/images/partner-logo.png">
         <a type="button" class="btn btn-primary btn-lg" href="select">立即申请</a>
         <img class="bottom-logo" src="<%=request.getContextPath()%>/static/images/bank-logo.png">
     </div>

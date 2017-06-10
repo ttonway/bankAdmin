@@ -26,7 +26,7 @@
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <link href="<%=request.getContextPath()%>/static/css/parter.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/static/css/partner.css" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar navbar-fixed-top">
