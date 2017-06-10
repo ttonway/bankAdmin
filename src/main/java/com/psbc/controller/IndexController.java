@@ -56,7 +56,7 @@ public class IndexController {
     // º£±¨
     @RequestMapping("/poster")
     public String poster() {
-        return "/poster";
+        return "postergrid";
     }
 
 }

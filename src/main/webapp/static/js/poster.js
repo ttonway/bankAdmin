@@ -1,7 +1,7 @@
 $(function () {
 
     function reloadPosters() {
-        $.getJSON("poster/list", function (data) {
+        $.getJSON("parter/list", function (data) {
             if (data.code == 0) {
                 var grid = $('#poater-grid');
                 var html = $.templates("#posterTmpl").render(data.data);
