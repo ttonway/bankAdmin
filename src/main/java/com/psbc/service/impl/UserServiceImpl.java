@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserDetailsService {
             return null;
         } else {
             List<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
-            if (adminUser.getRole().equals("ϵͳ����Ա")) {
+            if (adminUser.getRole().equals("系统管理员")) {
                 auths.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
             } else {
                 auths.add(new SimpleGrantedAuthority("ROLE_USER"));

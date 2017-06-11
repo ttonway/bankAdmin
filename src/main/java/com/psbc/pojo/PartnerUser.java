@@ -3,7 +3,7 @@ package com.psbc.pojo;
 public class PartnerUser {
     private Long partnerId;
 
-    private String type;
+    private String partnerType;
 
     private String oldCustomer;
 
@@ -18,8 +18,11 @@ public class PartnerUser {
     private String shopAddress;
 
     private String area;
-    
+
     private String posterType;
+
+    private String createTime;
+    private String updateTime;
 
     public Long getPartnerId() {
         return partnerId;
@@ -29,12 +32,12 @@ public class PartnerUser {
         this.partnerId = partnerId;
     }
 
-    public String getType() {
-        return type;
+    public String getPartnerType() {
+        return partnerType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setPartnerType(String partnerType) {
+        this.partnerType = partnerType;
     }
 
     public String getOldCustomer() {
@@ -107,5 +110,21 @@ public class PartnerUser {
 
     public void setPosterType(String posterType) {
         this.posterType = posterType;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
     }
 }

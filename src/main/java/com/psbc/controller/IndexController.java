@@ -15,10 +15,10 @@ public class IndexController {
     public ModelAndView login(String error, String logout) {
         ModelAndView model = new ModelAndView();
         if (error != null) {
-            model.addObject("error", "ÓÃ»§Ãû»òÃÜÂë´íÎó¡£");
+            model.addObject("error", "ç”¨æˆ·åæˆ–å¯†ç é”™è¯¯ã€‚");
         }
         if (logout != null) {
-            model.addObject("msg", "ÄúÒÑµÇ³öÏµÍ³¡£");
+            model.addObject("msg", "æ‚¨å·²ç™»å‡ºç³»ç»Ÿã€‚");
         }
         model.setViewName("login");
         return model;
@@ -41,19 +41,19 @@ public class IndexController {
         return "/userlist";
     }
 
-    // ÓÊĞÅ´û
+    // é‚®ä¿¡è´·
     @RequestMapping("/list1")
     public ModelAndView list1() {
-        return new ModelAndView("loanlist", "loanType", "ÓÊĞÅ´û");
+        return new ModelAndView("loanlist", "loanType", "é‚®ä¿¡è´·");
     }
 
-    // ÉÌÒ×´û
+    // å•†æ˜“è´·
     @RequestMapping("/list2")
     public ModelAndView list2() {
-        return new ModelAndView("loanlist", "loanType", "ÉÌÒ×´û");
+        return new ModelAndView("loanlist", "loanType", "å•†æ˜“è´·");
     }
 
-    // º£±¨
+    // æµ·æŠ¥
     @RequestMapping("/poster")
     public String poster() {
         return "postergrid";

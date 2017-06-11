@@ -42,7 +42,7 @@ public class LoanController {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             Map<String, Object> pmap = new HashMap<String, Object>();
-            if ("Ö§ĞĞÓªÏú¸Ú".equals(userDetails.getUserRole())) {
+            if ("æ”¯è¡Œè¥é”€å²—".equals(userDetails.getUserRole())) {
                 pmap.put("bank", userDetails.getUserBank());
             } else {
                 pmap.put("bank", null);
@@ -129,7 +129,7 @@ public class LoanController {
                 .getPrincipal();
 
         Map<String, Object> pmap = new HashMap<String, Object>();
-        if ("Ö§ĞĞÓªÏú¸Ú".equals(userDetails.getUserRole())) {
+        if ("æ”¯è¡Œè¥é”€å²—".equals(userDetails.getUserRole())) {
             pmap.put("bank", userDetails.getUserBank());
         } else {
             pmap.put("bank", null);
@@ -138,32 +138,32 @@ public class LoanController {
         pmap.put("type", loanType);
 
 
-        // »ñÈ¡°Ù·Ö±È
+        // è·å–ç™¾åˆ†æ¯”
         NumberFormat nf = NumberFormat.getPercentInstance();
-        // Ğ¡Êıµãºó×îÉÙ±£ÁôÁ½Î»Ğ¡Êı
+        // å°æ•°ç‚¹åæœ€å°‘ä¿ç•™ä¸¤ä½å°æ•°
         nf.setMinimumFractionDigits(2);
 
-        // ¶¨ÒåresponseÀàĞÍ
+        // å®šä¹‰responseç±»å‹
         response.setContentType("application/vnd.ms-excel;charset=UTF-8");
         response.setHeader("Content-Disposition", "attachment;filename=\"export.xls\"");
-        // ¶¨ÒåÊä³öÁ÷
+        // å®šä¹‰è¾“å‡ºæµ
         OutputStream excelStream;
         try {
             logger.info("export excel " + loanType);
             ExportExcelUtils<LoanUser> outExcel = new ExportExcelUtils<LoanUser>();
-            // ¶¨ÒåsheetÒ³±êÌâ
-            String title = "ÏÂÔØ";
-            // ¶¨Òå±íÍ·
-            if ("ÓÊĞÅ´û".equals(loanType)) {
+            // å®šä¹‰sheeté¡µæ ‡é¢˜
+            String title = "ä¸‹è½½";
+            // å®šä¹‰è¡¨å¤´
+            if ("é‚®ä¿¡è´·".equals(loanType)) {
                 excelStream = new BufferedOutputStream(response.getOutputStream());
                 Collection<LoanUser> dataset = loanUserService.export(pmap);
-                String[] headers = {"ÉêÇëÈËID", "ÉêÇëÈËĞÕÃû", "ÁªÏµÊÖ»ú", "ÇøÓò", "Ö§ĞĞ", "ÍÆ¼öÈË", "ID", "ÉêÇë½ğ¶î", "¹¤×÷µ¥Î»", "ÉêÇëÊ±¼ä", "×´Ì¬", "±¸×¢", "¸úĞÂÊ±¼ä", "À´Ô´"};
+                String[] headers = {"ç”³è¯·äººID", "ç”³è¯·äººå§“å", "è”ç³»æ‰‹æœº", "åŒºåŸŸ", "æ”¯è¡Œ", "æ¨èäºº", "ID", "ç”³è¯·é‡‘é¢", "å·¥ä½œå•ä½", "ç”³è¯·æ—¶é—´", "çŠ¶æ€", "å¤‡æ³¨", "è·Ÿæ–°æ—¶é—´", "æ¥æº"};
                 String[] fields = {"loanid", "usernm", "phonenum", "area", "bank", "referrals", "id", "loanNum", "workunit", "createtime", "status", "remark", "updatetime", "utmsrc"};
                 outExcel.exportExcel(title, headers, fields, dataset, excelStream);
-            } else if ("ÉÌÒ×´û".equals(loanType)) {
+            } else if ("å•†æ˜“è´·".equals(loanType)) {
                 excelStream = new BufferedOutputStream(response.getOutputStream());
                 Collection<LoanUser> dataset = loanUserService.export(pmap);
-                String[] headers = {"ÉêÇëÈËID", "ÉêÇëÈËĞÕÃû", "ÁªÏµÊÖ»ú", "ÇøÓò", "Ö§ĞĞ", "ÍÆ¼öÈË", "ID", "ÉêÇë½ğ¶î", "ĞĞÒµĞÅÏ¢£¨Ò»¼¶£©", "ĞĞÒµĞÅÏ¢£¨¶ş¼¶£©", "ÊÇ·ñÎª±¾µØÈË", "±¾µØÊÇ·ñÓĞ·¿²ú", "µ£±£·½Ê½", "ÉêÇëÊ±¼ä", "×´Ì¬", "±¸×¢", "¸úĞÂÊ±¼ä", "À´Ô´"};
+                String[] headers = {"ç”³è¯·äººID", "ç”³è¯·äººå§“å", "è”ç³»æ‰‹æœº", "åŒºåŸŸ", "æ”¯è¡Œ", "æ¨èäºº", "ID", "ç”³è¯·é‡‘é¢", "è¡Œä¸šä¿¡æ¯ï¼ˆä¸€çº§ï¼‰", "è¡Œä¸šä¿¡æ¯ï¼ˆäºŒçº§ï¼‰", "æ˜¯å¦ä¸ºæœ¬åœ°äºº", "æœ¬åœ°æ˜¯å¦æœ‰æˆ¿äº§", "æ‹…ä¿æ–¹å¼", "ç”³è¯·æ—¶é—´", "çŠ¶æ€", "å¤‡æ³¨", "è·Ÿæ–°æ—¶é—´", "æ¥æº"};
                 String[] fields = {"loanid", "usernm", "phonenum", "area", "bank", "referrals", "id", "loanNum", "workunit", "workunit2", "localPerson", "house", "guaranteeType", "createtime", "status", "remark", "updatetime", "utmsrc"};
                 outExcel.exportExcel(title, headers, fields, dataset, excelStream);
             }

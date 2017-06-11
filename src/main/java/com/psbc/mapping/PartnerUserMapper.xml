@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.psbc.dao.PartnerUserMapper">
+    <resultMap id="BaseResultMap" type="com.psbc.pojo.PartnerUser">
+        <id column="partnerId" property="partnerId" jdbcType="BIGINT"/>
+        <result column="partnerType" property="partnerType" jdbcType="VARCHAR"/>
+        <result column="oldCustomer" property="oldCustomer" jdbcType="VARCHAR"/>
+        <result column="workUnitType" property="workUnitType" jdbcType="VARCHAR"/>
+        <result column="workUnitName" property="workUnitName" jdbcType="VARCHAR"/>
+        <result column="userName" property="userName" jdbcType="VARCHAR"/>
+        <result column="phoneNumber" property="phoneNumber" jdbcType="VARCHAR"/>
+        <result column="shopName" property="shopName" jdbcType="VARCHAR"/>
+        <result column="shopAddress" property="shopAddress" jdbcType="VARCHAR"/>
+        <result column="area" property="area" jdbcType="VARCHAR"/>
+        <result column="posterType" property="posterType" jdbcType="VARCHAR"/>
+        <result column="createTime" property="createTime" jdbcType="VARCHAR"/>
+        <result column="updateTime" property="updateTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    partnerId, partnerType, oldCustomer, workUnitType, workUnitName, userName, phoneNumber, shopName, shopAddress, area, posterType, createTime, updateTime
+    </sql>
+
+
+    <select id="selectByList" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select *
+    from parter_user
+    order by createTime desc
+    limit #{start,jdbcType=BIGINT},#{length,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByCnt" resultType="java.lang.Integer">
+    select count(t.partnerId) cnt
+    from parter_user t
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from parter_user
+        where partnerId = #{partnerId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey">
+        delete from parter_user
+        where partnerId in
+        <foreach collection="array" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+    <insert id="insert" parameterType="com.psbc.pojo.PartnerUser">
+    insert into parter_user (userId, userNm, userCode,
+      userPw, bank, userRole
+      )
+    values (#{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{userCode,jdbcType=VARCHAR},
+      #{password,jdbcType=VARCHAR}, #{bank,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR}
+      )
+  </insert>
+
+</mapper>

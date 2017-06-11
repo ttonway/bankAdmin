@@ -62,7 +62,7 @@ public class PartnerController {
     @RequestMapping("/form/whitecollar")
     public ModelAndView formWhiteCollar(HttpSession session) {
         PartnerUser partner = new PartnerUser();
-        partner.setType("whitecollar");
+        partner.setPartnerType("whitecollar");
         session.setAttribute("partner", partner);
         return new ModelAndView("partner/form", "type", "whitecollar");
     }
@@ -70,7 +70,7 @@ public class PartnerController {
     @RequestMapping("/form/shop")
     public ModelAndView formShop(HttpSession session) {
         PartnerUser partner = new PartnerUser();
-        partner.setType("shop");
+        partner.setPartnerType("shop");
         session.setAttribute("partner", partner);
         return new ModelAndView("partner/form", "type", "shop");
     }
@@ -83,13 +83,13 @@ public class PartnerController {
         }
 
         partner.setOldCustomer(oldCustomer);
-        if (partner.getType().equals("whitecollar")) {
+        if (partner.getPartnerType().equals("whitecollar")) {
             partner.setWorkUnitType(workUnitType);
             partner.setWorkUnitName(workUnitName);
         }
         partner.setUserName(userName);
         partner.setPhoneNumber(phoneNumber);
-        if (partner.getType().equals("shop")) {
+        if (partner.getPartnerType().equals("shop")) {
             partner.setShopName(shopName);
             partner.setShopAddress(shopAddress);
         }

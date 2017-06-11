@@ -8,7 +8,6 @@
         <result column="userPw" property="password" jdbcType="VARCHAR"/>
         <result column="bank" property="bank" jdbcType="VARCHAR"/>
         <result column="userRole" property="role" jdbcType="VARCHAR"/>
-        <result column="loginTime" property="loginTime" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
     userId, userNm, userCode, userPw, bank, userRole

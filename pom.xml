@@ -230,7 +230,6 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
-					<encoding>GB2312</encoding>
 				</configuration>
 			</plugin>
 			<plugin>

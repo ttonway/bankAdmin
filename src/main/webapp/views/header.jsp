@@ -62,7 +62,7 @@
                                 <a href="#" class="btn btn-default" id="reset-pwd-btn">修改密码</a>
                             </div>
                             <div class="pull-right">
-                                <a href="login" class="btn btn-default">注销</a>
+                                <a href="<%=request.getContextPath()%>/j_spring_security_logout" class="btn btn-default">注销</a>
                             </div>
                         </li>
                     </ul>

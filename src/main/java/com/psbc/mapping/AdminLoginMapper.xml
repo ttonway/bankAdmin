@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.psbc.dao.AdminLoginMapper" >
+  <resultMap id="BaseResultMap" type="com.psbc.pojo.AdminLogin" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="userCode" property="usercode" jdbcType="BIGINT" />
+    <result column="loginTime" property="logintime" jdbcType="VARCHAR" />
+    <result column="loginStatus" property="loginstatus" jdbcType="INTEGER" />
+    <result column="loginNum" property="loginnum" jdbcType="BIGINT" />
+    <result column="sessionTime" property="sessiontime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, userCode, loginTime, loginStatus, loginNum, sessionTime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from admin_login
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from admin_login
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.psbc.pojo.AdminLogin" >
+    insert into admin_login (id, userCode, loginTime, 
+      loginStatus, loginNum, sessionTime
+      )
+    values (#{id,jdbcType=BIGINT}, #{usercode,jdbcType=BIGINT}, #{logintime,jdbcType=VARCHAR}, 
+      #{loginstatus,jdbcType=INTEGER}, #{loginnum,jdbcType=BIGINT}, #{sessiontime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.psbc.pojo.AdminLogin" >
+    insert into admin_login
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="usercode != null" >
+        userCode,
+      </if>
+      <if test="logintime != null" >
+        loginTime,
+      </if>
+      <if test="loginstatus != null" >
+        loginStatus,
+      </if>
+      <if test="loginnum != null" >
+        loginNum,
+      </if>
+      <if test="sessiontime != null" >
+        sessionTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="usercode != null" >
+        #{usercode,jdbcType=BIGINT},
+      </if>
+      <if test="logintime != null" >
+        #{logintime,jdbcType=VARCHAR},
+      </if>
+      <if test="loginstatus != null" >
+        #{loginstatus,jdbcType=INTEGER},
+      </if>
+      <if test="loginnum != null" >
+        #{loginnum,jdbcType=BIGINT},
+      </if>
+      <if test="sessiontime != null" >
+        #{sessiontime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.psbc.pojo.AdminLogin" >
+    update admin_login
+    <set >
+      <if test="usercode != null" >
+        userCode = #{usercode,jdbcType=BIGINT},
+      </if>
+      <if test="logintime != null" >
+        loginTime = #{logintime,jdbcType=VARCHAR},
+      </if>
+      <if test="loginstatus != null" >
+        loginStatus = #{loginstatus,jdbcType=INTEGER},
+      </if>
+      <if test="loginnum != null" >
+        loginNum = #{loginnum,jdbcType=BIGINT},
+      </if>
+      <if test="sessiontime != null" >
+        sessionTime = #{sessiontime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.psbc.pojo.AdminLogin" >
+    update admin_login
+    set userCode = #{usercode,jdbcType=BIGINT},
+      loginTime = #{logintime,jdbcType=VARCHAR},
+      loginStatus = #{loginstatus,jdbcType=INTEGER},
+      loginNum = #{loginnum,jdbcType=BIGINT},
+      sessionTime = #{sessiontime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -25,10 +25,13 @@
                 login-page='/login'
                 login-processing-url="/j_spring_security_check"
                 authentication-failure-url="/login?error"
+                authentication-success-handler-ref="myAuthenticationSuccessHandler"
                 default-target-url="/index"
                 username-parameter="username"
                 password-parameter="password"/>
-        <logout logout-success-url="/login?logout"/>
+        <logout
+                logout-url="/j_spring_security_logout"
+                logout-success-url="/login?logout"/>
         <csrf disabled="true"/>
     </http>
 
@@ -46,5 +49,7 @@
     <beans:bean id="md5Encoder" class="com.psbc.util.MD5PasswordEncoder"/>
 
     <beans:bean id="userService" class="com.psbc.service.impl.UserServiceImpl"/>
+
+    <beans:bean id="myAuthenticationSuccessHandler" class="com.psbc.service.impl.LoginSuccessHandler"/>
 
 </beans:beans>

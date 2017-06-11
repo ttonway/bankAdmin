@@ -7,17 +7,17 @@ import java.security.MessageDigest;
 public class MD5Util {
 	public static String getMD5(String str) {
 		String md5 = "";
-	    try {
-	        // Éú³ÉÒ»¸öMD5¼ÓÃÜ¼ÆËãÕªÒª
-	        MessageDigest md = MessageDigest.getInstance("MD5");
-	        // ¼ÆËãmd5º¯Êı
-	        md.update(str.getBytes());
-	        // digest()×îºóÈ·¶¨·µ»Ømd5 hashÖµ£¬·µ»ØÖµÎª8Îª×Ö·û´®¡£ÒòÎªmd5 hashÖµÊÇ16Î»µÄhexÖµ£¬Êµ¼ÊÉÏ¾ÍÊÇ8Î»µÄ×Ö·û
-	        // BigIntegerº¯ÊıÔò½«8Î»µÄ×Ö·û´®×ª»»³É16Î»hexÖµ£¬ÓÃ×Ö·û´®À´±íÊ¾£»µÃµ½×Ö·û´®ĞÎÊ½µÄhashÖµ
-	        md5 =  new BigInteger(1, md.digest()).toString(16);
-	    } catch (Exception e) {
-	    	e.printStackTrace();
-	    }
+		try {
+			// ç”Ÿæˆä¸€ä¸ªMD5åŠ å¯†è®¡ç®—æ‘˜è¦
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			// è®¡ç®—md5å‡½æ•°
+			md.update(str.getBytes());
+			// digest()æœ€åç¡®å®šè¿”å›md5 hashå€¼ï¼Œè¿”å›å€¼ä¸º8ä¸ºå­—ç¬¦ä¸²ã€‚å› ä¸ºmd5 hashå€¼æ˜¯16ä½çš„hexå€¼ï¼Œå®é™…ä¸Šå°±æ˜¯8ä½çš„å­—ç¬¦
+			// BigIntegerå‡½æ•°åˆ™å°†8ä½çš„å­—ç¬¦ä¸²è½¬æ¢æˆ16ä½hexå€¼ï¼Œç”¨å­—ç¬¦ä¸²æ¥è¡¨ç¤ºï¼›å¾—åˆ°å­—ç¬¦ä¸²å½¢å¼çš„hashå€¼
+			md5 =  new BigInteger(1, md.digest()).toString(16);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return md5;
 	}
 
