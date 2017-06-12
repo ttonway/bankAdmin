@@ -113,7 +113,7 @@
                 <p>确认删除此员工吗？</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">确认</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

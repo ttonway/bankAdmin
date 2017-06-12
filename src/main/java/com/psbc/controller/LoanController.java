@@ -11,7 +11,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.psbc.pojo.AdminUser;
 import com.psbc.pojo.AdminUserDetails;
+import com.psbc.pojo.PartnerUser;
+import com.psbc.service.AdminUserService;
+import com.psbc.service.PartnerUserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,6 +35,11 @@ public class LoanController {
     @Autowired
     private LoanUserService loanUserService;
 
+    @Autowired
+    private PartnerUserService partnerUserService;
+
+    @Autowired
+    private AdminUserService adminUserService;
 
     @RequestMapping("/list")
     @ResponseBody
@@ -117,6 +126,30 @@ public class LoanController {
             return map;
         } catch (Exception e) {
             logger.error("selecDetial fail.", e);
+            map.put("code", 1);
+            return map;
+        }
+    }
+
+    @RequestMapping("/getFromUser")
+    @ResponseBody
+    public Map<String, Object> getFromUserInfo(String userCode) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        final String prefix = "partner-";
+        try {
+            if (userCode.startsWith(prefix)) {
+                long partnerId = Long.parseLong(userCode.substring(prefix.length()));
+                PartnerUser user = partnerUserService.selectByPrimaryKey(partnerId);
+                map.put("partner", user);
+            } else {
+                AdminUser user = adminUserService.selectByCode(userCode);
+                map.put("admin", user);
+            }
+
+            map.put("code", 0);
+            return map;
+        } catch (Exception e) {
+            logger.error("getFromUserInfo fail.", e);
             map.put("code", 1);
             return map;
         }

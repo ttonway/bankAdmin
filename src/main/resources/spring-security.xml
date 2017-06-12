@@ -50,6 +50,8 @@
 
     <beans:bean id="userService" class="com.psbc.service.impl.UserServiceImpl"/>
 
-    <beans:bean id="myAuthenticationSuccessHandler" class="com.psbc.service.impl.LoginSuccessHandler"/>
+    <beans:bean id="myAuthenticationSuccessHandler" class="com.psbc.service.impl.LoginSuccessHandler">
+        <beans:property name="defaultTargetUrl" value="/index"/>
+    </beans:bean>
 
 </beans:beans>

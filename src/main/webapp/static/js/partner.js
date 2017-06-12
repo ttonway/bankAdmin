@@ -110,7 +110,7 @@ function generatePoster() {
     }
     var posterType = $('.nav-tabs li.active').attr('loan_type');
 
-    location.href = "poster?posterType=" + posterType + "&posterFileName" + poster.attr('file-name');
+    location.href = "result?posterType=" + posterType + "&posterFileName=" + poster.attr('file-name');
 }
 
 
@@ -152,7 +152,7 @@ function submitMaterial() {
 
     $.getJSON("needMaterial", {
         materials: materials.join("|"),
-        receiver: receive,
+        receiver: receiver,
         receiverPhoneNumber: receiverPhoneNumber,
         receiverArea: receiverArea,
         receiverAddress: receiverAddress

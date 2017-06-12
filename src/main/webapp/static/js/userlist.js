@@ -24,7 +24,7 @@ $(function () {
                     type: "post",
                     cache: false,
                     data: data,
-                    url: "admin/list",
+                    url: "admin/users",
                     success: function (res) {
                         var result = $.parseJSON(res);
                         if (result.code == 0) {

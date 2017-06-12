@@ -13,11 +13,20 @@
         <result column="shopAddress" property="shopAddress" jdbcType="VARCHAR"/>
         <result column="area" property="area" jdbcType="VARCHAR"/>
         <result column="posterType" property="posterType" jdbcType="VARCHAR"/>
+        <result column="posterFileName" property="posterFileName" jdbcType="VARCHAR"/>
+        <result column="needMaterial" property="needMaterial" jdbcType="VARCHAR"/>
+        <result column="materials" property="materials" jdbcType="VARCHAR"/>
+        <result column="receiver" property="receiver" jdbcType="VARCHAR"/>
+        <result column="receiverPhoneNumber" property="receiverPhoneNumber" jdbcType="VARCHAR"/>
+        <result column="receiverArea" property="receiverArea" jdbcType="VARCHAR"/>
+        <result column="receiverAddress" property="receiverAddress" jdbcType="VARCHAR"/>
+        <result column="posterType" property="posterType" jdbcType="VARCHAR"/>
         <result column="createTime" property="createTime" jdbcType="VARCHAR"/>
         <result column="updateTime" property="updateTime" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
-    partnerId, partnerType, oldCustomer, workUnitType, workUnitName, userName, phoneNumber, shopName, shopAddress, area, posterType, createTime, updateTime
+    partnerId, partnerType, oldCustomer, workUnitType, workUnitName, userName, phoneNumber, shopName, shopAddress, area,
+    posterType, posterFileName, needMaterial, materials, receiver, receiverPhoneNumber, receiverArea, receiverAddress, createTime, updateTime
     </sql>
 
 
@@ -48,11 +57,15 @@
     </delete>
     <insert id="insert" parameterType="com.psbc.pojo.PartnerUser"
             useGeneratedKeys="true" keyProperty="partnerId">
-    insert into parter_user (partnerType, oldCustomer, workUnitType, workUnitName, userName, phoneNumber,
-    shopName, shopAddress, area, posterType, createTime, updateTime)
+    insert into parter_user (partnerType, oldCustomer, workUnitType, workUnitName, userName, phoneNumber, shopName, shopAddress, area, posterType, posterFileName,
+    needMaterial, materials, receiver, receiverPhoneNumber, receiverArea, receiverAddress,
+    createTime, updateTime)
     values (#{partnerType,jdbcType=VARCHAR}, #{oldCustomer,jdbcType=VARCHAR}, #{workUnitType,jdbcType=VARCHAR}, #{workUnitName,jdbcType=VARCHAR},
       #{userName,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, #{shopAddress,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR},
-      #{posterType,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}
+      #{posterType,jdbcType=VARCHAR}, #{posterFileName,jdbcType=VARCHAR},
+      #{needMaterial,jdbcType=VARCHAR}, #{materials,jdbcType=VARCHAR},
+      #{receiver,jdbcType=VARCHAR}, #{receiverPhoneNumber,jdbcType=VARCHAR}, #{receiverArea,jdbcType=VARCHAR}, #{receiverAddress,jdbcType=VARCHAR},
+      #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}
       )
     </insert>
 
@@ -62,12 +75,19 @@
         oldCustomer = #{oldCustomer,jdbcType=VARCHAR},
         workUnitType = #{workUnitType,jdbcType=VARCHAR},
         workUnitName = #{workUnitName,jdbcType=VARCHAR},
-        userName = #{userName,jdbcType=VARCHAR}
-        phoneNumber = #{phoneNumber,jdbcType=VARCHAR}
-        shopName = #{shopName,jdbcType=VARCHAR}
-        shopAddress = #{shopAddress,jdbcType=VARCHAR}
-        area = #{area,jdbcType=VARCHAR}
-        posterType = #{posterType,jdbcType=VARCHAR}
+        userName = #{userName,jdbcType=VARCHAR},
+        phoneNumber = #{phoneNumber,jdbcType=VARCHAR},
+        shopName = #{shopName,jdbcType=VARCHAR},
+        shopAddress = #{shopAddress,jdbcType=VARCHAR},
+        area = #{area,jdbcType=VARCHAR},
+        posterType = #{posterType,jdbcType=VARCHAR},
+        posterFileName = #{posterFileName,jdbcType=VARCHAR},
+        needMaterial = #{needMaterial,jdbcType=VARCHAR},
+        materials = #{materials,jdbcType=VARCHAR},
+        receiver = #{receiver,jdbcType=VARCHAR},
+        receiverPhoneNumber = #{receiverPhoneNumber,jdbcType=VARCHAR},
+        receiverArea = #{receiverArea,jdbcType=VARCHAR},
+        receiverAddress = #{receiverAddress,jdbcType=VARCHAR},
         updateTime = #{updateTime,jdbcType=VARCHAR}
         where partnerId = #{partnerId,jdbcType=BIGINT}
     </update>

@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.psbc.pojo.AdminUserDetails;
+import com.psbc.pojo.PartnerUser;
+import com.psbc.pojo.PosterImage;
+import com.psbc.service.PartnerUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +28,12 @@ public class AdminController {
     @Autowired
     private AdminUserService adminUserService;
 
-    @RequestMapping("/list")
+    @Autowired
+    private PartnerUserService partnerUserService;
+
+    @RequestMapping("/users")
     @ResponseBody
-    public Map<String, Object> list(Integer draw, Integer start, Integer length) {
+    public Map<String, Object> users(Integer draw, Integer start, Integer length) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             int cnt = adminUserService.selectByCnt();
@@ -41,6 +47,43 @@ public class AdminController {
             return map;
         } catch (Exception e) {
             logger.error("list all users fail.", e);
+            map.put("code", 1);
+            return map;
+        }
+    }
+
+    @RequestMapping("/partners")
+    @ResponseBody
+    public Map<String, Object> partners(Integer draw, Integer start, Integer length) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            int cnt = partnerUserService.selectByCnt();
+            List<PartnerUser> list = partnerUserService.selectByList(start, length);
+
+            map.put("draw", draw);
+            map.put("recordsTotal", cnt);
+            map.put("recordsFiltered", cnt);
+            map.put("data", list);
+            map.put("code", 0);
+            return map;
+        } catch (Exception e) {
+            logger.error("list all partners fail.", e);
+            map.put("code", 1);
+            return map;
+        }
+    }
+
+    @RequestMapping("/getPartner")
+    @ResponseBody
+    public Map<String, Object> getPartner(Long partnerId) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            PartnerUser partner = partnerUserService.selectByPrimaryKey(partnerId);
+            map.put("code", 0);
+            map.put("result", partner);
+            return map;
+        } catch (Exception e) {
+            logger.error("query partner fail.", e);
             map.put("code", 1);
             return map;
         }

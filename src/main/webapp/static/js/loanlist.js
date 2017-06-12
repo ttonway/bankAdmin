@@ -56,9 +56,10 @@ $(function () {
                     "defaultContent": '<input type="checkbox" name="chk_item""/>'
                 },
                 {
+                    "class": 'from-user',
                     "data": "fromUserCode",
                     "render": function (data, type, full, meta) {
-                        return data ? '<a href="#" class="link-from-user">' + data + '</a>' : '';
+                        return data ? '<a href="#">' + data + '</a>' : '';
                     }
                 },
                 {"data": "usernm"},
@@ -141,6 +142,69 @@ $(function () {
             }
         });
     });
+
+    tableEl.on("click", ".from-user a", function () {
+        var data = table.row($(this).parents('tr')).data();
+
+        $.ajax({
+            type: "post",
+            cache: false,
+            data: {
+                userCode: data.fromUserCode,
+                r: Math.random()
+            },
+            url: "loan/getFromUser",
+            success: function (res) {
+                var result = $.parseJSON(res);
+                if (result.code == 0) {
+                    var dl = $('#details-modal dl');
+                    dl.html('');
+                    if (result.admin) {
+                        var map = result.admin;
+                        dl.append('<dt>姓名：</dt><dd>' + map.userName + '</dd>');
+                        dl.append('<dt>工号：</dt><dd>' + map.userCode + '</dd>');
+                        dl.append('<dt>银行：</dt><dd>' + map.bank + '</dd>');
+                        dl.append('<dt>岗位：</dt><dd>' + map.role + '</dd>');
+
+                        $('#details-modal').modal();
+                    } else if (result.partner) {
+                        var map = result.partner;
+
+                        var type;
+                        if (map.partnerType == "whitecollar") {
+                            type = "白领";
+                        } else if (map.partnerType == "shop") {
+                            type = "商家";
+                        }
+                        dl.append('<dt>类型：</dt><dd>' + type + '</dd>');
+                        dl.append('<dt>是否为我行老客户：</dt><dd>' + map.oldCustomer + '</dd>');
+                        dl.append('<dt>姓名：</dt><dd>' + map.userName + '</dd>');
+                        dl.append('<dt>联系方式：</dt><dd>' + map.phoneNumber + '</dd>');
+                        if (map.partnerType == "whitecollar") {
+                            dl.append('<dt>单位性质：</dt><dd>' + map.workUnitType + '</dd>');
+                            if (map.workUnitName)
+                                dl.append('<dt>单位名称：</dt><dd>' + map.workUnitName + '</dd>');
+                        } else if (map.partnerType == "shop") {
+                            dl.append('<dt>店面名称：</dt><dd>' + map.shopName + '</dd>');
+                            dl.append('<dt>店面位置：</dt><dd>' + map.shopAddress + '</dd>');
+                        }
+                        dl.append('<dt>合作区域：</dt><dd>' + map.area + '</dd>');
+                        dl.append('<dt>我需要实体宣传材料：</dt><dd>' + map.needMaterial + '</dd>');
+                        if (map.needMaterial == "是") {
+                            dl.append('<dt>实体宣传材料：</dt><dd>' + map.materials + '</dd>');
+                            dl.append('<dt>收货人：</dt><dd>' + map.receiver + '</dd>');
+                            dl.append('<dt>手机号码：</dt><dd>' + map.receiverPhoneNumber + '</dd>');
+                            dl.append('<dt>所在区或县：</dt><dd>' + map.receiverArea + '</dd>');
+                            dl.append('<dt>详细地址：</dt><dd>' + map.receiverAddress + '</dd>');
+                        }
+
+                        $('#details-modal').modal();
+                    }
+                }
+            }
+        });
+    });
+
 
     $('#export').on('click', function () {
         var loanType = $("#loanType").val();

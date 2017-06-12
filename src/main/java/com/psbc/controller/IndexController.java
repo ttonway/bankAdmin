@@ -41,6 +41,11 @@ public class IndexController {
         return "/userlist";
     }
 
+    @RequestMapping("/partnerlist")
+    public String partnerlist() {
+        return "/partnerlist";
+    }
+
     // 邮信贷
     @RequestMapping("/list1")
     public ModelAndView list1() {

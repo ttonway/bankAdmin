@@ -291,6 +291,6 @@
 <script src="<%=request.getContextPath()%>/static/lib/datatables/dataTables.bootstrap.min.js"></script>
 <script src="<%=request.getContextPath()%>/static/lib/adminLTE/js/app.min.js"></script>
 <script src="<%=request.getContextPath()%>/static/js/app.js"></script>
-<script src="<%=request.getContextPath()%>/static/js/list.js"></script>
+<script src="<%=request.getContextPath()%>/static/js/loanlist.js"></script>
 </body>
 </html>

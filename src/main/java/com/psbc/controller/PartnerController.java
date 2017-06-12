@@ -127,7 +127,7 @@ public class PartnerController {
 
         partner.setPosterType(posterType);
         partner.setPosterFileName(posterFileName);
-        if (partner.getPartnerId() == 0) {
+        if (partner.getPartnerId() == null) {
 
             partner.setNeedMaterial("否");
             partnerUserService.insert(partner);
@@ -172,8 +172,12 @@ public class PartnerController {
         partner.setReceiverArea(receiverArea);
         partner.setReceiverAddress(receiverAddress);
 
-        partnerUserService.updateByPrimaryKey(partner);
-        map.put("code", 0);
+        try {
+            partnerUserService.updateByPrimaryKey(partner);
+            map.put("code", 0);
+        } catch (Exception e) {
+            logger.error("update partner fail.", e);
+        }
         return map;
     }
 
