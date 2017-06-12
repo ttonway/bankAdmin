@@ -50,8 +50,6 @@ public class AdminUserServiceImpl implements AdminUserService {
         return adminUserMapper.selectByCode(usercode);
     }
 
-    ;
-
     @Override
     public List<AdminUser> selectByList(int start, int length) {
         Map<String, Integer> map = new HashMap<String, Integer>();

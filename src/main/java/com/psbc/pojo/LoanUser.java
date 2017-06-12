@@ -1,65 +1,65 @@
 package com.psbc.pojo;
 
 public class LoanUser {
-    private Long loanid;
+	private Long loanid;
 
 	/**
-	 * ÒµÎñÀàĞÍ
-	 * 1. ÉÌÒ×´û
-	 * 2. ÓÊĞÅ´û
+	 * ä¸šåŠ¡ç±»å‹
+	 * 1. å•†æ˜“è´·
+	 * 2. é‚®ä¿¡è´·
 	 */
 	private String loanType;
 
-    private String usernm;
+	private String usernm;
 
-    private String phonenum;
+	private String phonenum;
 
-    private String area;
+	private String area;
 
-    private String bank;
+	private String bank;
 
-    private String referrals;
+	private String referrals;
 
-    private Integer id;
+	private Integer id;
 
 	/**
-	 * ÉêÇë½ğ¶î
+	 * ç”³è¯·é‡‘é¢
 	 */
 	private Integer loanNum;
 
 	/**
-	 * ÉÌÒ×´û: ĞĞÒµĞÅÏ¢£¨Ò»¼¶£©
+	 * å•†æ˜“è´·: è¡Œä¸šä¿¡æ¯ï¼ˆä¸€çº§ï¼‰
 	 */
-    private String workunit;
+	private String workunit;
 	/**
-	 * ÉÌÒ×´û: ĞĞÒµĞÅÏ¢£¨¶ş¼¶£©
+	 * å•†æ˜“è´·: è¡Œä¸šä¿¡æ¯ï¼ˆäºŒçº§ï¼‰
 	 */
 	private String workunit2;
 	/**
-	 * ÉÌÒ×´û: ÊÇ·ñÎª±¾µØÈË
+	 * å•†æ˜“è´·: æ˜¯å¦ä¸ºæœ¬åœ°äºº
 	 */
 	private String localPerson;
 	/**
-	 * ÉÌÒ×´û:±¾µØÊÇ·ñÓĞ·¿²ú
+	 * å•†æ˜“è´·:æœ¬åœ°æ˜¯å¦æœ‰æˆ¿äº§
 	 */
 	private String house;
 	/**
-	 * ÉÌÒ×´û: µ£±£·½Ê½
+	 * å•†æ˜“è´·: æ‹…ä¿æ–¹å¼
 	 */
 	private String guaranteeType;
 
-    private String createtime;
-    //´ıÁªÏµ £¨0£© ´ıÉóºË £¨1£© ÒÑÉóºË £¨2£© ÒÑ²µ»Ø £¨3£© ´ıµ÷Õû £¨4£©
-    private String status;
-    
-    private String remark;
-    
-    private String updatetime;
-    
-    private String utmsrc;
+	private String createtime;
+	//å¾…è”ç³» ï¼ˆ0ï¼‰ å¾…å®¡æ ¸ ï¼ˆ1ï¼‰ å·²å®¡æ ¸ ï¼ˆ2ï¼‰ å·²é©³å› ï¼ˆ3ï¼‰ å¾…è°ƒæ•´ ï¼ˆ4ï¼‰
+	private String status;
+
+	private String remark;
+
+	private String updatetime;
+
+	private String utmsrc;
 
 	private String fromUserCode;
-    
+
 	public Long getLoanid() {
 		return loanid;
 	}

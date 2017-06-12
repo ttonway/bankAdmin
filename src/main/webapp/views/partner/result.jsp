@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -30,37 +29,27 @@
     <link href="<%=request.getContextPath()%>/static/css/partner.css" rel="stylesheet">
 </head>
 <body>
-<nav class="navbar navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">
-                获取海报
-            </a>
-        </div>
+
+<div class="container-fluid">
+    <div class="result-block">
+        <img class="img-responsive" src="<%=request.getContextPath()%>/static/images/partner-result.png"/>
+        <div class="text-content">您的海报已生成</div>
+        <div class="text-tip">请点击查看海报，并长按保存</div>
+        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal">查看海报</button>
+        <a href="material" class="btn btn-primary btn-border btn-block" role="button" style="margin-top: 15px;">我需要实体宣传材料</a>
     </div>
-</nav>
+</div>
 
-<ul class="nav nav-tabs nav-justified">
-    <li role="presentation" class="active" loan_type="0"><a href="#">消费贷海报</a></li>
-    <li role="presentation" loan_type="1"><a href="#">生意贷海报</a></li>
-</ul>
-
-<div class="container">
-    <div class="row poster-row">
-        <c:forEach var="poster" items="${posters}">
-            <div class="col-xs-4 col-md-3 poster" poster-id="${poster.posterId}" file-name="${poster.fileName}">
-                <div class="thumbnail">
-                    <img src="image/${poster.posterId}">
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div>
+                    <image class='img-responsive img-rounded'
+                           src="<%=request.getContextPath()%>/partner/generate/partner-${sessionScope.partner.partnerId}/${sessionScope.partner.posterType}/${sessionScope.partner.posterFileName}"/>
                 </div>
-                <div class="selected-mask"><span class="glyphicon glyphicon-ok"></span></div>
             </div>
-        </c:forEach>
-    </div>
-
-    <div class="fixed-bottom">
-    <button type="button" class="btn btn-primary btn-block" onclick="generatePoster()">
-        生成海报
-    </button>
+        </div>
     </div>
 </div>
 

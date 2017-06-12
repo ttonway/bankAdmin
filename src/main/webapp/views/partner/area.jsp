@@ -44,7 +44,7 @@
 
         <div class="form-group">
             <label for="corporateArea">请选择合作区域</label>
-            <ul class="list-group" id="corporateArea">
+            <ul class="list-group sigle-select" id="corporateArea">
                 <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>市区</li>
                 <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>东台</li>
                 <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>大丰</li>

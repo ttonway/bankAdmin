@@ -20,6 +20,14 @@ public class PartnerUser {
     private String area;
 
     private String posterType;
+    private String posterFileName;
+
+    private String needMaterial;
+    private String materials;
+    private String receiver;
+    private String receiverPhoneNumber;
+    private String receiverArea;
+    private String receiverAddress;
 
     private String createTime;
     private String updateTime;
@@ -126,5 +134,61 @@ public class PartnerUser {
 
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getPosterFileName() {
+        return posterFileName;
+    }
+
+    public void setPosterFileName(String posterFileName) {
+        this.posterFileName = posterFileName;
+    }
+
+    public String getNeedMaterial() {
+        return needMaterial;
+    }
+
+    public void setNeedMaterial(String needMaterial) {
+        this.needMaterial = needMaterial;
+    }
+
+    public String getMaterials() {
+        return materials;
+    }
+
+    public void setMaterials(String materials) {
+        this.materials = materials;
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
+    }
+
+    public String getReceiverPhoneNumber() {
+        return receiverPhoneNumber;
+    }
+
+    public void setReceiverPhoneNumber(String receiverPhoneNumber) {
+        this.receiverPhoneNumber = receiverPhoneNumber;
+    }
+
+    public String getReceiverArea() {
+        return receiverArea;
+    }
+
+    public void setReceiverArea(String receiverArea) {
+        this.receiverArea = receiverArea;
+    }
+
+    public String getReceiverAddress() {
+        return receiverAddress;
+    }
+
+    public void setReceiverAddress(String receiverAddress) {
+        this.receiverAddress = receiverAddress;
     }
 }

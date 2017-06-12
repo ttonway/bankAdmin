@@ -20,10 +20,12 @@
     });
 
 
-    var listItems = $('.list-group').find('.list-group-item');
-    listItems.on('click', function () {
+    $('.list-group.sigle-select').find('.list-group-item').on('click', function () {
         $(this).siblings('.list-group-item').removeClass('on');
         $(this).addClass('on');
+    });
+    $('.list-group.multi-select').find('.list-group-item').on('click', function () {
+        $(this).toggleClass('on');
     });
 
     $('.nav-tabs').find('li').on('click', function () {
@@ -37,6 +39,10 @@
     });
 }());
 
+function isPhoneNumber(str) {
+    var reg = /^0?1[3|4|5|7|8][0-9]\d{8}$/;
+    return reg.test(str);
+}
 
 function submitForm() {
     if (!$('input[name="oldCustomer"]').val()) {
@@ -49,7 +55,9 @@ function submitForm() {
             alert("请选择单位性质.");
             return;
         }
-        if (!$('#workUnitName').is(":hidden") && !$('#workUnitName').val()) {
+        if ($('#workUnitName').is(":hidden")) {
+            $('#workUnitName').val('');
+        } else if (!$('#workUnitName').val()) {
             alert("请输入单位名称.");
             return;
         }
@@ -76,8 +84,7 @@ function submitForm() {
         alert("请输入联系方式");
         return;
     }
-    var reg = /^0?1[3|4|5|7|8][0-9]\d{8}$/;
-    if (!reg.test(phoneNumber)) {
+    if (!isPhoneNumber(phoneNumber)) {
         alert("请输入正确手机号码");
         return;
     }
@@ -86,7 +93,7 @@ function submitForm() {
 }
 
 function submitArea() {
-    var area = $('.list-group-item.on').text();
+    var area = $('#corporateArea .list-group-item.on').text();
     if (!area) {
         alert("请选择合作区域.");
         return;
@@ -96,4 +103,65 @@ function submitArea() {
 }
 
 function generatePoster() {
+    var poster = $('.poster.selected');
+    if (poster.length == 0) {
+        alert("请选择海报.");
+        return;
+    }
+    var posterType = $('.nav-tabs li.active').attr('loan_type');
+
+    location.href = "poster?posterType=" + posterType + "&posterFileName" + poster.attr('file-name');
+}
+
+
+function submitMaterial() {
+    var items = $('#material .list-group-item.on');
+    if (items.length == 0) {
+        alert("请选择宣传材料.");
+        return;
+    }
+    var materials = [];
+    items.each(function () {
+        materials.push($(this).text());
+    });
+
+    var receiver = $('#receiver').val();
+    var receiverPhoneNumber = $('#receiverPhoneNumber').val();
+    var receiverArea = $('#receiverArea').val();
+    var receiverAddress = $('#receiverAddress').val();
+    if (!receiver) {
+        alert("请输入收货人.");
+        return;
+    }
+    if (!receiverPhoneNumber) {
+        alert("请输入手机号码");
+        return;
+    }
+    if (!isPhoneNumber(receiverPhoneNumber)) {
+        alert("请输入正确手机号码");
+        return;
+    }
+    if (!receiverArea) {
+        alert("请选择所在区或县.");
+        return;
+    }
+    if (!receiverAddress) {
+        alert("请输入详细地址.");
+        return;
+    }
+
+    $.getJSON("needMaterial", {
+        materials: materials.join("|"),
+        receiver: receive,
+        receiverPhoneNumber: receiverPhoneNumber,
+        receiverArea: receiverArea,
+        receiverAddress: receiverAddress
+    }, function (data) {
+        if (data.code == 0) {
+            $('#alert-modal .modal-body p').text("操作成功");
+        } else {
+            $('#alert-modal .modal-body p').text("操作失败");
+        }
+        $('#alert-modal').modal();
+    });
 }

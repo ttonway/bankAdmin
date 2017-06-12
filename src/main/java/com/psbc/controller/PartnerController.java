@@ -4,8 +4,11 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.psbc.pojo.AdminUser;
 import com.psbc.pojo.PartnerUser;
 import com.psbc.pojo.PosterImage;
+import com.psbc.service.AdminUserService;
+import com.psbc.service.PartnerUserService;
 import com.psbc.service.PosterService;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
@@ -49,6 +52,12 @@ public class PartnerController {
     @Autowired
     private PosterService posterService;
 
+    @Autowired
+    private PartnerUserService partnerUserService;
+
+    @Autowired
+    private AdminUserService adminUserService;
+
     @RequestMapping("/index")
     public String userlist() {
         return "/partner/index";
@@ -77,7 +86,7 @@ public class PartnerController {
 
     @RequestMapping("/area")
     public String area(HttpSession session, String oldCustomer, String workUnitType, String workUnitName, String userName, String phoneNumber, String shopName, String shopAddress) {
-        PartnerUser partner = (PartnerUser)session.getAttribute("partner");
+        PartnerUser partner = (PartnerUser) session.getAttribute("partner");
         if (partner == null) {
             return "redirect:index";
         }
@@ -98,7 +107,7 @@ public class PartnerController {
 
     @RequestMapping("/poster")
     public ModelAndView poster(HttpSession session, String area) {
-        PartnerUser partner = (PartnerUser)session.getAttribute("partner");
+        PartnerUser partner = (PartnerUser) session.getAttribute("partner");
         if (partner == null) {
             return new ModelAndView("redirect:index");
         }
@@ -107,6 +116,65 @@ public class PartnerController {
 
         List<PosterImage> list = posterService.selectAll();
         return new ModelAndView("partner/poster", "posters", list);
+    }
+
+    @RequestMapping("/result")
+    public String result(HttpSession session, String posterType, String posterFileName) {
+        PartnerUser partner = (PartnerUser) session.getAttribute("partner");
+        if (partner == null) {
+            return "redirect:index";
+        }
+
+        partner.setPosterType(posterType);
+        partner.setPosterFileName(posterFileName);
+        if (partner.getPartnerId() == 0) {
+
+            partner.setNeedMaterial("否");
+            partnerUserService.insert(partner);
+
+            AdminUser adminUser = new AdminUser();
+            adminUser.setUserCode("partner-" + partner.getPartnerId());
+            adminUser.setUserName(partner.getUserName());
+            adminUser.setRole("推广员");
+            adminUserService.insert(adminUser);
+        } else {
+            partnerUserService.updateByPrimaryKey(partner);
+        }
+
+        return "/partner/result";
+    }
+
+    @RequestMapping("/material")
+    public String material(HttpSession session) {
+        PartnerUser partner = (PartnerUser) session.getAttribute("partner");
+        if (partner == null) {
+            return "redirect:index";
+        }
+
+        return "/partner/material";
+    }
+
+    @RequestMapping("/needMaterial")
+    @ResponseBody
+    public Map<String, Object> needMaterial(HttpSession session, String materials, String receiver, String receiverPhoneNumber, String receiverArea, String receiverAddress) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("code", 1);
+
+        PartnerUser partner = (PartnerUser) session.getAttribute("partner");
+        if (partner == null) {
+            return map;
+        }
+
+        partner.setNeedMaterial("是");
+        partner.setMaterials(materials);
+        partner.setReceiver(receiver);
+        partner.setReceiverPhoneNumber(receiverPhoneNumber);
+        partner.setReceiverArea(receiverArea);
+        partner.setReceiverAddress(receiverAddress);
+
+        partnerUserService.updateByPrimaryKey(partner);
+        map.put("code", 0);
+        return map;
     }
 
     @RequestMapping("/list")

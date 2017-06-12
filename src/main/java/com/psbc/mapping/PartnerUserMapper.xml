@@ -46,13 +46,30 @@
             #{item}
         </foreach>
     </delete>
-    <insert id="insert" parameterType="com.psbc.pojo.PartnerUser">
-    insert into parter_user (userId, userNm, userCode,
-      userPw, bank, userRole
+    <insert id="insert" parameterType="com.psbc.pojo.PartnerUser"
+            useGeneratedKeys="true" keyProperty="partnerId">
+    insert into parter_user (partnerType, oldCustomer, workUnitType, workUnitName, userName, phoneNumber,
+    shopName, shopAddress, area, posterType, createTime, updateTime)
+    values (#{partnerType,jdbcType=VARCHAR}, #{oldCustomer,jdbcType=VARCHAR}, #{workUnitType,jdbcType=VARCHAR}, #{workUnitName,jdbcType=VARCHAR},
+      #{userName,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, #{shopAddress,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR},
+      #{posterType,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}
       )
-    values (#{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{userCode,jdbcType=VARCHAR},
-      #{password,jdbcType=VARCHAR}, #{bank,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR}
-      )
-  </insert>
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.psbc.pojo.PartnerUser">
+        update parter_user
+        set partnerType = #{partnerType,jdbcType=VARCHAR},
+        oldCustomer = #{oldCustomer,jdbcType=VARCHAR},
+        workUnitType = #{workUnitType,jdbcType=VARCHAR},
+        workUnitName = #{workUnitName,jdbcType=VARCHAR},
+        userName = #{userName,jdbcType=VARCHAR}
+        phoneNumber = #{phoneNumber,jdbcType=VARCHAR}
+        shopName = #{shopName,jdbcType=VARCHAR}
+        shopAddress = #{shopAddress,jdbcType=VARCHAR}
+        area = #{area,jdbcType=VARCHAR}
+        posterType = #{posterType,jdbcType=VARCHAR}
+        updateTime = #{updateTime,jdbcType=VARCHAR}
+        where partnerId = #{partnerId,jdbcType=BIGINT}
+    </update>
 
 </mapper>

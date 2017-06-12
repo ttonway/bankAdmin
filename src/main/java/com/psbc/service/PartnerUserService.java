@@ -1,11 +1,10 @@
-package com.psbc.dao;
+package com.psbc.service;
 
 import com.psbc.pojo.PartnerUser;
 
 import java.util.List;
-import java.util.Map;
 
-public interface PartnerUserMapper {
+public interface PartnerUserService {
     int deleteByPrimaryKey(Long[] partnerIds);
 
     int insert(PartnerUser record);
@@ -14,7 +13,7 @@ public interface PartnerUserMapper {
 
     PartnerUser selectByPrimaryKey(Long partnerId);
 
-    List<PartnerUser> selectByList(Map<String, Integer> map);
+    List<PartnerUser> selectByList(int start, int length);
 
     int selectByCnt();
 }
