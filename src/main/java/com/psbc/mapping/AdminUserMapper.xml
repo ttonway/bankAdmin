@@ -26,6 +26,7 @@
     from admin_user t 
     left join admin_login t1
       on t.userCode = t1.userCode
+      where t.userRole != '推广员'
    group by t.userId, t.userNm, t.userCode, t.userPw, t.bank, t.userRole
    order by userId desc
    limit #{start,jdbcType=BIGINT},#{length,jdbcType=BIGINT}
@@ -35,6 +36,7 @@
     <select id="selectByCnt" resultType="java.lang.Integer">
     select count(t.userId) cnt
     from admin_user t
+    where t.userRole != '推广员'
     </select>
 
 
