@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -36,7 +37,9 @@
         <div class="text-content">您的海报已生成</div>
         <div class="text-tip">请点击查看海报，并长按保存</div>
         <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal">查看海报</button>
-        <a href="material" class="btn btn-primary btn-border btn-block" role="button" style="margin-top: 15px;">我需要实体宣传材料</a>
+        <c:if test="${sessionScope.partner.partnerType eq 'shop'}">
+            <a href="material" class="btn btn-primary btn-border btn-block" role="button" style="margin-top: 15px;">我需要实体宣传材料</a>
+        </c:if>
     </div>
 </div>
 

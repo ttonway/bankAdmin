@@ -4,6 +4,7 @@
     <resultMap id="BaseResultMap" type="com.psbc.pojo.PosterImage">
         <id column="posterId" property="posterId" jdbcType="BIGINT"/>
         <result column="posterName" property="posterName" jdbcType="VARCHAR"/>
+        <result column="loanType" property="loanType" jdbcType="VARCHAR"/>
         <result column="fileName" property="fileName" jdbcType="VARCHAR"/>
         <result column="contentType" property="contentType" jdbcType="VARCHAR"/>
         <result column="createtime" property="createtime" jdbcType="VARCHAR"/>
@@ -11,13 +12,22 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        posterId, posterName, fileName, contentType
+        posterId, posterName, loanType, fileName, contentType
     </sql>
 
-    <select id="selectAll" resultMap="BaseResultMap">
-        select t.posterId, t.posterName, t.fileName, t.contentType
+    <select id="selectByList" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List"/>
         from poster_image t
+        where t.loanType = #{loanType,jdbcType=VARCHAR}
         order by createtime desc
+    </select>
+
+    <select id="selectByTypeCnt" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+        select loanType, count(posterId) cnt
+        from poster_image
+        group by loanType
+        order by loanType
     </select>
 
     <select id="selectByCnt" resultType="java.lang.Integer">
@@ -38,8 +48,8 @@
     </delete>
 
     <insert id="insert" parameterType="com.psbc.pojo.PosterImage">
-        insert into poster_image (posterName, fileName, contentType, createtime, updatetime)
-        values (#{posterName,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR},
+        insert into poster_image (posterName, loanType, fileName, contentType, createtime, updatetime)
+        values (#{posterName,jdbcType=VARCHAR}, #{loanType,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR},
         #{contentType,jdbcType=VARCHAR}, #{createtime,jdbcType=VARCHAR}, #{updatetime,jdbcType=VARCHAR})
     </insert>
 </mapper>

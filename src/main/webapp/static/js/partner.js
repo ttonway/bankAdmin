@@ -18,15 +18,37 @@
         $(this).toggleClass('on');
     });
 
-    $('.nav-tabs').find('li').on('click', function () {
-        $(this).siblings('li').removeClass('active');
-        $(this).addClass('active');
-    });
 
-    $('.poster').on('click', function () {
-        $(this).siblings('.poster').removeClass('selected');
-        $(this).addClass('selected');
-    });
+
+    var grid = $('.poster-row');
+
+    function reloadPosters() {
+        grid.find('.poster').remove();
+        var loanType = $('.nav-tabs li.active').attr('type');
+        $.getJSON("posterlist", {loanType: loanType}, function (data) {
+            if (data.code == 0) {
+                grid.find('.poster').remove();
+                var html = $.templates("#posterTmpl").render(data.data);
+                grid.append(html);
+            }
+        });
+    }
+
+    if (grid.length > 0) {
+        reloadPosters();
+
+        $('.nav-tabs').find('li').on('click', function () {
+            $(this).siblings('li').removeClass('active');
+            $(this).addClass('active');
+            reloadPosters();
+        });
+
+        grid.on('click', '.poster', function () {
+            $(this).siblings('.poster').removeClass('selected');
+            $(this).addClass('selected');
+        });
+    }
+
 }());
 
 function isPhoneNumber(str) {
@@ -98,7 +120,7 @@ function generatePoster() {
     }
     var posterType = $('.nav-tabs li.active').attr('loan_type');
 
-    location.href = "result?posterType=" + posterType + "&posterFileName=" + poster.attr('file-name');
+    location.href = "result?posterType=" + posterType + "&posterFileName=" + poster.attr('filename');
 }
 
 

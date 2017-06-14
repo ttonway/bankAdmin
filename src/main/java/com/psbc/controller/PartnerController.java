@@ -106,16 +106,15 @@ public class PartnerController {
     }
 
     @RequestMapping("/poster")
-    public ModelAndView poster(HttpSession session, String area) {
+    public String poster(HttpSession session, String area) {
         PartnerUser partner = (PartnerUser) session.getAttribute("partner");
         if (partner == null) {
-            return new ModelAndView("redirect:index");
+            return "redirect:index";
         }
 
         partner.setArea(area);
 
-        List<PosterImage> list = posterService.selectAll();
-        return new ModelAndView("partner/poster", "posters", list);
+        return "/partner/poster";
     }
 
     @RequestMapping("/result")
@@ -181,19 +180,23 @@ public class PartnerController {
         return map;
     }
 
-    @RequestMapping("/list")
+    @RequestMapping("/posterlist")
     @ResponseBody
-    public Map<String, Object> list() {
-        Map<String, Object> map = new HashMap<String, Object>();
+    public Map<String, Object> posterlist(String loanType) {
+        Map<String, Object> result = new HashMap<>();
         try {
-            List<PosterImage> list = posterService.selectAll();
-            map.put("code", 0);
-            map.put("data", list);
-            return map;
+            Map<String, Object> map = new HashMap<>();
+            map.put("loanType", loanType);
+            List<Map<String, Object>> cntlist = posterService.selectByTypeCnt(map);
+            result.put("cntlist", cntlist);
+            List<PosterImage> list = posterService.selectByList(map);
+            result.put("data", list);
+            result.put("code", 0);
+            return result;
         } catch (Exception e) {
             logger.error("query poster list fail.", e);
-            map.put("code", 1);
-            return map;
+            result.put("code", 1);
+            return result;
         }
     }
 

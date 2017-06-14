@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PosterServiceImpl implements PosterService {
@@ -30,8 +31,13 @@ public class PosterServiceImpl implements PosterService {
     }
 
     @Override
-    public List<PosterImage> selectAll() {
-        return posterMapper.selectAll();
+    public List<PosterImage> selectByList(Map<String,Object> map) {
+        return posterMapper.selectByList(map);
+    }
+
+    @Override
+    public List<Map<String,Object>> selectByTypeCnt(Map<String,Object> map) {
+        return posterMapper.selectByTypeCnt(map);
     }
 
     @Override

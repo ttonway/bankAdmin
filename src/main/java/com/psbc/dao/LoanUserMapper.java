@@ -20,7 +20,6 @@ public interface LoanUserMapper {
     
     int selectByCnt(Map<String,Object> map);
 
-
     List<LoanUser> selectByList(Map<String,Object> map);
     
     List<Map<String,Object>> selectByStatusCnt(Map<String,Object> map);

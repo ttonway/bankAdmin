@@ -1,16 +1,31 @@
 $(function () {
 
     function reloadPosters() {
-        $.getJSON("partner/list", function (data) {
+        var grid = $('#poater-grid');
+        grid.find('.poster').remove();
+        var loanType = $('.category.active').attr('type');
+        $.getJSON("partner/posterlist", {loanType: loanType}, function (data) {
             if (data.code == 0) {
-                var grid = $('#poater-grid');
+                var cntList = data.cntlist;
+                for (var i = 0; i < cntList.length; i++) {
+                    var map = cntList[i];
+                    $('.category[type="' + map.loanType + '"] span').text("(" + map.cnt + ")");
+                }
+
+                grid.find('.poster').remove();
                 var html = $.templates("#posterTmpl").render(data.data);
-                grid.html(html);
+                grid.append(html);
             }
         });
     }
 
     reloadPosters();
+
+    $('.category').on('click', function () {
+        $('.category').removeClass('active');
+        $(this).addClass('active');
+        reloadPosters();
+    });
 
     $('#poater-grid').on('click', '.poster .thumbnail img', function () {
         $("#bigimage-modal").find("img").attr('src', $(this).attr('src'));
@@ -26,7 +41,8 @@ $(function () {
         uploadUrl: "poster/upload",
         uploadExtraData: function () {
             return {
-                posterName: $('#posterName').val()
+                posterName: $('#posterName').val(),
+                loanType: $('#loanType').val()
             };
         },
         allowedFileTypes: ["image"]
@@ -67,7 +83,28 @@ $(function () {
         $.getJSON("poster/delete", {posterId: posterId}, function (data) {
             if (data.code == 0) {
                 item.remove();
+
+                reloadPosters();
             }
         });
     });
+    $('#poater-grid').on('click', '.poster .btn-success', function () {
+        var item = $(this).parents('.poster');
+        var loanType = item.attr('loan-type');
+        var fileName = item.attr('filename');
+
+        var src = 'partner/generate/' + $('#userCode').val() + '/';
+        if (loanType == '邮信贷') {
+            src += '0/'
+        } else if (loanType == '商易贷') {
+            src += '1/'
+        } else {
+            return;
+        }
+        src += fileName;
+        $("#bigimage-modal").find("img").attr('src', src);
+        $("#bigimage-modal").modal();
+    });
+
+
 });

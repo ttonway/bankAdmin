@@ -8,6 +8,8 @@ public class PosterImage {
 
     private String posterName;
 
+    private String loanType;
+
     private String fileName;
 
     private String contentType;
@@ -30,6 +32,14 @@ public class PosterImage {
 
     public void setPosterName(String posterName) {
         this.posterName = posterName;
+    }
+
+    public String getLoanType() {
+        return loanType;
+    }
+
+    public void setLoanType(String loanType) {
+        this.loanType = loanType;
     }
 
     public String getFileName() {

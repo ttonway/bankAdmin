@@ -56,8 +56,21 @@
         <!-- Main content -->
         <section class="content">
 
-            <div class="row" id="poater-grid">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <a href="#" class="category active" type="邮信贷">邮信贷<span>(0)</span></a>
+                            <a href="#" class="category" type="商易贷">生意贷<span>(0)</span></a>
+                        </div>
+                        <!-- /.box-header -->
 
+                        <div class="box-body" id="poater-grid">
+                        </div>
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
             </div>
             <!-- /.row -->
 
@@ -100,6 +113,15 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="posterName" class="col-sm-2 control-label">类型</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="loanType">
+                                <option>邮信贷</option>
+                                <option value="商易贷">生意贷</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="file" class="col-sm-2 control-label">文件</label>
                         <div class="col-sm-10">
                             <input type="file" class="form-control" name="file" id="file">
@@ -115,7 +137,7 @@
 </div><!-- /.modal -->
 
 <script id="posterTmpl" type="text/x-jsrender">
-    <div class="col-sm-6 col-md-3 poster" poster-id="{{:posterId}}">
+    <div class="col-sm-6 col-md-3 poster" poster-id="{{:posterId}}" loan-type="{{:loanType}}" filename="{{:fileName}}" >
         <div class="thumbnail">
             <img src="partner/image/{{:posterId}}">
             <div class="caption">
@@ -123,15 +145,14 @@
                 <% if (AuthorityUtils.hasAuthority(userDetails, "ROLE_ADMIN")) { %>
                 <p><a href="#" class="btn btn-danger" role="button">删除</a></p>
                 <% } else { %>
-                <p>
-                <a href="partner/generate/<%=userDetails.getUsername()%>/0/{{:fileName}}" class="btn btn-success" role="button">邮信贷</a>
-                <a href="partner/generate/<%=userDetails.getUsername()%>/1/{{:fileName}}" class="btn btn-warning" role="button">生意贷</a>
-                </p>
+                <p><a href="#" class="btn btn-success" role="button">生成海报</a></p>
                 <% } %>
             </div>
         </div>
     </div>
 </script>
+
+<input type="hidden" id="userCode" value='<%=userDetails.getUsername()%>'>
 
 <script src="<%=request.getContextPath()%>/static/lib/jQuery/jquery-2.2.3.min.js"></script>
 <script src="<%=request.getContextPath()%>/static/lib/bootstrap/js/bootstrap.min.js"></script>

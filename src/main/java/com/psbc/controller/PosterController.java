@@ -31,7 +31,7 @@ public class PosterController {
 
     @RequestMapping("upload")
     @ResponseBody
-    public Map<String, Object> upload(@RequestParam MultipartFile file, String posterName) {
+    public Map<String, Object> upload(@RequestParam MultipartFile file, String posterName, String loanType) {
         Map<String, Object> map = new HashMap<String, Object>();
 
         if (!file.isEmpty()) {
@@ -43,6 +43,7 @@ public class PosterController {
                 PosterImage poster = new PosterImage();
                 poster.setFileName(uuid.toString());
                 poster.setPosterName(posterName);
+                poster.setLoanType(loanType);
                 poster.setContentType(file.getContentType());
                 String timeStr = Utils.currentTimeStr();
                 poster.setCreatetime(timeStr);
