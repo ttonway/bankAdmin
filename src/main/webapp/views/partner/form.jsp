@@ -15,7 +15,7 @@
 
     <link rel="shortcut icon" href="http://www.suning.com/favicon.ico" type="image/x-icon"/>
 
-    <title>邮政自媒体合伙人计划</title>
+    <title>邮储自媒体</title>
 
     <!-- Bootstrap -->
     <link href="<%=request.getContextPath()%>/static/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -69,7 +69,7 @@
                 </select>
 
                 <input type="text" class="form-control" name="workUnitName" id="workUnitName" placeholder="请输入单位名称"
-                       style="margin-top: 5px; display: none;">
+                       style="margin-top: 5px;">
             </div>
 
             <div class="form-divider"></div>

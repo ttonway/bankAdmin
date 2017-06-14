@@ -9,16 +9,6 @@
         $('input[name="' + name + '"]').val($(this).text());
     });
 
-    $('#workUnitType').on('change', function () {
-        var value = $(this).val();
-        var input = $('#workUnitName');
-        if ('金融、电信、烟草、电力' == value) {
-            input.show();
-        } else {
-            input.hide();
-        }
-    });
-
 
     $('.list-group.sigle-select').find('.list-group-item').on('click', function () {
         $(this).siblings('.list-group-item').removeClass('on');
@@ -55,9 +45,7 @@ function submitForm() {
             alert("请选择单位性质.");
             return;
         }
-        if ($('#workUnitName').is(":hidden")) {
-            $('#workUnitName').val('');
-        } else if (!$('#workUnitName').val()) {
+        if (!$('#workUnitName').val()) {
             alert("请输入单位名称.");
             return;
         }

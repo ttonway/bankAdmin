@@ -14,7 +14,7 @@
 
     <link rel="shortcut icon" href="http://www.suning.com/favicon.ico" type="image/x-icon"/>
 
-    <title>邮政自媒体合伙人计划</title>
+    <title>邮储自媒体</title>
 
     <!-- Bootstrap -->
     <link href="<%=request.getContextPath()%>/static/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
