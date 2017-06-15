@@ -36,7 +36,6 @@ $(function () {
                             for (var i = 0; i < cntList.length; i++) {
                                 var map = cntList[i];
                                 cntMap[map.status] = map.cnt;
-                                $('.category[status="' + map.status + '"] span').text("(" + map.cnt + ")");
                             }
                             $('.category').each(function () {
                                 var cnt = cntMap[$(this).attr('status')] || 0;

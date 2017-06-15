@@ -7,10 +7,15 @@ $(function () {
         $.getJSON("partner/posterlist", {loanType: loanType}, function (data) {
             if (data.code == 0) {
                 var cntList = data.cntlist;
+                var cntMap = {};
                 for (var i = 0; i < cntList.length; i++) {
                     var map = cntList[i];
-                    $('.category[type="' + map.loanType + '"] span').text("(" + map.cnt + ")");
+                    cntMap[map.loanType] = map.cnt;
                 }
+                $('.category').each(function () {
+                    var cnt = cntMap[$(this).attr('type')] || 0;
+                    $(this).find('span').text("(" + cnt + ")");
+                });
 
                 grid.find('.poster').remove();
                 var html = $.templates("#posterTmpl").render(data.data);
