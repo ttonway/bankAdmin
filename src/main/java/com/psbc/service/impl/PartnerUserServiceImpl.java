@@ -31,10 +31,14 @@ public class PartnerUserServiceImpl implements PartnerUserService {
         return partnerUserMapper.updateByPrimaryKey(record);
     }
 
-
     @Override
     public PartnerUser selectByPrimaryKey(Long partnerId) {
         return partnerUserMapper.selectByPrimaryKey(partnerId);
+    }
+
+    @Override
+    public PartnerUser selectByPhoneNumber(String phoneNumber) {
+        return partnerUserMapper.selectByPhoneNumber(phoneNumber);
     }
 
     @Override

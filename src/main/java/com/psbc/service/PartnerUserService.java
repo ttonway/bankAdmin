@@ -13,6 +13,8 @@ public interface PartnerUserService {
 
     PartnerUser selectByPrimaryKey(Long partnerId);
 
+    PartnerUser selectByPhoneNumber(String phoneNumber);
+
     List<PartnerUser> selectByList(int start, int length);
 
     int selectByCnt();

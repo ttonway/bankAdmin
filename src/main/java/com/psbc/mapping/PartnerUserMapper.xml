@@ -48,6 +48,14 @@
         from parter_user
         where partnerId = #{partnerId,jdbcType=BIGINT}
     </select>
+
+    <select id="selectByPhoneNumber" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from parter_user
+        where phoneNumber = #{phoneNumber,jdbcType=BIGINT}
+    </select>
+
     <delete id="deleteByPrimaryKey">
         delete from parter_user
         where partnerId in
@@ -55,6 +63,7 @@
             #{item}
         </foreach>
     </delete>
+
     <insert id="insert" parameterType="com.psbc.pojo.PartnerUser"
             useGeneratedKeys="true" keyProperty="partnerId">
     insert into parter_user (partnerType, oldCustomer, workUnitType, workUnitName, userName, phoneNumber, shopName, shopAddress, area, posterType, posterFileName,

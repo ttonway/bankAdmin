@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -117,6 +118,7 @@ public class PartnerController {
         return "/partner/poster";
     }
 
+    @Transactional
     @RequestMapping("/result")
     public String result(HttpSession session, String posterType, String posterFileName) {
         PartnerUser partner = (PartnerUser) session.getAttribute("partner");
@@ -126,16 +128,23 @@ public class PartnerController {
 
         partner.setPosterType(posterType);
         partner.setPosterFileName(posterFileName);
+
         if (partner.getPartnerId() == null) {
-
             partner.setNeedMaterial("否");
-            partnerUserService.insert(partner);
 
-            AdminUser adminUser = new AdminUser();
-            adminUser.setUserCode("partner-" + partner.getPartnerId());
-            adminUser.setUserName(partner.getUserName());
-            adminUser.setRole("推广员");
-            adminUserService.insert(adminUser);
+            PartnerUser exist = partnerUserService.selectByPhoneNumber(partner.getPhoneNumber());
+            if (exist != null) {
+                partner.setPartnerId(exist.getPartnerId());
+                partnerUserService.updateByPrimaryKey(partner);
+            } else {
+                partnerUserService.insert(partner);
+
+                AdminUser adminUser = new AdminUser();
+                adminUser.setUserCode("partner-" + partner.getPartnerId());
+                adminUser.setUserName(partner.getUserName());
+                adminUser.setRole("推广员");
+                adminUserService.insert(adminUser);
+            }
         } else {
             partnerUserService.updateByPrimaryKey(partner);
         }

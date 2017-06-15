@@ -14,6 +14,8 @@ public interface PartnerUserMapper {
 
     PartnerUser selectByPrimaryKey(Long partnerId);
 
+    PartnerUser selectByPhoneNumber(String phoneNumber);
+
     List<PartnerUser> selectByList(Map<String, Integer> map);
 
     int selectByCnt();

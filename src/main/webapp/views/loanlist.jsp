@@ -137,8 +137,6 @@
                 <h4 class="modal-title">详情</h4>
             </div>
             <div class="modal-body">
-                <dl class="dl-horizontal">
-                </dl>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>

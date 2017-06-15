@@ -156,8 +156,7 @@ $(function () {
                 var result = $.parseJSON(res);
                 var map = result.result;
                 if (result.code == 0) {
-                    var dl = $('#details-modal dl');
-                    dl.html('');
+                    var dl = $('<dl class="dl-horizontal"></dl>');
                     dl.append('<dt>申请人：</dt><dd>' + map.usernm + '</dd>');
                     dl.append('<dt>申请额度：</dt><dd>' + map.loanNum + '</dd>');
                     dl.append('<dt>联系手机：</dt><dd>' + map.phonenum + '</dd>');
@@ -173,8 +172,6 @@ $(function () {
                         dl.append('<dt>车贷月供：</dt><dd>' + map.loanCar + '</dd>');
                         dl.append('<dt>其他贷款：</dt><dd>' + map.loanConsumer + '</dd>');
                         dl.append('<dt>审核情况：</dt><dd>' + map.status + '</dd>');
-
-                        $('#details-modal').modal();
                     } else if (map.loanType == '商易贷') {
 
                         dl.append('<dt>是否为本地人：</dt><dd>' + map.localPerson + '</dd>');
@@ -182,9 +179,11 @@ $(function () {
                         dl.append('<dt>年销售额：</dt><dd>' + map.income + '</dd>');
                         dl.append('<dt>担保方式：</dt><dd>' + map.guaranteeType + '</dd>');
                         dl.append('<dt>审核情况：</dt><dd>' + map.status + '</dd>');
-
-                        $('#details-modal').modal();
                     }
+
+                    $('#details-modal .modal-body').html('');
+                    $('#details-modal .modal-body').append(dl);
+                    $('#details-modal').modal();
                 }
             }
         });
@@ -204,8 +203,7 @@ $(function () {
             success: function (res) {
                 var result = $.parseJSON(res);
                 if (result.code == 0) {
-                    var dl = $('#details-modal dl');
-                    dl.html('');
+                    var dl = $('<dl class="dl-horizontal"></dl>');
                     if (result.admin) {
                         var map = result.admin;
                         dl.append('<dt>姓名：</dt><dd>' + map.userName + '</dd>');
@@ -213,6 +211,8 @@ $(function () {
                         dl.append('<dt>银行：</dt><dd>' + map.bank + '</dd>');
                         dl.append('<dt>岗位：</dt><dd>' + map.role + '</dd>');
 
+                        $('#details-modal .modal-body').html('');
+                        $('#details-modal .modal-body').append(dl);
                         $('#details-modal').modal();
                     } else if (result.partner) {
                         var map = result.partner;
@@ -245,6 +245,11 @@ $(function () {
                             dl.append('<dt>详细地址：</dt><dd>' + map.receiverAddress + '</dd>');
                         }
 
+                        $('#details-modal .modal-body').html('');
+                        $('#details-modal .modal-body').append(dl);
+                        $('#details-modal').modal();
+                    } else {
+                        $('#details-modal .modal-body').html('<p>用户不存在</p>');
                         $('#details-modal').modal();
                     }
                 }
