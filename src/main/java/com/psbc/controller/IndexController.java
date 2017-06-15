@@ -59,8 +59,8 @@ public class IndexController {
     }
 
     // 海报
-    @RequestMapping("/poster")
-    public String poster() {
+    @RequestMapping("/postergrid")
+    public String postergrid() {
         return "postergrid";
     }
 

@@ -88,7 +88,7 @@
             <li<% if (uri.equals("loanlist") && "邮信贷".equals(loanType)) { %> class="active"<% } %>><a href="list1"><i class="fa fa-link"></i> <span>邮信贷</span></a></li>
             <li<% if (uri.equals("loanlist") && "商易贷".equals(loanType)) { %> class="active"<% } %>><a href="list2"><i class="fa fa-link"></i> <span>生意贷</span></a></li>
             <% } %>
-            <li<% if (uri.equals("poster")) { %> class="active"<% } %>><a href="poster"><i class="fa fa-link"></i> <span>专属海报</span></a></li>
+            <li<% if (uri.equals("postergrid")) { %> class="active"<% } %>><a href="postergrid"><i class="fa fa-link"></i> <span>专属海报</span></a></li>
         </ul>
         <!-- /.sidebar-menu -->
     </section>
