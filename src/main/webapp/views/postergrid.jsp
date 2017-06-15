@@ -43,14 +43,9 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1 style="display: inline-block;">
+            <h1>
                 海报模版
             </h1>
-            <% if (AuthorityUtils.hasAuthority(userDetails, "ROLE_ADMIN")) { %>
-            <a id="btn-add" class="btn btn-primary pull-right" href="#" role="button" style="margin-top: -8px;">
-                <span class="glyphicon glyphicon-plus"></span>
-            </a>
-            <% } %>
         </section>
 
         <!-- Main content -->
@@ -62,6 +57,12 @@
                         <div class="box-header">
                             <a href="#" class="category active" type="邮信贷">邮信贷<span>(0)</span></a>
                             <a href="#" class="category" type="商易贷">生意贷<span>(0)</span></a>
+                            <% if (AuthorityUtils.hasAuthority(userDetails, "ROLE_ADMIN")) { %>
+                            <div class="pull-right box-tools">
+                                <button id="btn-add" type="button" class="btn btn-primary btn-sm" title="Add">
+                                    <i class="fa fa-plus"></i></button>
+                            </div>
+                            <% } %>
                         </div>
                         <!-- /.box-header -->
 
@@ -150,6 +151,8 @@
             </div>
         </div>
     </div>
+
+
 </script>
 
 <input type="hidden" id="userCode" value='<%=userDetails.getUsername()%>'>

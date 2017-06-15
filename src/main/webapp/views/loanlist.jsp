@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/static/lib/font-awesome-4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/static/lib/ionicons-2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/static/lib/datatables/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/static/lib/daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/static/lib/adminLTE/css/AdminLTE.min.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/static/lib/adminLTE/css/skins/skin-green.min.css">
 
@@ -61,6 +62,15 @@
                             <a href="#" class="category" status="3">已驳回<span>(0)</span></a>
                             <a href="#" class="category" status="4">待调整<span>(0)</span></a>
                             <a href="#" class="category" status="5">已删除<span>(0)</span></a>
+
+                            <div class="box-tools">
+                                <div class="input-group input-group-sm" style="width: 150px;">
+                                    <button type="button" class="btn btn-default pull-right" id="daterange-btn">
+                                        <span><i class="fa fa-calendar"></i> 所有</span>
+                                        <i class="fa fa-caret-down"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -289,6 +299,8 @@
 <!-- DataTables -->
 <script src="<%=request.getContextPath()%>/static/lib/datatables/jquery.dataTables.min.js"></script>
 <script src="<%=request.getContextPath()%>/static/lib/datatables/dataTables.bootstrap.min.js"></script>
+<script src="<%=request.getContextPath()%>/static/lib/daterangepicker/moment.min.js"></script>
+<script src="<%=request.getContextPath()%>/static/lib/daterangepicker/daterangepicker.js"></script>
 <script src="<%=request.getContextPath()%>/static/lib/adminLTE/js/app.min.js"></script>
 <script src="<%=request.getContextPath()%>/static/js/app.js"></script>
 <script src="<%=request.getContextPath()%>/static/js/loanlist.js"></script>

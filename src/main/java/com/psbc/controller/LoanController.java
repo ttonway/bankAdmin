@@ -156,7 +156,7 @@ public class LoanController {
     }
 
     @RequestMapping("/export")
-    public void export(HttpServletRequest req, HttpServletResponse response, String status, String loanType) {
+    public void export(HttpServletResponse response, String loanType, String status) {
         AdminUserDetails userDetails = (AdminUserDetails) SecurityContextHolder.getContext()
                 .getAuthentication()
                 .getPrincipal();
