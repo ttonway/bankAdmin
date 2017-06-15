@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -43,7 +44,7 @@ public class LoanController {
 
     @RequestMapping("/list")
     @ResponseBody
-    public Map<String, Object> list(String loanType, String status, Integer draw, Integer start, Integer length) {
+    public Map<String, Object> list(String loanType, String status, String minTime, String maxTime, Integer draw, Integer start, Integer length) {
         AdminUserDetails userDetails = (AdminUserDetails) SecurityContextHolder.getContext()
                 .getAuthentication()
                 .getPrincipal();
@@ -58,6 +59,12 @@ public class LoanController {
             }
             pmap.put("type", loanType);
             pmap.put("status", status);
+            if (!StringUtils.isEmpty(minTime)) {
+                pmap.put("minTime", minTime);
+            }
+            if (!StringUtils.isEmpty(maxTime)) {
+                pmap.put("maxTime", maxTime);
+            }
             pmap.put("start", start);
             pmap.put("length", length);
             List<Map<String, Object>> cntlist = loanUserService.selectByStatusCnt(pmap);
@@ -156,7 +163,7 @@ public class LoanController {
     }
 
     @RequestMapping("/export")
-    public void export(HttpServletResponse response, String loanType, String status) {
+    public void export(HttpServletResponse response, String loanType, String status, String minTime, String maxTime) {
         AdminUserDetails userDetails = (AdminUserDetails) SecurityContextHolder.getContext()
                 .getAuthentication()
                 .getPrincipal();
@@ -169,7 +176,12 @@ public class LoanController {
         }
         pmap.put("status", status);
         pmap.put("type", loanType);
-
+        if (!StringUtils.isEmpty(minTime)) {
+            pmap.put("minTime", minTime);
+        }
+        if (!StringUtils.isEmpty(maxTime)) {
+            pmap.put("maxTime", maxTime);
+        }
 
         // 获取百分比
         NumberFormat nf = NumberFormat.getPercentInstance();

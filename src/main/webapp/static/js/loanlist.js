@@ -1,32 +1,5 @@
 $(function () {
 
-    $('#daterange-btn').daterangepicker(
-        {
-            locale: {
-                applyLabel: '确认',
-                cancelLabel: '取消',
-                fromLabel: '起始时间',
-                toLabel: '结束时间',
-                customRangeLabel: '自定义',
-                daysOfWeek: ['日', '一', '二', '三', '四', '五', '六'],
-                monthNames: ['一月', '二月', '三月', '四月', '五月', '六月',
-                    '七月', '八月', '九月', '十月', '十一月', '十二月'],
-                firstDay: 1
-            },
-            ranges: {
-                '今天': [moment(), moment()],
-                '过去7天': [moment().subtract(6, 'days'), moment()],
-                '过去30天': [moment().subtract(29, 'days'), moment()],
-                '本月': [moment().startOf('month'), moment().endOf('month')]
-            },
-            startDate: moment().subtract(29, 'days'),
-            endDate: moment()
-        },
-        function (start, end) {
-            $('#daterange-btn span').html(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
-        }
-    );
-
     var tableEl = $('#loan-table');
     var table;
 
@@ -47,6 +20,8 @@ $(function () {
             "ajax": function (data, callback, settings) {
                 data.loanType = $("#loanType").val();
                 data.status = $('.category.active').attr('status');
+                data.minTime = $('#daterange-btn').attr('min-time');
+                data.maxTime = $('#daterange-btn').attr('max-time');
                 data.r = Math.random();
                 $.ajax({
                     type: "post",
@@ -57,10 +32,17 @@ $(function () {
                         var result = $.parseJSON(res);
                         if (result.code == 0) {
                             var cntList = result.cntlist;
+                            var cntMap = {};
                             for (var i = 0; i < cntList.length; i++) {
                                 var map = cntList[i];
+                                cntMap[map.status] = map.cnt;
                                 $('.category[status="' + map.status + '"] span').text("(" + map.cnt + ")");
                             }
+                            $('.category').each(function () {
+                                var cnt = cntMap[$(this).attr('status')] || 0;
+                                $(this).find('span').text("(" + cnt + ")");
+                            });
+
 
                             if (data.loanType == '商易贷') {
                                 for (var i = 0; i < result.data.length; i++) {
@@ -111,6 +93,44 @@ $(function () {
         $(this).addClass('active');
         reloadTable();
     });
+
+    $('#daterange-btn').daterangepicker(
+        {
+            locale: {
+                applyLabel: '确认',
+                cancelLabel: '取消',
+                fromLabel: '起始时间',
+                toLabel: '结束时间',
+                customRangeLabel: '自定义',
+                daysOfWeek: ['日', '一', '二', '三', '四', '五', '六'],
+                monthNames: ['一月', '二月', '三月', '四月', '五月', '六月',
+                    '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                firstDay: 1
+            },
+            ranges: {
+                '所有': [null, null],
+                '今天': [moment(), moment()],
+                '过去7天': [moment().subtract(6, 'days'), moment()],
+                '过去30天': [moment().subtract(29, 'days'), moment()],
+                '本月': [moment().startOf('month'), moment().endOf('month')]
+            },
+            startDate: null,
+            endDate: null
+        },
+        function (start, end) {
+            if (!start._isValid && !end._isValid) {
+                $('#daterange-btn').attr('min-time', '');
+                $('#daterange-btn').attr('max-time', '');
+                $('#daterange-btn span').html('<i class="fa fa-calendar"></i> 所有');
+            } else {
+                $('#daterange-btn').attr('min-time', start.format("YYYYMMDD HHmmss"));
+                $('#daterange-btn').attr('max-time', end.format("YYYYMMDD HHmmss"));
+                $('#daterange-btn span').html(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+            }
+
+            reloadTable();
+        }
+    );
 
     tableEl.on("change", "input[type='checkbox'][name='chk_all']", function () {
         $("input[type='checkbox'][name='chk_item']").prop("checked", $(this).is(':checked'));
@@ -240,6 +260,8 @@ $(function () {
         var params = {
             status: status,
             loanType: loanType,
+            minTime: $('#daterange-btn').attr('min-time'),
+            maxTime: $('#daterange-btn').attr('max-time'),
             r: Math.random()
         };
         var url = "loan/export?" + $.param(params);

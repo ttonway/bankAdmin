@@ -22,16 +22,23 @@
 
     <select id="selectByList" resultMap="BaseResultMap" parameterType="java.util.HashMap">
         select
-        t.loanid, t.usernm, t.phonenum, t.area, t.bank, t.loanNum, t.id, t.referrals, t.createtime, t.status, t.utmsrc, t.fromUserCode,
+        t.loanid, t.usernm, t.phonenum, t.area, t.bank, t.loanNum, t.id, t.referrals, t.createtime, t.status, t.utmsrc,
+        t.fromUserCode,
         t1.loanType, t1.workunit, t1.workunit2
         from loan_user_info t
         left join loan_user t1 on t.id = t1.id
         where t1.loanType = #{type,jdbcType=VARCHAR}
         <if test="bank != null">
-            and bank = #{bank,jdbcType=VARCHAR}
+            and t.bank = #{bank,jdbcType=VARCHAR}
         </if>
         <if test="status != null">
-            and status = #{status,jdbcType=VARCHAR}
+            and t.status = #{status,jdbcType=VARCHAR}
+        </if>
+        <if test="minTime != null">
+            <![CDATA[and t.createtime >= #{minTime,jdbcType=VARCHAR}]]>
+        </if>
+        <if test="maxTime != null">
+            <![CDATA[and t.createtime < #{maxTime,jdbcType=VARCHAR}]]>
         </if>
         order by t.loanid desc
         limit #{start,jdbcType=BIGINT},#{length,jdbcType=BIGINT}
@@ -54,20 +61,32 @@
         left join loan_user t1 on t.id = t1.id
         where t1.loanType = #{type,jdbcType=VARCHAR}
         <if test="bank != null">
-            and bank = #{bank,jdbcType=VARCHAR}
+            and t.bank = #{bank,jdbcType=VARCHAR}
         </if>
         <if test="status != null">
-            and status = #{status,jdbcType=VARCHAR}
+            and t.status = #{status,jdbcType=VARCHAR}
+        </if>
+        <if test="minTime != null">
+            <![CDATA[and t.createtime >= #{minTime,jdbcType=VARCHAR}]]>
+        </if>
+        <if test="maxTime != null">
+            <![CDATA[and t.createtime < #{maxTime,jdbcType=VARCHAR}]]>
         </if>
     </select>
 
     <select id="selectByStatusCnt" resultType="java.util.HashMap" parameterType="java.util.HashMap">
-        select status,count(t.loanid) cnt
+        select t.status, count(t.loanid) cnt
         from loan_user_info t
         left join loan_user t1 on t.id = t1.id
         where t1.loanType = #{type,jdbcType=VARCHAR}
         <if test="bank != null">
-            and bank = #{bank,jdbcType=VARCHAR}
+            and t.bank = #{bank,jdbcType=VARCHAR}
+        </if>
+        <if test="minTime != null">
+            <![CDATA[and t.createtime >= #{minTime,jdbcType=VARCHAR}]]>
+        </if>
+        <if test="maxTime != null">
+            <![CDATA[and t.createtime < #{maxTime,jdbcType=VARCHAR}]]>
         </if>
         group by status
         order by status
@@ -191,6 +210,12 @@
         </if>
         <if test="status != null">
             and status = #{status,jdbcType=VARCHAR}
+        </if>
+        <if test="minTime != null">
+            <![CDATA[and createtime >= #{minTime,jdbcType=VARCHAR}]]>
+        </if>
+        <if test="maxTime != null">
+            <![CDATA[and createtime < #{maxTime,jdbcType=VARCHAR}]]>
         </if>
         order by t.loanid desc
     </select>
