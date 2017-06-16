@@ -7,6 +7,7 @@ import java.util.Map;
 import com.psbc.pojo.AdminUserDetails;
 import com.psbc.pojo.PartnerUser;
 import com.psbc.pojo.PosterImage;
+import com.psbc.service.LoanUserService;
 import com.psbc.service.PartnerUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -30,6 +31,9 @@ public class AdminController {
 
     @Autowired
     private PartnerUserService partnerUserService;
+
+    @Autowired
+    private LoanUserService loanUserService;
 
     @RequestMapping("/users")
     @ResponseBody
@@ -79,6 +83,17 @@ public class AdminController {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             PartnerUser partner = partnerUserService.selectByPrimaryKey(partnerId);
+            Map<String, Object> pmap = new HashMap<String, Object>();
+            pmap.put("fromUserCode", "partner-" + partnerId);
+            List<Map<String,Object>> cntList = loanUserService.selectByStatusCnt(pmap);
+            for (Map<String,Object> cntMap : cntList) {
+                Long cnt = (Long) cntMap.get("cnt");
+                int count = cnt == null ? 0 : cnt.intValue();
+                if (cntMap.get("status").equals("2")) {//已审核
+                    partner.setPassLoanCount(count);
+                }
+                partner.setTotalLoanCount(partner.getTotalLoanCount() + count);
+            }
             map.put("code", 0);
             map.put("result", partner);
             return map;

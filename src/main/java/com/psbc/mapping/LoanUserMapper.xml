@@ -78,9 +78,15 @@
         select t.status, count(t.loanid) cnt
         from loan_user_info t
         left join loan_user t1 on t.id = t1.id
-        where t1.loanType = #{type,jdbcType=VARCHAR}
+        where 1=1
+        <if test="loanType != null">
+            and t.loanType = #{loanType,jdbcType=VARCHAR}
+        </if>
         <if test="bank != null">
             and t.bank = #{bank,jdbcType=VARCHAR}
+        </if>
+        <if test="fromUserCode != null">
+            and t.fromUserCode = #{fromUserCode,jdbcType=VARCHAR}
         </if>
         <if test="minTime != null">
             <![CDATA[and t.createtime >= #{minTime,jdbcType=VARCHAR}]]>

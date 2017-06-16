@@ -32,6 +32,10 @@ public class PartnerUser {
     private String createTime;
     private String updateTime;
 
+
+    private int passLoanCount;
+    private int totalLoanCount;
+
     public Long getPartnerId() {
         return partnerId;
     }
@@ -190,5 +194,22 @@ public class PartnerUser {
 
     public void setReceiverAddress(String receiverAddress) {
         this.receiverAddress = receiverAddress;
+    }
+
+
+    public int getPassLoanCount() {
+        return passLoanCount;
+    }
+
+    public void setPassLoanCount(int passLoanCount) {
+        this.passLoanCount = passLoanCount;
+    }
+
+    public int getTotalLoanCount() {
+        return totalLoanCount;
+    }
+
+    public void setTotalLoanCount(int totalLoanCount) {
+        this.totalLoanCount = totalLoanCount;
     }
 }
