@@ -42,15 +42,12 @@ public class PartnerUserServiceImpl implements PartnerUserService {
     }
 
     @Override
-    public List<PartnerUser> selectByList(int start, int length) {
-        Map<String, Integer> map = new HashMap<String, Integer>();
-        map.put("start", start);
-        map.put("length", length);
+    public List<PartnerUser> selectByList(Map<String,Object> map) {
         return partnerUserMapper.selectByList(map);
     }
 
     @Override
-    public int selectByCnt() {
-        return partnerUserMapper.selectByCnt();
+    public int selectByCnt(Map<String,Object> map) {
+        return partnerUserMapper.selectByCnt(map);
     }
 }

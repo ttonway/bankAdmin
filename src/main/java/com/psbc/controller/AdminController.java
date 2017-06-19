@@ -5,10 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.psbc.pojo.AdminUserDetails;
-import com.psbc.pojo.PartnerUser;
-import com.psbc.pojo.PosterImage;
-import com.psbc.service.LoanUserService;
-import com.psbc.service.PartnerUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +24,6 @@ public class AdminController {
 
     @Autowired
     private AdminUserService adminUserService;
-
-    @Autowired
-    private PartnerUserService partnerUserService;
-
-    @Autowired
-    private LoanUserService loanUserService;
 
     @RequestMapping("/users")
     @ResponseBody
@@ -55,55 +45,6 @@ public class AdminController {
             return map;
         }
     }
-
-    @RequestMapping("/partners")
-    @ResponseBody
-    public Map<String, Object> partners(Integer draw, Integer start, Integer length) {
-        Map<String, Object> map = new HashMap<String, Object>();
-        try {
-            int cnt = partnerUserService.selectByCnt();
-            List<PartnerUser> list = partnerUserService.selectByList(start, length);
-
-            map.put("draw", draw);
-            map.put("recordsTotal", cnt);
-            map.put("recordsFiltered", cnt);
-            map.put("data", list);
-            map.put("code", 0);
-            return map;
-        } catch (Exception e) {
-            logger.error("list all partners fail.", e);
-            map.put("code", 1);
-            return map;
-        }
-    }
-
-    @RequestMapping("/getPartner")
-    @ResponseBody
-    public Map<String, Object> getPartner(Long partnerId) {
-        Map<String, Object> map = new HashMap<String, Object>();
-        try {
-            PartnerUser partner = partnerUserService.selectByPrimaryKey(partnerId);
-            Map<String, Object> pmap = new HashMap<String, Object>();
-            pmap.put("fromUserCode", "partner-" + partnerId);
-            List<Map<String,Object>> cntList = loanUserService.selectByStatusCnt(pmap);
-            for (Map<String,Object> cntMap : cntList) {
-                Long cnt = (Long) cntMap.get("cnt");
-                int count = cnt == null ? 0 : cnt.intValue();
-                if (cntMap.get("status").equals("2")) {//已审核
-                    partner.setPassLoanCount(count);
-                }
-                partner.setTotalLoanCount(partner.getTotalLoanCount() + count);
-            }
-            map.put("code", 0);
-            map.put("result", partner);
-            return map;
-        } catch (Exception e) {
-            logger.error("query partner fail.", e);
-            map.put("code", 1);
-            return map;
-        }
-    }
-
 
     @RequestMapping("/create")
     @ResponseBody

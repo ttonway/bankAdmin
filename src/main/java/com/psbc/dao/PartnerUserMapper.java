@@ -16,7 +16,7 @@ public interface PartnerUserMapper {
 
     PartnerUser selectByPhoneNumber(String phoneNumber);
 
-    List<PartnerUser> selectByList(Map<String, Integer> map);
+    List<PartnerUser> selectByList(Map<String,Object> map);
 
-    int selectByCnt();
+    int selectByCnt(Map<String,Object> map);
 }

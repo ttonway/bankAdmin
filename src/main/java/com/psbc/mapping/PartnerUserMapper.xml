@@ -11,7 +11,7 @@
         <result column="phoneNumber" property="phoneNumber" jdbcType="VARCHAR"/>
         <result column="shopName" property="shopName" jdbcType="VARCHAR"/>
         <result column="shopAddress" property="shopAddress" jdbcType="VARCHAR"/>
-        <result column="area" property="area" jdbcType="VARCHAR"/>
+        <result column="bank" property="bank" jdbcType="VARCHAR"/>
         <result column="posterType" property="posterType" jdbcType="VARCHAR"/>
         <result column="posterFileName" property="posterFileName" jdbcType="VARCHAR"/>
         <result column="needMaterial" property="needMaterial" jdbcType="VARCHAR"/>
@@ -21,43 +21,58 @@
         <result column="receiverArea" property="receiverArea" jdbcType="VARCHAR"/>
         <result column="receiverAddress" property="receiverAddress" jdbcType="VARCHAR"/>
         <result column="posterType" property="posterType" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
         <result column="createTime" property="createTime" jdbcType="VARCHAR"/>
         <result column="updateTime" property="updateTime" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
-    partnerId, partnerType, oldCustomer, workUnitType, workUnitName, userName, phoneNumber, shopName, shopAddress, area,
+    partnerId, partnerType, oldCustomer, workUnitType, workUnitName, userName, phoneNumber, shopName, shopAddress, bank,
     posterType, posterFileName, needMaterial, materials, receiver, receiverPhoneNumber, receiverArea, receiverAddress, createTime, updateTime
     </sql>
 
 
     <select id="selectByList" resultMap="BaseResultMap" parameterType="java.util.HashMap">
     select *
-    from parter_user
+    from partner_user
+    where 1=1
+    <if test="bank != null">
+        and t.bank = #{bank,jdbcType=VARCHAR}
+    </if>
+    <if test="status != null">
+        and t.status = #{status,jdbcType=VARCHAR}
+    </if>
     order by createTime desc
     limit #{start,jdbcType=BIGINT},#{length,jdbcType=BIGINT}
     </select>
 
     <select id="selectByCnt" resultType="java.lang.Integer">
     select count(t.partnerId) cnt
-    from parter_user t
+    from partner_user t
+    where 1=1
+    <if test="bank != null">
+        and t.bank = #{bank,jdbcType=VARCHAR}
+    </if>
+    <if test="status != null">
+        and t.status = #{status,jdbcType=VARCHAR}
+    </if>
     </select>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
         <include refid="Base_Column_List"/>
-        from parter_user
+        from partner_user
         where partnerId = #{partnerId,jdbcType=BIGINT}
     </select>
 
     <select id="selectByPhoneNumber" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List"/>
-        from parter_user
+        from partner_user
         where phoneNumber = #{phoneNumber,jdbcType=BIGINT}
     </select>
 
     <delete id="deleteByPrimaryKey">
-        delete from parter_user
+        delete from partner_user
         where partnerId in
         <foreach collection="array" item="item" open="(" close=")" separator=",">
             #{item}
@@ -66,11 +81,11 @@
 
     <insert id="insert" parameterType="com.psbc.pojo.PartnerUser"
             useGeneratedKeys="true" keyProperty="partnerId">
-    insert into parter_user (partnerType, oldCustomer, workUnitType, workUnitName, userName, phoneNumber, shopName, shopAddress, area, posterType, posterFileName,
+    insert into partner_user (partnerType, oldCustomer, workUnitType, workUnitName, userName, phoneNumber, shopName, shopAddress, bank, posterType, posterFileName,
     needMaterial, materials, receiver, receiverPhoneNumber, receiverArea, receiverAddress,
     createTime, updateTime)
     values (#{partnerType,jdbcType=VARCHAR}, #{oldCustomer,jdbcType=VARCHAR}, #{workUnitType,jdbcType=VARCHAR}, #{workUnitName,jdbcType=VARCHAR},
-      #{userName,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, #{shopAddress,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR},
+      #{userName,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, #{shopAddress,jdbcType=VARCHAR}, #{bank,jdbcType=VARCHAR},
       #{posterType,jdbcType=VARCHAR}, #{posterFileName,jdbcType=VARCHAR},
       #{needMaterial,jdbcType=VARCHAR}, #{materials,jdbcType=VARCHAR},
       #{receiver,jdbcType=VARCHAR}, #{receiverPhoneNumber,jdbcType=VARCHAR}, #{receiverArea,jdbcType=VARCHAR}, #{receiverAddress,jdbcType=VARCHAR},
@@ -79,7 +94,7 @@
     </insert>
 
     <update id="updateByPrimaryKey" parameterType="com.psbc.pojo.PartnerUser">
-        update parter_user
+        update partner_user
         set partnerType = #{partnerType,jdbcType=VARCHAR},
         oldCustomer = #{oldCustomer,jdbcType=VARCHAR},
         workUnitType = #{workUnitType,jdbcType=VARCHAR},
@@ -88,7 +103,7 @@
         phoneNumber = #{phoneNumber,jdbcType=VARCHAR},
         shopName = #{shopName,jdbcType=VARCHAR},
         shopAddress = #{shopAddress,jdbcType=VARCHAR},
-        area = #{area,jdbcType=VARCHAR},
+        bank = #{bank,jdbcType=VARCHAR},
         posterType = #{posterType,jdbcType=VARCHAR},
         posterFileName = #{posterFileName,jdbcType=VARCHAR},
         needMaterial = #{needMaterial,jdbcType=VARCHAR},

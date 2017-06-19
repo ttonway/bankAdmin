@@ -59,7 +59,7 @@ public class PartnerController {
     private AdminUserService adminUserService;
 
     @RequestMapping("/index")
-    public String userlist() {
+    public String index() {
         return "/partner/index";
     }
 
@@ -72,6 +72,7 @@ public class PartnerController {
     public ModelAndView formWhiteCollar(HttpSession session) {
         PartnerUser partner = new PartnerUser();
         partner.setPartnerType("whitecollar");
+        partner.setStatus("0");
         session.setAttribute("partner", partner);
         return new ModelAndView("partner/form", "type", "whitecollar");
     }
@@ -80,6 +81,7 @@ public class PartnerController {
     public ModelAndView formShop(HttpSession session) {
         PartnerUser partner = new PartnerUser();
         partner.setPartnerType("shop");
+        partner.setStatus("0");
         session.setAttribute("partner", partner);
         return new ModelAndView("partner/form", "type", "shop");
     }
@@ -112,7 +114,7 @@ public class PartnerController {
             return "redirect:index";
         }
 
-        partner.setArea(area);
+        partner.setBank(area + "支行");
 
         return "/partner/poster";
     }

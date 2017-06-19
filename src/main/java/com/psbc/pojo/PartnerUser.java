@@ -17,7 +17,7 @@ public class PartnerUser {
     private String shopName;
     private String shopAddress;
 
-    private String area;
+    private String bank;
 
     private String posterType;
     private String posterFileName;
@@ -28,6 +28,9 @@ public class PartnerUser {
     private String receiverPhoneNumber;
     private String receiverArea;
     private String receiverAddress;
+
+    //默认 （0）
+    private String status;
 
     private String createTime;
     private String updateTime;
@@ -108,12 +111,12 @@ public class PartnerUser {
         this.shopAddress = shopAddress;
     }
 
-    public String getArea() {
-        return area;
+    public String getBank() {
+        return bank;
     }
 
-    public void setArea(String area) {
-        this.area = area;
+    public void setBank(String bank) {
+        this.bank = bank;
     }
 
     public String getPosterType() {
@@ -211,5 +214,13 @@ public class PartnerUser {
 
     public void setTotalLoanCount(int totalLoanCount) {
         this.totalLoanCount = totalLoanCount;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

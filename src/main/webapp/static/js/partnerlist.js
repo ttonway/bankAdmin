@@ -24,7 +24,7 @@ $(function () {
                     type: "post",
                     cache: false,
                     data: data,
-                    url: "admin/partners",
+                    url: "partnermgr/list",
                     success: function (res) {
                         var result = $.parseJSON(res);
                         if (result.code == 0) {
@@ -43,10 +43,16 @@ $(function () {
                 });
             },
             "columns": [
+                {
+                    "class": 'td-checkbox',
+                    "orderable": false,
+                    "data": null,
+                    "defaultContent": '<input type="checkbox" name="chk_item""/>'
+                },
                 {"data": "type"},
                 {"data": "userName"},
                 {"data": "phoneNumber"},
-                {"data": "area"},
+                {"data": "bank"},
                 {"data": "needMaterial"},
                 {
                     "class": 'view-details',
@@ -79,7 +85,7 @@ $(function () {
                 partnerId: data.partnerId,
                 r: Math.random()
             },
-            url: "admin/getPartner",
+            url: "partnermgr/get",
             success: function (res) {
                 var result = $.parseJSON(res);
                 if (result.code == 0) {
@@ -121,5 +127,55 @@ $(function () {
                 }
             }
         });
+    });
+
+
+    $('#export').on('click', function () {
+        var params = {r: Math.random()};
+        var url = "partnermgr/export?" + $.param(params);
+        location.href = url;
+    });
+    // 删除
+    $('#showDelete').on('click', function () {
+        var len = $("input[type='checkbox'][name='chk_item']:checked").length;
+        if (len == 0) {
+            alert("请选择用户");
+            return;
+        } else {
+            $('#delete-modal .alert-success').hide();
+            $('#delete-modal .alert-danger').hide();
+            $('#delete-modal').modal();
+        }
+    });
+    $('#delete-modal button.btn-danger').on('click', function () {
+        var array = [];
+        $("input[type='checkbox'][name='chk_item']:checked").each(function () {
+            var data = table.row($(this).parents('tr')).data();
+            array.push(data.partnerId);
+        });
+        if (array.length > 0) {
+            $.ajax({
+                type: "post",
+                cache: false,
+                traditional: true,
+                data: {
+                    partnerIds: array,
+                    r: Math.random()
+                },
+                url: "partnermgr/delete",
+                success: function (res) {
+                    var result = $.parseJSON(res);
+                    if (result.code == 0) {
+                        $('#delete-modal .alert-success').text("删除成功");
+                        $('#delete-modal .alert-success').show();
+
+                        reloadTable();
+                    } else {
+                        $('#delete-modal .alert-danger').text("删除失败");
+                        $('#delete-modal .alert-danger').show();
+                    }
+                }
+            });
+        }
     });
 });

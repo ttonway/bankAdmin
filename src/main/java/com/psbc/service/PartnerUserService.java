@@ -3,6 +3,7 @@ package com.psbc.service;
 import com.psbc.pojo.PartnerUser;
 
 import java.util.List;
+import java.util.Map;
 
 public interface PartnerUserService {
     int deleteByPrimaryKey(Long[] partnerIds);
@@ -15,7 +16,7 @@ public interface PartnerUserService {
 
     PartnerUser selectByPhoneNumber(String phoneNumber);
 
-    List<PartnerUser> selectByList(int start, int length);
+    List<PartnerUser> selectByList(Map<String,Object> map);
 
-    int selectByCnt();
+    int selectByCnt(Map<String,Object> map);
 }

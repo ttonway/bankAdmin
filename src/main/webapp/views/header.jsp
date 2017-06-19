@@ -83,10 +83,10 @@
             <!-- Optionally, you can add icons to the links -->
             <% if (AuthorityUtils.hasAuthority(userDetails, "ROLE_ADMIN")) { %>
             <li<% if (uri.equals("userlist")) { %> class="active"<% } %>><a href="userlist"><i class="fa fa-link"></i> <span>帐号密码信息</span></a></li>
-            <li<% if (uri.equals("partnerlist")) { %> class="active"<% } %>><a href="partnerlist"><i class="fa fa-link"></i> <span>推广员信息</span></a></li>
             <% } else { %>
             <li<% if (uri.equals("loanlist") && "邮信贷".equals(loanType)) { %> class="active"<% } %>><a href="list1"><i class="fa fa-link"></i> <span>邮信贷</span></a></li>
             <li<% if (uri.equals("loanlist") && "商易贷".equals(loanType)) { %> class="active"<% } %>><a href="list2"><i class="fa fa-link"></i> <span>生意贷</span></a></li>
+            <li<% if (uri.equals("partnerlist")) { %> class="active"<% } %>><a href="partnerlist"><i class="fa fa-link"></i> <span>推广员信息</span></a></li>
             <% } %>
             <li<% if (uri.equals("postergrid")) { %> class="active"<% } %>><a href="postergrid"><i class="fa fa-link"></i> <span>专属海报</span></a></li>
         </ul>

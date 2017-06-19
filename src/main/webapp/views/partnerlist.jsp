@@ -58,6 +58,7 @@
                             <table id="user-table" class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
+                                    <th class="td-checkbox"><input type="checkbox" name="chk_all"/></th>
                                     <th>类型</th>
                                     <th>姓名</th>
                                     <th>联系方式</th>
@@ -71,6 +72,11 @@
                             </table>
                         </div>
                         <!-- /.box-body -->
+
+                        <div class="box-footer clearfix">
+                            <a href="#" class="btn btn-default pull-left" id="export">下载</a>
+                            <a href="#" class="btn btn-default pull-left" id="showDelete">删除</a>
+                        </div>
                     </div>
                     <!-- /.box -->
                 </div>
@@ -99,6 +105,26 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">删除</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-success" role="alert"></div>
+                <div class="alert alert-danger" role="alert"></div>
+                <p>确认删除吗？</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger">确认删除</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
