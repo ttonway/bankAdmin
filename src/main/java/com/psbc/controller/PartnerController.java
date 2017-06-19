@@ -10,6 +10,7 @@ import com.psbc.pojo.PosterImage;
 import com.psbc.service.AdminUserService;
 import com.psbc.service.PartnerUserService;
 import com.psbc.service.PosterService;
+import com.psbc.util.Utils;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,6 +130,9 @@ public class PartnerController {
 
         partner.setPosterType(posterType);
         partner.setPosterFileName(posterFileName);
+        String time = Utils.currentTimeStr();
+        partner.setCreateTime(time);
+        partner.setUpdateTime(time);
 
         if (partner.getPartnerId() == null) {
             partner.setNeedMaterial("否");

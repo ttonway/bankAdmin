@@ -92,6 +92,12 @@ public class PartnerMgrController {
             PartnerUser partner = partnerUserService.selectByPrimaryKey(partnerId);
             fillPartnerCount(partner);
 
+            String str = partner.getBank();
+            if (str != null) {
+                str = str.replace("支行", "");
+                partner.setBank(str);
+            }
+
             map.put("code", 0);
             map.put("result", partner);
             return map;

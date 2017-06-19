@@ -32,8 +32,8 @@
 
 
     <select id="selectByList" resultMap="BaseResultMap" parameterType="java.util.HashMap">
-    select *
-    from partner_user
+    select t.*
+    from partner_user t
     where 1=1
     <if test="bank != null">
         and t.bank = #{bank,jdbcType=VARCHAR}
@@ -42,7 +42,9 @@
         and t.status = #{status,jdbcType=VARCHAR}
     </if>
     order by createTime desc
-    limit #{start,jdbcType=BIGINT},#{length,jdbcType=BIGINT}
+    <if test="start != null and length != null">
+        limit #{start,jdbcType=BIGINT},#{length,jdbcType=BIGINT}
+    </if>
     </select>
 
     <select id="selectByCnt" resultType="java.lang.Integer">
