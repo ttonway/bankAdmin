@@ -58,7 +58,7 @@
 <script id="posterTmpl" type="text/x-jsrender">
     <div class="col-xs-4 col-md-3 poster" poster-id="{{:posterId}}" loan-type="{{:loanType}}" filename="{{:fileName}}" >
         <div class="thumbnail">
-            <img src="image/{{:posterId}}">
+            <img src="image/{{:fileName}}.thm.jpg">
         </div>
         <div class="selected-mask"><span class="glyphicon glyphicon-ok"></span></div>
     </div>

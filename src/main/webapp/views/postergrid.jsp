@@ -138,9 +138,9 @@
 </div><!-- /.modal -->
 
 <script id="posterTmpl" type="text/x-jsrender">
-    <div class="col-sm-6 col-md-3 poster" poster-id="{{:posterId}}" loan-type="{{:loanType}}" filename="{{:fileName}}" >
+    <div class="col-sm-4 col-md-2 poster" poster-id="{{:posterId}}" loan-type="{{:loanType}}" filename="{{:fileName}}" >
         <div class="thumbnail">
-            <img src="partner/image/{{:posterId}}">
+            <img src="partner/image/{{:fileName}}.thm.jpg">
             <div class="caption">
                 <h3>{{:posterName}}</h3>
                 <% if (AuthorityUtils.hasAuthority(userDetails, "ROLE_ADMIN")) { %>
@@ -151,8 +151,6 @@
             </div>
         </div>
     </div>
-
-
 </script>
 
 <input type="hidden" id="userCode" value='<%=userDetails.getUsername()%>'>

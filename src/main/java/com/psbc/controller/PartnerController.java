@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -209,19 +208,19 @@ public class PartnerController {
         }
     }
 
-    @RequestMapping(value = "/image/{posterId}")
-    public void file(HttpServletResponse response, @PathVariable Long posterId) throws IOException {
-        PosterImage poster = posterService.selectByPrimaryKey(posterId);
-        if (poster == null) {
+    @RequestMapping(value = "/image/{fileName:.+}")
+    public void file(HttpServletResponse response, @PathVariable String fileName) throws IOException {
+
+
+        File file = new File(fileRootPath, fileName);
+        logger.debug("read file " + file);
+        if (!file.exists()) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
 
-        File file = new File(fileRootPath, poster.getFileName());
-        logger.debug("read file " + file);
-
         FileInputStream fis = null;
-        response.setContentType(poster.getContentType());
+        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         try {
             OutputStream out = response.getOutputStream();
             fis = new FileInputStream(file);
@@ -275,7 +274,7 @@ public class PartnerController {
         }
     }
 
-    @RequestMapping(value = "/generate/{userCode}/{loanType}/{fileName}")
+    @RequestMapping(value = "/generate/{userCode}/{loanType}/{fileName:.+}")
     public void generate(HttpServletResponse response, @PathVariable String userCode, @PathVariable String loanType, @PathVariable String fileName) {
 
         String url = getLoanUrl(userCode, loanType);

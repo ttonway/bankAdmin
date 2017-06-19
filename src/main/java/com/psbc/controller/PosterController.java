@@ -3,6 +3,7 @@ package com.psbc.controller;
 import com.psbc.pojo.PosterImage;
 import com.psbc.service.PosterService;
 import com.psbc.util.Utils;
+import net.coobird.thumbnailator.Thumbnails;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,6 +40,11 @@ public class PosterController {
                 UUID uuid = UUID.randomUUID();
                 File target = new File(fileRootPath, uuid.toString());
                 file.transferTo(target);
+
+                Thumbnails.of(target)
+                        .size(320, 320)
+                        .outputFormat("jpg")
+                        .toFile(new File(target.getParent(), target.getName() + ".thm"));
 
                 PosterImage poster = new PosterImage();
                 poster.setFileName(uuid.toString());
