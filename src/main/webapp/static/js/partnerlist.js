@@ -115,7 +115,7 @@ $(function () {
                         dl.append('<dt>所在区或县：</dt><dd>' + map.receiverArea + '</dd>');
                         dl.append('<dt>详细地址：</dt><dd>' + map.receiverAddress + '</dd>');
                     }
-                    dl.append('<dt>业绩（审核通过／总数）：</dt><dd>' + map.passLoanCount + '/' + map.totalLoanCount + '</dd>');
+                    dl.append('<dt>业绩（通过／总数）：</dt><dd>' + map.passLoanCount + '/' + map.totalLoanCount + '</dd>');
 
                     $('#details-modal').modal();
                 }
