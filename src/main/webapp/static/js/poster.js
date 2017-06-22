@@ -33,7 +33,10 @@ $(function () {
     });
 
     $('#poater-grid').on('click', '.poster .thumbnail img', function () {
-        $("#bigimage-modal").find("img").attr('src', $(this).attr('src'));
+        var item = $(this).parents('.poster');
+        var fileName = item.attr('filename');
+
+        $("#bigimage-modal").find("img").attr('src', 'partner/image/' + fileName);
         $("#bigimage-modal").modal();
     });
 
