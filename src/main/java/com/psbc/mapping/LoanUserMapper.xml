@@ -27,7 +27,7 @@
         t1.loanType, t1.workunit, t1.workunit2
         from loan_user_info t
         left join loan_user t1 on t.id = t1.id
-        where t1.loanType = #{type,jdbcType=VARCHAR}
+        where t1.loanType = #{loanType,jdbcType=VARCHAR}
         <if test="bank != null">
             and t.bank = #{bank,jdbcType=VARCHAR}
         </if>
@@ -59,7 +59,7 @@
         select count(t.loanid) cnt
         from loan_user_info t
         left join loan_user t1 on t.id = t1.id
-        where t1.loanType = #{type,jdbcType=VARCHAR}
+        where t1.loanType = #{loanType,jdbcType=VARCHAR}
         <if test="bank != null">
             and t.bank = #{bank,jdbcType=VARCHAR}
         </if>
@@ -80,7 +80,7 @@
         left join loan_user t1 on t.id = t1.id
         where 1=1
         <if test="loanType != null">
-            and t.loanType = #{loanType,jdbcType=VARCHAR}
+            and t1.loanType = #{loanType,jdbcType=VARCHAR}
         </if>
         <if test="bank != null">
             and t.bank = #{bank,jdbcType=VARCHAR}
@@ -210,7 +210,7 @@
         t1.loanType, t1.workunit, t1.workunit2, t1.house, t1.localPerson, t1.guaranteeType
         from loan_user_info t
         left join loan_user t1 on t.id = t1.id
-        where t1.loanType = #{type,jdbcType=VARCHAR}
+        where t1.loanType = #{loanType,jdbcType=VARCHAR}
         <if test="bank != null">
             and bank = #{bank,jdbcType=VARCHAR}
         </if>

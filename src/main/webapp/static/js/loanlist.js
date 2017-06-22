@@ -403,7 +403,7 @@ $(function () {
                     status: 1,
                     r: Math.random()
                 },
-                url: "loan/updateLoan.htm",
+                url: "loan/update",
                 success: function (res) {
                     var result = $.parseJSON(res);
                     if (result.code == 0) {
@@ -448,7 +448,7 @@ $(function () {
                     status: 3,
                     r: Math.random()
                 },
-                url: "loan/updateLoan.htm",
+                url: "loan/update",
                 success: function (res) {
                     var result = $.parseJSON(res);
                     if (result.code == 0) {
@@ -503,7 +503,7 @@ $(function () {
                     loanNum: $('#loanNum2').val(),
                     r: Math.random()
                 },
-                url: "loan/updateLoan.htm",
+                url: "loan/update",
                 success: function (res) {
                     var result = $.parseJSON(res);
                     if (result.code == 0) {

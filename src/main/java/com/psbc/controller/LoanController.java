@@ -57,7 +57,7 @@ public class LoanController {
             } else {
                 pmap.put("bank", null);
             }
-            pmap.put("type", loanType);
+            pmap.put("loanType", loanType);
             pmap.put("status", status);
             if (!StringUtils.isEmpty(minTime)) {
                 pmap.put("minTime", minTime);
@@ -175,7 +175,7 @@ public class LoanController {
             pmap.put("bank", null);
         }
         pmap.put("status", status);
-        pmap.put("type", loanType);
+        pmap.put("loanType", loanType);
         if (!StringUtils.isEmpty(minTime)) {
             pmap.put("minTime", minTime);
         }
