@@ -234,7 +234,7 @@ $(function () {
                             dl.append('<dt>店面名称：</dt><dd>' + map.shopName + '</dd>');
                             dl.append('<dt>店面位置：</dt><dd>' + map.shopAddress + '</dd>');
                         }
-                        dl.append('<dt>合作区域：</dt><dd>' + map.area + '</dd>');
+                        dl.append('<dt>合作区域：</dt><dd>' + map.bank + '</dd>');
                         dl.append('<dt>我需要实体宣传材料：</dt><dd>' + map.needMaterial + '</dd>');
                         if (map.needMaterial == "是") {
                             dl.append('<dt>实体宣传材料：</dt><dd>' + map.materials + '</dd>');

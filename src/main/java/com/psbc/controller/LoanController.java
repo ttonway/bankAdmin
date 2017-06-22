@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.psbc.pojo.AdminUser;
@@ -32,6 +31,8 @@ import com.psbc.util.ExportExcelUtils;
 @RequestMapping("/loan")
 public class LoanController {
     private static Logger logger = Logger.getLogger(LoanController.class);
+
+    private static final String PARTNER_PREFIX = "partner-";
 
     @Autowired
     private LoanUserService loanUserService;
@@ -142,11 +143,17 @@ public class LoanController {
     @ResponseBody
     public Map<String, Object> getFromUserInfo(String userCode) {
         Map<String, Object> map = new HashMap<String, Object>();
-        final String prefix = "partner-";
         try {
-            if (userCode.startsWith(prefix)) {
-                long partnerId = Long.parseLong(userCode.substring(prefix.length()));
+            if (userCode.startsWith(PARTNER_PREFIX)) {
+                long partnerId = Long.parseLong(userCode.substring(PARTNER_PREFIX.length()));
                 PartnerUser user = partnerUserService.selectByPrimaryKey(partnerId);
+
+                String str = user.getBank();
+                if (str != null) {
+                    str = str.replace("支行", "");
+                    user.setBank(str);
+                }
+
                 map.put("partner", user);
             } else {
                 AdminUser user = adminUserService.selectByCode(userCode);
@@ -199,19 +206,48 @@ public class LoanController {
             // 定义sheet页标题
             String title = "下载";
             // 定义表头
+            String[] headers;
+            String[] fields;
+            Collection<LoanUser> dataset;
             if ("邮信贷".equals(loanType)) {
-                excelStream = new BufferedOutputStream(response.getOutputStream());
-                Collection<LoanUser> dataset = loanUserService.export(pmap);
-                String[] headers = {"申请人ID", "申请人姓名", "联系手机", "区域", "支行", "推荐人", "ID", "申请金额", "工作单位", "申请时间", "状态", "备注", "跟新时间", "来源"};
-                String[] fields = {"loanid", "usernm", "phonenum", "area", "bank", "referrals", "id", "loanNum", "workunit", "createtime", "status", "remark", "updatetime", "fromUserCode"};
-                outExcel.exportExcel(title, headers, fields, dataset, excelStream);
+                headers = new String[]{"申请人ID", "申请人姓名", "联系手机", "区域", "支行", "推荐人", "ID",
+                        "申请金额", "工作单位", "申请时间", "状态", "备注", "跟新时间",
+                        "来源", "来源姓名", "来源电话"};
+                fields = new String[]{"loanid", "usernm", "phonenum", "area", "bank", "referrals", "id",
+                        "loanNum", "workunit", "createtime", "status", "remark", "updatetime",
+                        "fromUserCode", "fromUserName", "fromUserPhone"};
             } else if ("商易贷".equals(loanType)) {
-                excelStream = new BufferedOutputStream(response.getOutputStream());
-                Collection<LoanUser> dataset = loanUserService.export(pmap);
-                String[] headers = {"申请人ID", "申请人姓名", "联系手机", "区域", "支行", "推荐人", "ID", "申请金额", "行业信息（一级）", "行业信息（二级）", "是否为本地人", "本地是否有房产", "担保方式", "申请时间", "状态", "备注", "跟新时间", "来源"};
-                String[] fields = {"loanid", "usernm", "phonenum", "area", "bank", "referrals", "id", "loanNum", "workunit", "workunit2", "localPerson", "house", "guaranteeType", "createtime", "status", "remark", "updatetime", "fromUserCode"};
-                outExcel.exportExcel(title, headers, fields, dataset, excelStream);
+                headers = new String[]{"申请人ID", "申请人姓名", "联系手机", "区域", "支行", "推荐人", "ID",
+                        "申请金额", "行业信息（一级）", "行业信息（二级）", "是否为本地人", "本地是否有房产", "担保方式", "申请时间", "状态", "备注", "跟新时间",
+                        "来源", "来源姓名", "来源电话"};
+                fields = new String[]{"loanid", "usernm", "phonenum", "area", "bank", "referrals", "id",
+                        "loanNum", "workunit", "workunit2", "localPerson", "house", "guaranteeType", "createtime", "status", "remark", "updatetime",
+                        "fromUserCode", "fromUserName", "fromUserPhone"};
+            } else {
+                throw new IllegalArgumentException("Invalid loanType: " + loanType);
             }
+
+            excelStream = new BufferedOutputStream(response.getOutputStream());
+            dataset = loanUserService.export(pmap);
+            for (LoanUser loanUser : dataset) {
+                String fromUserCode = loanUser.getFromUserCode();
+                if (StringUtils.isEmpty(fromUserCode)) {
+
+                } else if (fromUserCode.startsWith(PARTNER_PREFIX)) {
+                    long partnerId = Long.parseLong(fromUserCode.substring(PARTNER_PREFIX.length()));
+                    PartnerUser user = partnerUserService.selectByPrimaryKey(partnerId);
+                    if (user != null) {
+                        loanUser.setFromUserName(user.getUserName());
+                        loanUser.setFromUserPhone(user.getPhoneNumber());
+                    }
+                } else {
+                    AdminUser user = adminUserService.selectByCode(fromUserCode);
+                    if (user != null) {
+                        loanUser.setFromUserName(user.getUserName());
+                    }
+                }
+            }
+            outExcel.exportExcel(title, headers, fields, dataset, excelStream);
         } catch (Exception e) {
             logger.error("export fail.", e);
         }

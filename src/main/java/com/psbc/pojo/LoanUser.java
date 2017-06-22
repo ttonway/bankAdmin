@@ -60,6 +60,9 @@ public class LoanUser {
 
 	private String fromUserCode;
 
+	private String fromUserName;
+	private String fromUserPhone;
+
 	public Long getLoanid() {
 		return loanid;
 	}
@@ -218,5 +221,21 @@ public class LoanUser {
 
 	public void setFromUserCode(String fromUserCode) {
 		this.fromUserCode = fromUserCode;
+	}
+
+	public String getFromUserName() {
+		return fromUserName;
+	}
+
+	public void setFromUserName(String fromUserName) {
+		this.fromUserName = fromUserName;
+	}
+
+	public String getFromUserPhone() {
+		return fromUserPhone;
+	}
+
+	public void setFromUserPhone(String fromUserPhone) {
+		this.fromUserPhone = fromUserPhone;
 	}
 }
