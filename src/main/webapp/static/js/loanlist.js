@@ -400,19 +400,19 @@ $(function () {
                 cache: false,
                 data: {
                     loanid: data.loanid,
-                    status: 1,
+                    status: 2,
                     r: Math.random()
                 },
                 url: "loan/update",
                 success: function (res) {
                     var result = $.parseJSON(res);
                     if (result.code == 0) {
-                        $('#status2-modal .alert-success').text("提交审核成功");
+                        $('#status2-modal .alert-success').text("通过审核成功");
                         $('#status2-modal .alert-success').show();
 
                         reloadTable();
                     } else {
-                        $('#status2-modal .alert-danger').text("提交审核失败");
+                        $('#status2-modal .alert-danger').text("通过审核失败");
                         $('#status2-modal .alert-danger').show();
                     }
                 }

@@ -101,13 +101,8 @@
 
                         <div class="box-footer clearfix">
                             <a href="#" class="btn btn-default pull-left" id="export">下载</a>
-                            <% if ("授信管理岗".equals(userDetails.getUserRole())) { %>
-                            <a href="#" class="btn btn-default pull-left" id="showVerify">审核</a>
-                            <a href="#" class="btn btn-default pull-left" id="showstatus3">驳回</a>
-                            <a href="#" class="btn btn-default pull-left" id="showVerify2">调整</a>
-                            <% } %>
                             <% if ("支行营销岗".equals(userDetails.getUserRole())) { %>
-                            <a href="#" class="btn btn-default pull-left" id="showstatus2">提交至审核</a>
+                            <a href="#" class="btn btn-default pull-left" id="showstatus2">审核</a>
                             <% } %>
                             <% if ("市分行管理岗".equals(userDetails.getUserRole()) || "支行营销岗".equals(userDetails.getUserRole())) { %>
                             <a href="#" class="btn btn-default pull-left" id="showDelete">删除</a>
@@ -207,12 +202,12 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">提交审核</h4>
+                <h4 class="modal-title">审核</h4>
             </div>
             <div class="modal-body">
                 <div class="alert alert-success" role="alert"></div>
                 <div class="alert alert-danger" role="alert"></div>
-                <p>确认提交审核吗？</p>
+                <p>确认通过审核吗？</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary">确认审核</button>
