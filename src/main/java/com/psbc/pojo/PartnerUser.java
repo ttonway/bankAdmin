@@ -36,8 +36,10 @@ public class PartnerUser {
     private String updateTime;
 
 
-    private int passLoanCount;
-    private int totalLoanCount;
+    private int passLoan0Count;
+    private int totalLoan0Count;
+    private int passLoan1Count;
+    private int totalLoan1Count;
 
     public Long getPartnerId() {
         return partnerId;
@@ -199,21 +201,36 @@ public class PartnerUser {
         this.receiverAddress = receiverAddress;
     }
 
-
-    public int getPassLoanCount() {
-        return passLoanCount;
+    public int getPassLoan0Count() {
+        return passLoan0Count;
     }
 
-    public void setPassLoanCount(int passLoanCount) {
-        this.passLoanCount = passLoanCount;
+    public void setPassLoan0Count(int passLoan0Count) {
+        this.passLoan0Count = passLoan0Count;
     }
 
-    public int getTotalLoanCount() {
-        return totalLoanCount;
+    public int getTotalLoan0Count() {
+        return totalLoan0Count;
     }
 
-    public void setTotalLoanCount(int totalLoanCount) {
-        this.totalLoanCount = totalLoanCount;
+    public void setTotalLoan0Count(int totalLoan0Count) {
+        this.totalLoan0Count = totalLoan0Count;
+    }
+
+    public int getPassLoan1Count() {
+        return passLoan1Count;
+    }
+
+    public void setPassLoan1Count(int passLoan1Count) {
+        this.passLoan1Count = passLoan1Count;
+    }
+
+    public int getTotalLoan1Count() {
+        return totalLoan1Count;
+    }
+
+    public void setTotalLoan1Count(int totalLoan1Count) {
+        this.totalLoan1Count = totalLoan1Count;
     }
 
     public String getStatus() {

@@ -2,6 +2,7 @@
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.psbc.pojo.AdminUserDetails" %>
+<%@ page import="com.psbc.pojo.LoanUser" %>
 <%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
 <% AdminUserDetails userDetails = (AdminUserDetails) SecurityContextHolder.getContext()
         .getAuthentication()
@@ -81,10 +82,10 @@
                                     <th>来源</th>
                                     <th>申请人</th>
                                     <th>联系手机</th>
-                                    <c:if test="${requestScope.loanType eq '邮信贷'}">
+                                    <c:if test="${requestScope.loanType eq LoanUser.LOAN_TYPE_0}">
                                         <th>工作单位</th>
                                     </c:if>
-                                    <c:if test="${requestScope.loanType eq '商易贷'}">
+                                    <c:if test="${requestScope.loanType eq LoanUser.LOAN_TYPE_1}">
                                         <th>行业</th>
                                     </c:if>
                                     <th>申请支行</th>

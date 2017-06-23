@@ -1,6 +1,7 @@
 package com.psbc.controller;
 
 import com.psbc.pojo.AdminUserDetails;
+import com.psbc.pojo.LoanUser;
 import com.psbc.pojo.PartnerUser;
 import com.psbc.service.LoanUserService;
 import com.psbc.service.PartnerUserService;
@@ -73,15 +74,28 @@ public class PartnerMgrController {
     void fillPartnerCount(PartnerUser partner) {
         Map<String, Object> pmap = new HashMap<String, Object>();
         pmap.put("fromUserCode", "partner-" + partner.getPartnerId());
+        pmap.put("loanType", LoanUser.LOAN_TYPE_0);
         List<Map<String, Object>> cntList = loanUserService.selectByStatusCnt(pmap);
         for (Map<String, Object> cntMap : cntList) {
             Long cnt = (Long) cntMap.get("cnt");
             int count = cnt == null ? 0 : cnt.intValue();
             if (cntMap.get("status").equals("2")) {//已审核
-                partner.setPassLoanCount(count);
+                partner.setPassLoan0Count(count);
             }
-            partner.setTotalLoanCount(partner.getTotalLoanCount() + count);
+            partner.setTotalLoan0Count(partner.getTotalLoan0Count() + count);
         }
+
+        pmap.put("loanType", LoanUser.LOAN_TYPE_1);
+        cntList = loanUserService.selectByStatusCnt(pmap);
+        for (Map<String, Object> cntMap : cntList) {
+            Long cnt = (Long) cntMap.get("cnt");
+            int count = cnt == null ? 0 : cnt.intValue();
+            if (cntMap.get("status").equals("2")) {//已审核
+                partner.setPassLoan1Count(count);
+            }
+            partner.setTotalLoan1Count(partner.getTotalLoan1Count() + count);
+        }
+
     }
 
     @RequestMapping("/get")
@@ -166,10 +180,10 @@ public class PartnerMgrController {
 
             String[] headers = {"类型", "是否为我行老客户", "姓名", "联系方式", "单位名称", "单位性质", "店面名称", "店面位置",
                     "合作区域", "是否需要宣传材料", "实体宣传材料", "收货人", "手机号码", "所在区或县", "详细地址",
-                    "贷款通过总数", "贷款申请总数", "申请时间"};
+                    "邮信贷通过总数", "邮信贷申请总数", "生意贷通过总数", "生意贷申请总数", "申请时间"};
             String[] fields = {"partnerType", "oldCustomer", "userName", "phoneNumber", "workUnitType", "workUnitName", "shopName", "shopAddress",
                     "bank", "needMaterial", "materials", "receiver", "receiverPhoneNumber", "receiverArea", "receiverAddress",
-                    "passLoanCount", "totalLoanCount", "createTime"};
+                    "passLoan0Count", "totalLoan0Count", "passLoan1Count", "totalLoan1Count", "createTime"};
             outExcel.exportExcel(title, headers, fields, dataset, excelStream);
         } catch (Exception e) {
             logger.error("export fail.", e);

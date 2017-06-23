@@ -1,6 +1,7 @@
 package com.psbc.controller;
 
 import com.psbc.pojo.AdminUserDetails;
+import com.psbc.pojo.LoanUser;
 import com.psbc.util.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -49,13 +50,13 @@ public class IndexController {
     // 邮信贷
     @RequestMapping("/list1")
     public ModelAndView list1() {
-        return new ModelAndView("loanlist", "loanType", "邮信贷");
+        return new ModelAndView("loanlist", "loanType", LoanUser.LOAN_TYPE_0);
     }
 
     // 商易贷
     @RequestMapping("/list2")
     public ModelAndView list2() {
-        return new ModelAndView("loanlist", "loanType", "商易贷");
+        return new ModelAndView("loanlist", "loanType", LoanUser.LOAN_TYPE_1);
     }
 
     // 海报

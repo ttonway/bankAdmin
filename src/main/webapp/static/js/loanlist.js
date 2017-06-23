@@ -228,8 +228,7 @@ $(function () {
                         dl.append('<dt>联系方式：</dt><dd>' + map.phoneNumber + '</dd>');
                         if (map.partnerType == "whitecollar") {
                             dl.append('<dt>单位性质：</dt><dd>' + map.workUnitType + '</dd>');
-                            if (map.workUnitName)
-                                dl.append('<dt>单位名称：</dt><dd>' + map.workUnitName + '</dd>');
+                            dl.append('<dt>单位名称：</dt><dd>' + map.workUnitName + '</dd>');
                         } else if (map.partnerType == "shop") {
                             dl.append('<dt>店面名称：</dt><dd>' + map.shopName + '</dd>');
                             dl.append('<dt>店面位置：</dt><dd>' + map.shopAddress + '</dd>');

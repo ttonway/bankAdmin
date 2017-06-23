@@ -1,6 +1,10 @@
 package com.psbc.pojo;
 
 public class LoanUser {
+
+    public static final String LOAN_TYPE_0 = "邮信贷";
+    public static final String LOAN_TYPE_1 = "商易贷";
+
 	private Long loanid;
 
 	/**

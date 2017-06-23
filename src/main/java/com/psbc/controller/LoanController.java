@@ -209,14 +209,14 @@ public class LoanController {
             String[] headers;
             String[] fields;
             Collection<LoanUser> dataset;
-            if ("邮信贷".equals(loanType)) {
+            if (LoanUser.LOAN_TYPE_0.equals(loanType)) {
                 headers = new String[]{"申请人ID", "申请人姓名", "联系手机", "区域", "支行", "推荐人", "ID",
                         "申请金额", "工作单位", "申请时间", "状态", "备注", "跟新时间",
                         "来源", "来源姓名", "来源电话"};
                 fields = new String[]{"loanid", "usernm", "phonenum", "area", "bank", "referrals", "id",
                         "loanNum", "workunit", "createtime", "status", "remark", "updatetime",
                         "fromUserCode", "fromUserName", "fromUserPhone"};
-            } else if ("商易贷".equals(loanType)) {
+            } else if (LoanUser.LOAN_TYPE_1.equals(loanType)) {
                 headers = new String[]{"申请人ID", "申请人姓名", "联系手机", "区域", "支行", "推荐人", "ID",
                         "申请金额", "行业信息（一级）", "行业信息（二级）", "是否为本地人", "本地是否有房产", "担保方式", "申请时间", "状态", "备注", "跟新时间",
                         "来源", "来源姓名", "来源电话"};

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ page import="com.psbc.pojo.AdminUserDetails" %>
+<%@ page import="com.psbc.pojo.LoanUser" %>
 <%@ page import="com.psbc.util.AuthorityUtils" %>
 <%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
 <% AdminUserDetails userDetails = (AdminUserDetails) SecurityContextHolder.getContext()
@@ -55,8 +56,10 @@
                 <div class="col-xs-12">
                     <div class="box">
                         <div class="box-header">
-                            <a href="#" class="category active" type="邮信贷">邮信贷<span>(0)</span></a>
-                            <a href="#" class="category" type="商易贷">生意贷<span>(0)</span></a>
+                            <a href="#" class="category active"
+                               type="<%= LoanUser.LOAN_TYPE_0 %>">邮信贷<span>(0)</span></a>
+                            <a href="#" class="category"
+                               type="<%= LoanUser.LOAN_TYPE_1 %>">生意贷<span>(0)</span></a>
                             <% if (AuthorityUtils.hasAuthority(userDetails, "ROLE_ADMIN")) { %>
                             <div class="pull-right box-tools">
                                 <button id="btn-add" type="button" class="btn btn-primary btn-sm" title="Add">
@@ -151,6 +154,10 @@
             </div>
         </div>
     </div>
+
+
+
+
 </script>
 
 <input type="hidden" id="userCode" value='<%=userDetails.getUsername()%>'>

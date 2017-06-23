@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="com.psbc.pojo.LoanUser" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -40,8 +41,8 @@
 </nav>
 
 <ul class="nav nav-tabs nav-justified">
-    <li role="presentation" class="active" loan_type="0" type="邮信贷"><a href="#">消费贷海报</a></li>
-    <li role="presentation" loan_type="1" type="商易贷"><a href="#">生意贷海报</a></li>
+    <li role="presentation" class="active" loan_type="0" type="<%= LoanUser.LOAN_TYPE_0 %>"><a href="#">消费贷海报</a></li>
+    <li role="presentation" loan_type="1" type="<%= LoanUser.LOAN_TYPE_1 %>"><a href="#">生意贷海报</a></li>
 </ul>
 
 <div class="container">
