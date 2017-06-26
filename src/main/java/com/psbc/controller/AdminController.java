@@ -80,16 +80,15 @@ public class AdminController {
     @RequestMapping("/resetPwd")
     @ResponseBody
     public Map<String, Object> resetPwd(Long userId, String password) {
-        AdminUserDetails userDetails = (AdminUserDetails) SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getPrincipal();
+
 
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             AdminUser adminUser = new AdminUser();
             adminUser.setUserId(userId);
             if (StringUtils.isEmpty(password)) {
-                adminUser.setPassword(MD5Util.getMD5(userDetails.getUsername()));
+                adminUser = adminUserService.selectByPrimaryKey(userId);
+                adminUser.setPassword(MD5Util.getMD5(adminUser.getUserCode()));
             } else {
                 adminUser.setPassword(MD5Util.getMD5(password));
             }

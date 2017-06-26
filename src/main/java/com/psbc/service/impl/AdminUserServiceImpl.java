@@ -30,8 +30,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     @Override
     public AdminUser selectByPrimaryKey(Long userid) {
-        // TODO Auto-generated method stub
-        return null;
+        return adminUserMapper.selectByPrimaryKey(userid);
     }
 
     @Override
@@ -41,8 +40,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     @Override
     public int updateByPrimaryKey(AdminUser record) {
-        // TODO Auto-generated method stub
-        return 0;
+        return adminUserMapper.updateByPrimaryKey(record);
     }
 
     @Override
