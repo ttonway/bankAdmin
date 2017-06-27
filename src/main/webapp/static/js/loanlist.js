@@ -107,17 +107,16 @@ $(function () {
                 firstDay: 1
             },
             ranges: {
-                '所有': [null, null],
-                '今天': [moment(), moment()],
+                '所有': [moment(), moment()],
                 '过去7天': [moment().subtract(6, 'days'), moment()],
                 '过去30天': [moment().subtract(29, 'days'), moment()],
                 '本月': [moment().startOf('month'), moment().endOf('month')]
             },
-            startDate: null,
-            endDate: null
+            startDate: moment(),
+            endDate: moment()
         },
         function (start, end) {
-            if (!start._isValid && !end._isValid) {
+            if (start.isSame(end, 'day')) {
                 $('#daterange-btn').attr('min-time', '');
                 $('#daterange-btn').attr('max-time', '');
                 $('#daterange-btn span').html('<i class="fa fa-calendar"></i> 所有');
