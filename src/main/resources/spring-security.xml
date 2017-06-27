@@ -15,11 +15,11 @@
 
         <intercept-url pattern="/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/>
 
-        <!-- 同一时间内允许同一账号保持4个在线, error-if-maximum-exceeded="true"表示第第四个以后的登不进去 -->
+        <!-- 同一时间内允许同一账号保持4个在线, error-if-maximum-exceeded="true"表示第第四个以后的登不进去
         <session-management>
             <concurrency-control max-sessions="4"
                                  error-if-maximum-exceeded="true"/>
-        </session-management>
+        </session-management>-->
 
         <form-login
                 login-page='/login'

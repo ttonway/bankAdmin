@@ -15,6 +15,19 @@ public class AdminUser {
     
     private String loginTime;
 
+    @Override
+    public String toString() {
+        return "AdminUser{" +
+                "userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", userCode='" + userCode + '\'' +
+                ", password='" + password + '\'' +
+                ", bank='" + bank + '\'' +
+                ", role='" + role + '\'' +
+                ", loginTime='" + loginTime + '\'' +
+                '}';
+    }
+
     public Long getUserId() {
         return userId;
     }
