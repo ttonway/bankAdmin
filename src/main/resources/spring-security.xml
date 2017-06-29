@@ -11,6 +11,7 @@
     <http security="none" pattern="/static/**"/>
 
     <http use-expressions="true" auto-config="true">
+        <intercept-url pattern="/j_spring_security_check" access="permitAll"/>
         <intercept-url pattern="/partner/**" access="permitAll"/>
 
         <intercept-url pattern="/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/>
@@ -28,7 +29,8 @@
                 authentication-success-handler-ref="myAuthenticationSuccessHandler"
                 default-target-url="/index"
                 username-parameter="username"
-                password-parameter="password"/>
+                password-parameter="password"
+                always-use-default-target="true"/>
         <logout
                 logout-url="/j_spring_security_logout"
                 logout-success-url="/login?logout"/>
@@ -52,6 +54,7 @@
 
     <beans:bean id="myAuthenticationSuccessHandler" class="com.psbc.service.impl.LoginSuccessHandler">
         <beans:property name="defaultTargetUrl" value="/index"/>
+        <beans:property name="alwaysUseDefaultTargetUrl" value="true"/>
     </beans:bean>
 
 </beans:beans>
