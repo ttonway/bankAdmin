@@ -1,6 +1,7 @@
 package com.psbc.controller;
 
 import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
@@ -271,7 +272,9 @@ public class PartnerController {
         try {
             OutputStream stream = response.getOutputStream();
             QRCodeWriter writer = new QRCodeWriter();
-            BitMatrix m = writer.encode(url, BarcodeFormat.QR_CODE, width, height);
+            Map<EncodeHintType, Object> hints = new HashMap<>();
+            hints.put(EncodeHintType.MARGIN, 1);
+            BitMatrix m = writer.encode(url, BarcodeFormat.QR_CODE, width, height, hints);
             MatrixToImageWriter.writeToStream(m, "png", stream);
             stream.flush();
         } catch (Exception e) {
@@ -297,7 +300,9 @@ public class PartnerController {
             Rectangle rect = findSquare(bufferedImage);
 
             QRCodeWriter writer = new QRCodeWriter();
-            BitMatrix m = writer.encode(url, BarcodeFormat.QR_CODE, rect.width, rect.height);
+            Map<EncodeHintType, Object> hints = new HashMap<>();
+            hints.put(EncodeHintType.MARGIN, 1);
+            BitMatrix m = writer.encode(url, BarcodeFormat.QR_CODE, QRCODE_WIDTH, QRCODE_HEIGHT, hints);
             BufferedImage qrcode = MatrixToImageWriter.toBufferedImage(m);
 
             Graphics2D g2d = bufferedImage.createGraphics();
